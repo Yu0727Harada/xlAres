@@ -65,7 +65,7 @@ Exit Sub
 
 
 sheet_cal_error:
-End
+Exit Sub
 End Sub
 
 Public Sub recal()

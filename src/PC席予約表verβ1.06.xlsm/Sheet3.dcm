@@ -28,7 +28,12 @@ End Sub
 Private Sub Worksheet_Calculate()
 'ワークシートに再計算が発生したときにおこるイベント
 
+Dim Thiswb As Workbook
+Dim Activewb As Workbook
+Set Thiswb = ThisWorkbook
+Set Activewb = ActiveWorkbook
 
+If Thiswb <> Activewb Then End
 
 Dim 色セルのRow As Integer
 Dim 色セルのcolumn As Integer
