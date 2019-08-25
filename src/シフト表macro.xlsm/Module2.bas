@@ -11,6 +11,9 @@ Do While Cells(i + 3, 1) <> ""
 i = i + 1
 Loop
 
-Range("C4:Q4").Resize(i - 1, 15).Clear
+With Range("C4:Q4").Resize(i - 1, 15)
+    .Clear
+    .NumberFormatLocal = "@"
+End With
 
 End Sub
