@@ -10,7 +10,8 @@ Dim match_row As Integer
 i = 3
 j = 4
 
-    For j = 3 To 16
+Do While Cells(j, 1) <> ""
+'    For j = 3 To 16
         For i = 3 To 17
                 If j = 3 Then
                     If Cells(j, i).Value = "“y" Then
@@ -25,13 +26,15 @@ j = 4
                         Cells(j, i).Interior.ColorIndex = 0
                     Else
                         On Error GoTo error
-                        match_row = WorksheetFunction.Match(Cells(j, i), Range("B21:B40"), 0)
+                        match_row = WorksheetFunction.Match(Cells(j, i), Range("B:B"), 0)
                         On Error GoTo 0
-                        Cells(j, i).Interior.Color = Cells(match_row + 20, 3).Interior.Color
+                        Cells(j, i).Interior.Color = Cells(match_row, 3).Interior.Color
                     End If
                 End If
         Next i
-    Next j
+'    Next j
+j = j + 1
+Loop
 
 Exit Sub
 
