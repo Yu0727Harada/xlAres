@@ -1,0 +1,201 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "Sheet3"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+
+
+
+Private Sub Worksheet_Activate()
+Call recal
+'シートがactiveになった場合recalプロシージャに行く
+
+End Sub
+
+Private Sub Worksheet_Deactivate()
+
+If tm <> 0 Then
+Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+End If
+'tm変数に何か入っていた場合のみ、recalプロシージャが一分ごとに起動するのを止める
+
+End Sub
+
+Private Sub Worksheet_Calculate()
+'ワークシートに再計算が発生したときにおこるイベント
+
+
+
+Dim 色セルのRow As Integer
+Dim 色セルのcolumn As Integer
+
+'利用するために変数を宣言
+
+
+色セルのRow = 4
+色セルのcolumn = 3
+'一番左上から順に計算していくのでC4セル番地を代入
+
+Call setting_time
+
+Do While 色セルのcolumn < 10
+
+    Do While 色セルのRow < 9
+    
+        If on_time >= 色セルのcolumn And Range("K2") = Date Then
+            If Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(195, 160, 160)
+            ElseIf Cells(色セルのRow, 色セルのcolumn).Text = "予約済(貸出中)" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(198, 118, 123)
+            ElseIf Cells(色セルのRow, 色セルのcolumn).Text = "" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(162, 179, 193)
+            Else
+        '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(139, 180, 191)
+    '           どれにも当てはまらない場合の色設定
+            End If
+        Else
+            If Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 209, 209)
+            ElseIf Cells(色セルのRow, 色セルのcolumn).Text = "予約済(貸出中)" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 153, 160)
+            ElseIf Cells(色セルのRow, 色セルのcolumn).Text = "" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(212, 234, 252)
+            Else
+        '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
+                Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(180, 235, 250)
+    '           どれにも当てはまらない場合の色設定
+            End If
+        End If
+        
+        色セルのRow = 色セルのRow + 1
+    
+'    席番号１～５までの中身をみて計算
+    
+    Loop
+
+色セルのRow = 4
+色セルのcolumn = 色セルのcolumn + 1
+'席番号は４列目に戻して次の時間帯の計算に移る
+
+Loop
+
+'灰色 215, 215, 215
+'予約済灰色205 , 162, 128
+'貸し出し灰色 197, 131, 111
+'もじれつはいい215 , 188, 109
+
+End Sub
+
+
+
+
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+'Static past_able As Integer
+
+
+If Target.Count > 1 Then
+
+'Cells(12, 2).Select
+End
+End If
+'選択範囲が１以上の場合終了
+
+If Target.Row = 12 And Target.Column = 9 Then
+    If Worksheets("メイン").EnableCalculation = False Then
+        Worksheets("メイン").EnableCalculation = True
+    End If
+
+End If
+
+If Target.Row = 13 And Target.Column = 9 Then
+    Dim inputpass As String
+    inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
+    If inputpass = passcord Then
+        If Cells(13, 9) = "off" Then
+            Cells(13, 9) = "on"
+        ElseIf Cells(13, 9) = "on" Then
+            Cells(13, 9) = "off"
+        End If
+    ElseIf inputpass = "" Then
+    
+    Else
+        MsgBox ("パスコードが一致しません")
+    End If
+End If
+
+If Target.Row = 14 And Target.Column = 9 Then
+    Call Worksheets("生データ").Range("A:F").Sort(key1:=Worksheets("生データ").Range("D:D"), order1:=xlAscending, Header:=xlYes)
+End If
+
+If Not (Target.Row >= 4 And Target.Row <= 8 And Target.Column >= 3 And Target.Column <= 9) Then
+
+'Cells(12, 2).Select
+End
+End If
+
+
+Dim 今日 As Range
+Set 今日 = Range(" K2")
+'今日という変数を宣言して日付の入ってるk2を選択する
+
+If Cells(13, 9) = "off" Then
+    If 今日 < Date Then End
+End If
+'past_able変数がfalseで過去の表だった場合は予約フォームが起動しないようになった
+
+If 今日 = Date Then
+    Call setting_time
+    '標準モジュールのsetting_timeに行ってon_time変数に今の時間はどこまで予約できるかを入れに行く
+End If
+'予約表の範囲以外なら終了･
+'日付が未来だった場合は全時間帯予約可能､日付が当日の場合は過ぎた時間の予約はできないように
+
+  
+    
+予約日 = Format(今日, "yyyymmdd")
+'PUBLIC変数の予約日にYYYYMMDD形式で代入
+'PUBLIC変数は標準モジュールで宣言
+    
+時間帯 = Target.Column - 2
+席番号 = Target.Row - 3
+   
+If Cells(Target.Row, Target.Column + 1).Text = "" Then
+    連続可能か = True
+Else
+    連続可能か = False
+End If
+If 時間帯 = 7 Then
+    連続可能か = False
+End If
+'予約フォームでの処理のために連続可能かという変数に次の時間が予約済みかと、閉室後でないかどうかでTRUEかFALSEかを入れておく
+
+If 今日 = Date And Cells(13, 9) = "off" Then
+    If InStr(Target.Text, "予約済") > 0 And Target.Column > on_time Then
+        予約変更フォーム.Show
+    '    予約済のセルの場合は予約変更フォームを開く
+    ElseIf Target.Text = "" And Target.Column > on_time Then
+          予約フォーム.Show
+        'セルが空白だった場合は予約フォームを開く
+    ElseIf InStr(Target.Text, "貸出中") > 0 And Target.Column <= on_time Then
+        Call cable
+    End If
+Else
+    If InStr(Target.Text, "予約済") > 0 Then
+        予約変更フォーム.Show
+    '    予約済のセルの場合は予約変更フォームを開く
+    ElseIf Target.Text = "" Then
+          予約フォーム.Show
+        'セルが空白だった場合は予約フォームを開く
+    End If
+End If
+
+'Cells(12, 2).Select
+
+End Sub
