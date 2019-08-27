@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約フォーム 
    Caption         =   "予約フォーム"
    ClientHeight    =   7497
-   ClientLeft      =   -462
-   ClientTop       =   -1799
-   ClientWidth     =   6671
+   ClientLeft      =   -460
+   ClientTop       =   -1800
+   ClientWidth     =   6670
    OleObjectBlob   =   "予約フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End

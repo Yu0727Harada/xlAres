@@ -28,12 +28,10 @@ End Sub
 Private Sub Worksheet_Calculate()
 'ワークシートに再計算が発生したときにおこるイベント
 
-Dim Thiswb As Workbook
-Dim Activewb As Workbook
-Set Thiswb = ThisWorkbook
-Set Activewb = ActiveWorkbook
+On Error GoTo error
+now_time = Sheets("メイン").Cells(2, 12).Value
+On Error GoTo 0
 
-If Thiswb <> Activewb Then End
 
 Dim 色セルのRow As Integer
 Dim 色セルのcolumn As Integer
@@ -94,6 +92,11 @@ Loop
 '貸し出し灰色 197, 131, 111
 'もじれつはいい215 , 188, 109
 
+Exit Sub
+
+error:
+
+Exit Sub
 End Sub
 
 

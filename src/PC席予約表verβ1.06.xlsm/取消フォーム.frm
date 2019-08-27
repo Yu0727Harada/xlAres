@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 取消フォーム 
    Caption         =   "予約の取消の確認"
    ClientHeight    =   6006
-   ClientLeft      =   91
-   ClientTop       =   413
-   ClientWidth     =   7217
+   ClientLeft      =   90
+   ClientTop       =   410
+   ClientWidth     =   7220
    OleObjectBlob   =   "取消フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
