@@ -35,6 +35,8 @@ Else
     on_time = 2
 End If
 
+
+
 '現在の時刻を取得して数字を代入。数時は時間帯に対応するもの
 
 'If Time > 0.4375 And Time <= 0.50694444 Then
@@ -376,7 +378,7 @@ Sub check_res_day()
 Worksheets("メイン").EnableCalculation = False
 Set main = Worksheets("メイン")
 Set Duplicate = Worksheets("重複チェック")
-Set Data = Worksheets("生データ")
+Set data = Worksheets("生データ")
 
 Duplicate.Cells(1, 2).Value = Format(main.Cells(2, 11), "yyyymmdd")
 If Duplicate.Cells(1, 1) = Duplicate.Cells(1, 2) Then
@@ -385,15 +387,15 @@ End If
 Duplicate.Cells.Clear
 Duplicate.Cells(1, 1) = Format(main.Cells(2, 11), "yyyymmdd")
 
-Call Data.Range("A:F").Sort(key1:=Data.Range("D:D"), order1:=xlAscending, Header:=xlYes)
+Call data.Range("A:F").Sort(key1:=data.Range("D:D"), order1:=xlAscending, Header:=xlYes)
 
 Dim search_up As Integer
 
 On Error GoTo error_process
-search_up = WorksheetFunction.Match(Duplicate.Cells(1, 1).Value, Data.Range("A:A"), 1)
+search_up = WorksheetFunction.Match(Duplicate.Cells(1, 1).Value, data.Range("A:A"), 1)
 On Error GoTo 0
 
-If Duplicate.Cells(1, 1).Value <> WorksheetFunction.Index(Data.Range("A:A"), search_up) Then
+If Duplicate.Cells(1, 1).Value <> WorksheetFunction.Index(data.Range("A:A"), search_up) Then
     Exit Sub
 End If
 
@@ -402,17 +404,17 @@ Dim i As Integer
 Dim j As Integer
 
 i = 0
-    While Data.Cells(search_up - i, 1) = Duplicate.Cells(1, 1).Value
+    While data.Cells(search_up - i, 1) = Duplicate.Cells(1, 1).Value
         j = 0
-        While Data.Cells(search_up - i, 6 + j).Value <> ""
+        While data.Cells(search_up - i, 6 + j).Value <> ""
             On Error GoTo error_process_2
-            search_target_Row = WorksheetFunction.Match(Data.Cells(search_up - i, 6 + j), Duplicate.Range("A:A"), 1)
+            search_target_Row = WorksheetFunction.Match(data.Cells(search_up - i, 6 + j), Duplicate.Range("A:A"), 1)
             On Error GoTo 0
-                If Data.Cells(search_up - i, 6 + j) = Duplicate.Cells(search_target_Row, 1) Then
+                If data.Cells(search_up - i, 6 + j) = Duplicate.Cells(search_target_Row, 1) Then
                     Duplicate.Cells(search_target_Row, 2) = Duplicate.Cells(search_target_Row, 2) + 1
                 Else
                     Duplicate.Rows(search_target_Row + 1).Insert
-                    Duplicate.Cells(search_target_Row + 1, 1) = Data.Cells(search_up - i, 6 + j)
+                    Duplicate.Cells(search_target_Row + 1, 1) = data.Cells(search_up - i, 6 + j)
                     Duplicate.Cells(search_target_Row + 1, 2) = Duplicate.Cells(search_target_Row + 1, 2) + 1
                 End If
             j = j + 1
