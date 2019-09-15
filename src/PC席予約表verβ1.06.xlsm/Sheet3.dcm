@@ -45,6 +45,7 @@ Dim 色セルのcolumn As Integer
 
 Call setting_time
 
+
 Do While 色セルのcolumn < 10
 
     Do While 色セルのRow < 9

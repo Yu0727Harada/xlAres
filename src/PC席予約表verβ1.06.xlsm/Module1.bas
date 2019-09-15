@@ -69,11 +69,58 @@ Exit Sub
 sheet_cal_error:
 Exit Sub
 End Sub
+Public Sub shift_check()
+
+Worksheets("メイン").EnableCalculation = False
+Dim now_time As Date
+
+On Error GoTo sheet_cal_error
+now_time = Sheets("メイン").Cells(2, 12).Value
+On Error GoTo 0
+
+Dim i As Integer
+Dim j As Integer
+Dim now_date As Date
+Dim search As Integer
+Dim end_time As Date
+Dim start_time As Date
+Dim shift(4) As Integer
+j = 0
+
+For i = 0 To 48
+If now_time > i * 1 / 48 And now_time < i * 1 / 48 + 2 / 24 / 60 Then
+    now_date = Sheets("メイン").Cells(2, 11).Value
+    search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
+    If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
+    Exit For
+    Else
+        Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search))
+                   
+            end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
+            start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
+            If now_time < end_time And now_time > start_time Then
+                shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+            End If
+            j = j + 1
+            search = search + 1
+        Loop
+    End If
+End If
+Next i
+i = 0
+For i = 0 To 4
+    Cells(9, 3 + i).Value = shift(i)
+Next i
+Worksheets("メイン").EnableCalculation = True
+sheet_cal_error:
+Exit Sub
+End Sub
 
 Public Sub recal()
 
 Application.Calculate
 'シートの再計算を行う
+Call shift_check
 tm = Now() + TimeValue("00:01:00")
 Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
 'tm変数に一分後をセット
