@@ -75,10 +75,52 @@ Worksheets("メイン").EnableCalculation = False
 Dim now_time As Date
 
 On Error GoTo sheet_cal_error
-now_time = Sheets("メイン").Cells(2, 12).Value
+'now_time = Sheets("メイン").Cells(2, 12).Value
+now_time = Time
 On Error GoTo 0
 
 Dim i As Integer
+
+
+For i = 0 To 48
+If now_time > i * 1 / 48 And now_time < i * 1 / 48 + 1 / 24 / 60 Then
+Call shift_output_mainsheet(now_time)
+Exit For
+'    now_date = Sheets("メイン").Cells(2, 11).Value
+'    search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
+'    If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
+'    Exit For
+'    Else
+'        Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search))
+'
+'            end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
+'            start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
+'            If now_time < end_time And now_time > start_time Then
+'                shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+'                j = j + 1
+'            End If
+'            search = search + 1
+'        Loop
+'            Dim k As Integer
+'            k = 0
+'            For k = 0 To j
+'                Cells(1, 15 + k).Value = shift(k)
+'            Next k
+'
+'    End If
+End If
+Next i
+
+'i = shift(0)
+'Sheets("メイン").Shapes.Range(Array("Picture 4")).Formula = "=出力!inditrct(address(," + Str(i) + ",2)"
+'=mid(indirect(address(" + Str(現在の位置) + "," + Str(i) + ")),1,8)
+Worksheets("メイン").EnableCalculation = True
+sheet_cal_error:
+Exit Sub
+End Sub
+
+Public Sub shift_output_mainsheet(ByVal now_time As Date)
+
 Dim j As Integer
 Dim now_date As Date
 Dim search As Integer
@@ -87,12 +129,10 @@ Dim start_time As Date
 Dim shift(4) As Integer
 j = 0
 
-For i = 0 To 48
-If now_time > i * 1 / 48 And now_time < i * 1 / 48 + 2 / 24 / 60 Then
-    now_date = Sheets("メイン").Cells(2, 11).Value
+   now_date = Sheets("メイン").Cells(2, 11).Value
     search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
     If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
-    Exit For
+    Exit Sub
     Else
         Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search))
                    
@@ -100,20 +140,18 @@ If now_time > i * 1 / 48 And now_time < i * 1 / 48 + 2 / 24 / 60 Then
             start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
             If now_time < end_time And now_time > start_time Then
                 shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+                j = j + 1
             End If
-            j = j + 1
             search = search + 1
         Loop
+            Dim k As Integer
+            k = 0
+            For k = 0 To j - 1
+                Cells(1, 15 + k).Value = shift(k)
+            Next k
+
     End If
-End If
-Next i
-i = 0
-For i = 0 To 4
-    Cells(9, 3 + i).Value = shift(i)
-Next i
-Worksheets("メイン").EnableCalculation = True
-sheet_cal_error:
-Exit Sub
+
 End Sub
 
 Public Sub recal()

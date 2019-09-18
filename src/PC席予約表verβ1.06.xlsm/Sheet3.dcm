@@ -11,6 +11,7 @@ Attribute VB_Exposed = True
 
 
 Private Sub Worksheet_Activate()
+Call shift_output_mainsheet(Time)
 Call recal
 'シートがactiveになった場合recalプロシージャに行く
 
