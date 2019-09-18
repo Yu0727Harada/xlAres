@@ -15,6 +15,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 
+Private Sub checBox_Change()
+
+End Sub
+
 Private Sub CommandButton1_Click()
 
 If checBox = "" Then

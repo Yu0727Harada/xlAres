@@ -129,13 +129,15 @@ Dim start_time As Date
 Dim shift(4) As Integer
 j = 0
 
-   now_date = Sheets("メイン").Cells(2, 11).Value
+   now_date = Date
     search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
     If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
+        Cells(1, 15).Value = 0
+        Cells(1, 16).Value = 0
+    
     Exit Sub
     Else
         Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search))
-                   
             end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
             start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
             If now_time < end_time And now_time > start_time Then
