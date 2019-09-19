@@ -9,16 +9,22 @@ Set outputsheet = Worksheets("èoóÕ")
 
 Worksheets("ÉÅÉCÉì").EnableCalculation = False
 
+Dim shp As Shape
+
+For Each shp In outputsheet.Shapes
+    shp.Delete
+Next shp
+
 Dim i As Integer
 i = 2
     Do While inputsheet.Cells(i, 1) <> ""
-        outputsheet.Cells(i - 1, 1).Value = inputsheet.Cells(i, 1).Value
+        outputsheet.Cells(i, 1).Value = inputsheet.Cells(i, 1).Value
         Dim cellT As Variant
         Dim cellL As Variant
         Dim cellW As Variant
         Dim cellH As Variant
         
-        With outputsheet.Cells(i - 1, 2)
+        With outputsheet.Cells(i, 2)
             cellT = .Top
             cellL = .Left
             cellW = .Width

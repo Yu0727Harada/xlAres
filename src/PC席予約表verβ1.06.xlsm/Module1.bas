@@ -85,11 +85,10 @@ Call setting_time
 With Sheets("メイン")
 Do While 色セルのcolumn < 10
     Do While 色セルのRow < 9
-    
         If on_time >= 色セルのcolumn And .Range("K2") = Date Then
             If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(195, 160, 160)
-            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "予約済(貸出中)" Then
+            ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(198, 118, 123)
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(162, 179, 193)
@@ -101,7 +100,7 @@ Do While 色セルのcolumn < 10
         Else
             If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 209, 209)
-            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "予約済(貸出中)" Then
+            ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 153, 160)
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(212, 234, 252)
@@ -140,11 +139,11 @@ Exit Sub
 End Sub
 
 Public Sub shift_check()
-
+On Error GoTo sheet_cal_error
 Worksheets("メイン").EnableCalculation = False
 Dim now_time As Date
 
-On Error GoTo sheet_cal_error
+
 'now_time = Sheets("メイン").Cells(2, 12).Value
 now_time = Time
 On Error GoTo 0
@@ -199,15 +198,28 @@ Dim start_time As Date
 Dim shift(4) As Integer
 Dim shp As Shape
 Dim rng As Range
+Dim k As Integer
 j = 0
 
    now_date = Date
+   On Error GoTo sheet_cal_error
     search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
+    On Error GoTo 0
     If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
         
-        Cells(1, 15).Value = 0
-        Cells(1, 16).Value = 0
-    
+            k = 0
+            For k = 0 To 1
+                If Cells(1, 15 + k).Value <> shift(k) Then
+                    Cells(1, 15 + k).Value = shift(k)
+                    
+                    For Each shp In Sheets("メイン").Shapes
+                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + k * 3, 11), Cells(4 + k * 3, 11))) Is Nothing) Then
+                            shp.Delete
+                        End If
+                    Next
+                End If
+            Next k
     Exit Sub
     Else
         Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search))
@@ -219,25 +231,41 @@ j = 0
             End If
             search = search + 1
         Loop
-            Dim k As Integer
-            k = 0
-            For k = 0 To j - 1
-                If Cells(1, 15 + k).Value <> shift(k) Then
-                    Cells(1, 15 + k).Value = shift(k)
+            Dim L As Integer
+            L = 0
+            For L = 0 To j - 1
+                If Cells(1, 15 + L).Value <> shift(k) Then
+                    Cells(1, 15 + L).Value = shift(k)
                     
                     For Each shp In Sheets("メイン").Shapes
                         Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + k * 3, 11), Cells(4 + k * 3, 11))) Is Nothing) Then
+                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + L * 3, 11), Cells(4 + L * 3, 11))) Is Nothing) Then
                             shp.Delete
                         End If
                     Next
-                    Sheets("出力").Cells(shift(k) + 1, 2).CopyPicture
-                    Sheets("メイン").Paste Cells(4 + k * 3, 11)
+                    Sheets("出力").Cells(shift(L) + 1, 2).CopyPicture
+                    Sheets("メイン").Paste Cells(4 + L * 3, 11)
                 End If
-            Next k
+            Next L
 
     End If
-
+Exit Sub
+sheet_cal_error:
+        Dim m As Integer
+            m = 0
+            For m = 0 To 1
+                If Cells(1, 15 + m).Value <> shift(m) Then
+                    Cells(1, 15 + m).Value = shift(m)
+                    
+                    For Each shp In Sheets("メイン").Shapes
+                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + m * 3, 11), Cells(4 + m * 3, 11))) Is Nothing) Then
+                            shp.Delete
+                        End If
+                    Next
+                    End If
+            Next m
+                
 End Sub
 
 Public Sub recal()
