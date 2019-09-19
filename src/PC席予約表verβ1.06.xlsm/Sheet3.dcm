@@ -11,6 +11,8 @@ Attribute VB_Exposed = True
 
 
 Private Sub Worksheet_Activate()
+Call Sheets("メイン").Protect(UserInterfaceOnly:=True)
+
 Call shift_output_mainsheet(Time)
 Call recal
 'シートがactiveになった場合recalプロシージャに行く
@@ -113,7 +115,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
 If Target.Count > 1 Then
 
-'Cells(12, 2).Select
+If Cells(5, 20).Value = "on" Then
+    Cells(12, 2).Select
+End If
 End
 End If
 '選択範囲が１以上の場合終了
@@ -146,9 +150,11 @@ End If
 'End If
 '
 If Not (Target.Row >= 4 And Target.Row <= 8 And Target.Column >= 3 And Target.Column <= 9) Then
+    If Cells(5, 20).Value = "on" Then
+        Cells(12, 2).Select
+    End If
+    End
 
-'Cells(12, 2).Select
-End
 End If
 
 
@@ -215,6 +221,8 @@ ElseIf Cells(4, 20) = "on" Then
     End If
 End If
 
-'Cells(12, 2).Select
+If Cells(5, 20).Value = "on" Then
+    Cells(12, 2).Select
+End If
 
 End Sub

@@ -197,11 +197,14 @@ Dim search As Integer
 Dim end_time As Date
 Dim start_time As Date
 Dim shift(4) As Integer
+Dim shp As Shape
+Dim rng As Range
 j = 0
 
    now_date = Date
     search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
     If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
+        
         Cells(1, 15).Value = 0
         Cells(1, 16).Value = 0
     
@@ -219,7 +222,18 @@ j = 0
             Dim k As Integer
             k = 0
             For k = 0 To j - 1
-                Cells(1, 15 + k).Value = shift(k)
+                If Cells(1, 15 + k).Value <> shift(k) Then
+                    Cells(1, 15 + k).Value = shift(k)
+                    
+                    For Each shp In Sheets("メイン").Shapes
+                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + k * 3, 11), Cells(4 + k * 3, 11))) Is Nothing) Then
+                            shp.Delete
+                        End If
+                    Next
+                    Sheets("出力").Cells(shift(k) + 1, 2).CopyPicture
+                    Sheets("メイン").Paste Cells(4 + k * 3, 11)
+                End If
             Next k
 
     End If

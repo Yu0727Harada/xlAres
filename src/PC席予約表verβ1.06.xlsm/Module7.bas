@@ -28,3 +28,25 @@ Sub main_sheet_sort()
     Call Worksheets("生データ").Range("A:F").Sort(key1:=Worksheets("生データ").Range("D:D"), order1:=xlAscending, Header:=xlYes)
 
 End Sub
+
+Sub selction_move()
+
+    Dim inputpass As String
+    inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
+    If inputpass = passcord Then
+        If Cells(5, 20) = "off" Then
+            Cells(5, 20) = "on"
+        ElseIf Cells(5, 20) = "on" Then
+            Cells(5, 20) = "off"
+        Else
+            Cells(5, 20) = "off"
+        End If
+    ElseIf inputpass = "" Then
+    
+    Else
+        MsgBox ("パスコードが一致しません")
+    End If
+
+
+End Sub
+
