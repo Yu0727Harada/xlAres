@@ -69,6 +69,76 @@ Exit Sub
 sheet_cal_error:
 Exit Sub
 End Sub
+Public Sub sheet_color_check()
+On Error GoTo error
+now_time = Sheets("メイン").Cells(2, 12).Value
+On Error GoTo 0
+
+Dim 色セルのRow As Integer
+Dim 色セルのcolumn As Integer
+
+色セルのRow = 4
+色セルのcolumn = 3
+
+Call setting_time
+
+With Sheets("メイン")
+Do While 色セルのcolumn < 10
+    Do While 色セルのRow < 9
+    
+        If on_time >= 色セルのcolumn And .Range("K2") = Date Then
+            If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(195, 160, 160)
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "予約済(貸出中)" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(198, 118, 123)
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(162, 179, 193)
+            Else
+        '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(139, 180, 191)
+    '           どれにも当てはまらない場合の色設定
+            End If
+        Else
+            If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 209, 209)
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "予約済(貸出中)" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 153, 160)
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(212, 234, 252)
+            Else
+        '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(180, 235, 250)
+    '           どれにも当てはまらない場合の色設定
+            End If
+        End If
+        
+        色セルのRow = 色セルのRow + 1
+    
+'    席番号１～５までの中身をみて計算
+    
+    Loop
+
+色セルのRow = 4
+色セルのcolumn = 色セルのcolumn + 1
+'席番号は４列目に戻して次の時間帯の計算に移る
+
+Loop
+
+End With
+
+'灰色 215, 215, 215
+'予約済灰色205 , 162, 128
+'貸し出し灰色 197, 131, 111
+'もじれつはいい215 , 188, 109
+
+Exit Sub
+
+error:
+
+Exit Sub
+
+End Sub
+
 Public Sub shift_check()
 
 Worksheets("メイン").EnableCalculation = False

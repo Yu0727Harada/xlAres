@@ -6,6 +6,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約フォーム
    ClientTop       =   -1799
    ClientWidth     =   6671
    OleObjectBlob   =   "予約フォーム.frx":0000
+   ShowModal       =   0   'False
    StartUpPosition =   1  'オーナー フォームの中央
 End
 Attribute VB_Name = "予約フォーム"
@@ -21,11 +22,11 @@ End Sub
 
 Private Sub CommandButton1_Click()
 
-If checBox = "" Then
-    checBox = "a"
-Else
-    checBox = ""
-End If
+'If checBox = "" Then
+'    checBox = "●"
+'Else
+'    checBox = ""
+'End If
 
 End Sub
 
@@ -35,6 +36,31 @@ End Sub
 
 Private Sub Label3_Click()
 
+End Sub
+
+Private Sub Label4_Click()
+
+If checBox = "" Then
+    checBox = "●"
+    チェックボックス2コマ = True
+Else
+    checBox = ""
+    チェックボックス2コマ = False
+End If
+End Sub
+
+Private Sub TextBox1_Change()
+
+End Sub
+
+Private Sub Label5_Click()
+If checkbox2 = "" Then
+    checkbox2 = "●"
+    ケーブルチェック = True
+Else
+    checkbox2 = ""
+    ケーブルチェック = False
+End If
 End Sub
 
 Private Sub UserForm_Initialize()
@@ -227,6 +253,7 @@ If チェックボックス2コマ = False Then
     
     Call input_res_num(学籍番号リスト(), data_num)
 
+    
 End If
         
 If チェックボックス2コマ = True Then
@@ -288,7 +315,6 @@ If チェックボックス2コマ = True Then
                 Sheets("生データ").Cells(現在の位置 + 1, Lastcolumn + m).Value = 学籍番号リスト(m)
             Next m
             Call input_res_num(学籍番号リスト(), data_num)
-
           
             予約コード = 予約日 * 100 + (時間帯 + 1) * 10 + 席番号
             On Error GoTo error_process
@@ -306,13 +332,15 @@ If チェックボックス2コマ = True Then
                 Sheets("生データ").Cells(現在の位置 + 1, Lastcolumn + m).Value = 学籍番号リスト(m)
             Next m
             Call input_res_num(学籍番号リスト(), data_num)
-      
+
+
     Else
         MsgBox ("２コマ予約できません。")
     End If
 End If
 
     Worksheets("メイン").EnableCalculation = True
+    Call sheet_color_check
     Unload 予約フォーム
     Exit Sub
 
