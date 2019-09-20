@@ -29,7 +29,7 @@ End If
 End Sub
 
 Private Sub Worksheet_Calculate()
-    Call sheet_color_check
+'    Call sheet_color_check
 'ワークシートに再計算が発生したときにおこるイベント
 
 'On Error GoTo error
@@ -220,6 +220,8 @@ ElseIf Cells(4, 20) = "on" Then
         'セルが空白だった場合は予約フォームを開く
     End If
 End If
+
+Call sheet_color_check
 
 If Cells(5, 20).Value = "on" Then
     Cells(12, 2).Select

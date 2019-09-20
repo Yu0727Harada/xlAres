@@ -103,7 +103,7 @@ Do While 色セルのcolumn < 10
             ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 153, 160)
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(212, 234, 252)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 255, 255)
             Else
         '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(180, 235, 250)
@@ -189,7 +189,7 @@ Exit Sub
 End Sub
 
 Public Sub shift_output_mainsheet(ByVal now_time As Date)
-
+Worksheets("メイン").EnableCalculation = False
 Dim j As Integer
 Dim now_date As Date
 Dim search As Integer
@@ -203,7 +203,7 @@ j = 0
 
    now_date = Date
    On Error GoTo sheet_cal_error
-    search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
+    search = WorksheetFunction.Match(CDbl(now_date), CDbl(Sheets("シフト表").Range("B:B")), 1) + 1
     On Error GoTo 0
     If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
         
@@ -251,20 +251,23 @@ j = 0
     End If
 Exit Sub
 sheet_cal_error:
-        Dim m As Integer
-            m = 0
-            For m = 0 To 1
-                If Cells(1, 15 + m).Value <> shift(m) Then
-                    Cells(1, 15 + m).Value = shift(m)
-                    
-                    For Each shp In Sheets("メイン").Shapes
-                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + m * 3, 11), Cells(4 + m * 3, 11))) Is Nothing) Then
-                            shp.Delete
-                        End If
-                    Next
-                    End If
-            Next m
+search = 2
+Resume Next
+
+'        Dim m As Integer
+'            m = 0
+'            For m = 0 To 1
+'                If Cells(1, 15 + m).Value <> shift(m) Then
+'                    Cells(1, 15 + m).Value = shift(m)
+'
+'                    For Each shp In Sheets("メイン").Shapes
+'                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+'                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + m * 3, 11), Cells(4 + m * 3, 11))) Is Nothing) Then
+'                            shp.Delete
+'                        End If
+'                    Next
+'                    End If
+'            Next m
                 
 End Sub
 
