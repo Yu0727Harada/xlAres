@@ -29,53 +29,20 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-'Static past_able As Integer
-
-
-If Target.Count > 1 Then
+If Target.count > 1 Then
 
 If Cells(5, 20).Value = "on" Then
     Cells(12, 2).Select
 End If
 End
 End If
-'選択範囲が１以上の場合終了
 
-'If Target.Row = 12 And Target.Column = 9 Then
-'    If Worksheets("メイン").EnableCalculation = False Then
-'        Worksheets("メイン").EnableCalculation = True
-'    End If
-'
-'End If
-
-'If Target.Row = 13 And Target.Column = 9 Then
-'    Dim inputpass As String
-'    inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
-'    If inputpass = passcord Then
-'        If Cells(13, 9) = "off" Then
-'            Cells(13, 9) = "on"
-'        ElseIf Cells(13, 9) = "on" Then
-'            Cells(13, 9) = "off"
-'        End If
-'    ElseIf inputpass = "" Then
-'
-'    Else
-'        MsgBox ("パスコードが一致しません")
-'    End If
-'End If
-
-'If Target.Row = 14 And Target.Column = 9 Then
-'    Call Worksheets("生データ").Range("A:F").Sort(key1:=Worksheets("生データ").Range("D:D"), order1:=xlAscending, Header:=xlYes)
-'End If
-'
 If Not (Target.Row >= 4 And Target.Row <= 8 And Target.Column >= 3 And Target.Column <= 9) Then
     If Cells(5, 20).Value = "on" Then
         Cells(12, 2).Select
     End If
-    End
-
+    End '予約表の範囲以外なら終了･
 End If
-
 
 Dim 今日 As Range
 Set 今日 = Range(" K2")
@@ -90,14 +57,8 @@ If 今日 = Date Then
     Call setting_time
     '標準モジュールのsetting_timeに行ってon_time変数に今の時間はどこまで予約できるかを入れに行く
 End If
-'予約表の範囲以外なら終了･
-'日付が未来だった場合は全時間帯予約可能､日付が当日の場合は過ぎた時間の予約はできないように
-
-  
     
 resreve_day = Format(今日, "yyyymmdd")
-'PUBLIC変数の予約日にYYYYMMDD形式で代入
-'PUBLIC変数は標準モジュールで宣言
     
 時間帯 = Target.Column - 2
 席番号 = Target.Row - 3

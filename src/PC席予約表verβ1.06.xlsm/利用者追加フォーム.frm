@@ -101,19 +101,28 @@ End If
 
 Call check_res_day
 Call check_res_num(学籍番号リスト(), data_num, CNT())
-Dim k As Integer
-    For k = 0 To data_num
-        If CNT(k) >= 2 Then
-            予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
-                If 予約確認 = vbNo Then
-                    Worksheets("メイン").EnableCalculation = True
-                    Unload 予約フォーム
-                    Exit Sub
-                Else
-                    Exit For
-                End If
-        End If
-    Next k
+
+Dim bl_res_dup_check As Boolean
+bl_res_dup_check = res_duplicate_check(data_num, 0, CNT())
+If bl_res_dup_check = False Then
+    Worksheets("メイン").EnableCalculation = True
+    Unload 予約フォーム
+    Exit Sub
+End If
+
+'Dim k As Integer
+'    For k = 0 To data_num
+'        If CNT(k) >= 2 Then
+'            予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
+'                If 予約確認 = vbNo Then
+'                    Worksheets("メイン").EnableCalculation = True
+'                    Unload 予約フォーム
+'                    Exit Sub
+'                Else
+'                    Exit For
+'                End If
+'        End If
+'    Next k
 
 
 'Set 複数人表示参照 = Worksheets("複数人表示参照")
@@ -134,20 +143,22 @@ Dim k As Integer
 'Next i
     
 Dim 予約コード As Long
-Dim 追加する位置 As Long
+Dim add_search As Long
 予約コード = resrveday * 100 + 時間帯 * 10 + 席番号
 
-追加する位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
+add_search = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
 '予約コードを生成して、それが何番目にあるのか取得
 
-Dim Lastcolumn As Long
+Call stu_num_list_input_rawsheet(add_search, 学籍番号リスト(), data_num)
 
-Lastcolumn = Sheets("生データ").Cells(追加する位置, Columns.Count).End(xlToLeft).Column + 1
-
-For j = 0 To i
-    Sheets("生データ").Cells(追加する位置, Lastcolumn + j).Value = 学籍番号リスト(j)
-Next j
-Call input_res_num(学籍番号リスト(), data_num)
+'Dim Lastcolumn As Long
+'
+'Lastcolumn = Sheets("生データ").Cells(追加する位置, Columns.count).End(xlToLeft).Column + 1
+'
+'For j = 0 To i
+'    Sheets("生データ").Cells(追加する位置, Lastcolumn + j).Value = 学籍番号リスト(j)
+'Next j
+'Call input_res_num(学籍番号リスト(), data_num)
 
 Worksheets("メイン").EnableCalculation = True
 

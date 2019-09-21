@@ -519,10 +519,10 @@ Public Sub cable()
 
 End Sub
 
-Public Sub cable_new(ByVal check As Object, ByVal Row As Variant)
+Public Sub cable_new(ByVal check As Boolean, ByVal Row As Variant)
 
 '新規予約したときにケーブル貸し出しするときのプロシージャ
-If check.Value = True Then
+If check = True Then
     Sheets("生データ").Cells(Row, 5).Value = 1
 Else
     Sheets("生データ").Cells(Row, 5).Value = 0

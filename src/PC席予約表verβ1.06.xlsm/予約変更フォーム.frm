@@ -35,56 +35,68 @@ Else
     Dim 予約確認 As Integer
     Dim CNT(10) As Integer
     Dim 学籍番号リスト(10) As Variant
-    Dim cable_check As Integer
+    Dim cable_check As Boolean
     Dim j As Integer
     Dim k As Integer
     Dim L As Integer
-    j = 0
     k = 0
     L = 0
-
-'    Dim 複数人表示参照 As Worksheet
-'    Set 複数人表示参照 = Worksheets("複数人表示参照")
-
     
+    j = 0
     While Sheets("生データ").Cells(現在の位置, j + 6) <> ""
             学籍番号リスト(j) = Sheets("生データ").Cells(現在の位置, j + 6)
             j = j + 1
     Wend
 
-    cable_check = Sheets("生データ").Cells(現在の位置, 5)
+If Sheets("生データ").Cells(現在の位置, 5) = 0 Then
+    cable_check = False
+Else
+    cable_check = True
+End If
 
     Call check_res_day
     Call check_res_num(学籍番号リスト(), data_num, CNT())
-
-        Do While Sheets("生データ").Cells(現在の位置, k + 6) <> ""
-            If CNT(k) >= 2 And 予約確認 = 0 Then
-                予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
-                    If 予約確認 = vbNo Then
-                        Worksheets("メイン").EnableCalculation = True
-                        Unload 予約変更フォーム
-                        Exit Sub
-                    End If
-            End If
-            k = k + 1
-        Loop
-
-    予約コード = resreve_day * 100 + (時間帯 + 1) * 10 + 席番号
-    現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
-    Sheets("生データ").Rows(現在の位置 + 1).Insert
-
-'    LastRow = Sheets("生データ").Cells(Rows.Count, 1).End(xlUp).Row + 1
-    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
-    Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯 + 1
-    Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
-    Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード
-    Sheets("生データ").Cells(現在の位置 + 1, 5).Value = cable_check
-
     
-        For L = 0 To k - 1
-            Sheets("生データ").Cells(現在の位置 + 1, 6 + L).Value = 学籍番号リスト(L)
-        Next L
-    Call input_res_num(学籍番号リスト(), k - 1)
+    Dim bl_res_dup_check As Boolean
+    bl_res_dup_check = res_duplicate_check(j - 1, 0, CNT())
+    If bl_res_dup_check = False Then
+        Worksheets("メイン").EnableCalculation = True
+        Unload 予約変更フォーム
+        Exit Sub
+    End If
+
+'        Do While Sheets("生データ").Cells(現在の位置, k + 6) <> ""
+'            If CNT(k) >= 2 And 予約確認 = 0 Then
+'                予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
+'                    If 予約確認 = vbNo Then
+'                        Worksheets("メイン").EnableCalculation = True
+'                        Unload 予約変更フォーム
+'                        Exit Sub
+'                    End If
+'            End If
+'            k = k + 1
+'        Loop
+
+    Dim bl_res_input As Boolean
+    bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), j - 1)
+    
+'    予約コード = resreve_day * 100 + (時間帯 + 1) * 10 + 席番号
+'    現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
+'    Sheets("生データ").Rows(現在の位置 + 1).Insert
+'
+''    LastRow = Sheets("生データ").Cells(Rows.Count, 1).End(xlUp).Row + 1
+'    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
+'    Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯 + 1
+'    Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
+'    Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード
+'    Sheets("生データ").Cells(現在の位置 + 1, 5).Value = cable_check
+'
+'
+'        For L = 0 To k - 1
+'            Sheets("生データ").Cells(現在の位置 + 1, 6 + L).Value = 学籍番号リスト(L)
+'        Next L
+'    Call input_res_num(学籍番号リスト(), k - 1)
+
     Worksheets("メイン").EnableCalculation = True
     Unload 予約変更フォーム
 
