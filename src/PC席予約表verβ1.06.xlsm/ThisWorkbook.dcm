@@ -36,4 +36,6 @@ shift_table_time_start_row = 4 '１３－１４などのシフトを入力するセルの開始位置。
 shift_table_time_start_colomn = 3
 shift_table_date_start_row = 2 '日付を入力している位置。これが空白になるまでシフトの読み込みを続ける
 
+Call sheet_color_check
+
 End Sub
