@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約変更フォーム 
    Caption         =   "予約の変更など"
    ClientHeight    =   4200
-   ClientLeft      =   110
-   ClientTop       =   450
-   ClientWidth     =   4500
+   ClientLeft      =   112
+   ClientTop       =   448
+   ClientWidth     =   4501
    OleObjectBlob   =   "予約変更フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -30,7 +30,7 @@ Else
     Worksheets("メイン").EnableCalculation = False
     Dim 予約コード As Long
     Dim 現在の位置 As Long
-    予約コード = 予約日 * 100 + 時間帯 * 10 + 席番号
+    予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
     現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
     Dim 予約確認 As Integer
     Dim CNT(10) As Integer
@@ -69,12 +69,12 @@ Else
             k = k + 1
         Loop
 
-    予約コード = 予約日 * 100 + (時間帯 + 1) * 10 + 席番号
+    予約コード = resreve_day * 100 + (時間帯 + 1) * 10 + 席番号
     現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
     Sheets("生データ").Rows(現在の位置 + 1).Insert
 
 '    LastRow = Sheets("生データ").Cells(Rows.Count, 1).End(xlUp).Row + 1
-    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = 予約日
+    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
     Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯 + 1
     Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
     Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード

@@ -1,22 +1,31 @@
 Attribute VB_Name = "Module1"
 Option Explicit
+Public shift_table_number_start_row As Integer
+Public shift_table_number_start_colomn As Integer
+Public shift_table_time_start_row As Integer
+Public shift_table_time_start_colomn As Integer
+Public shift_table_date_start_row As Integer
 
 Sub Obtain_ShiftTime()
 Dim i As Integer
 Dim j As Integer
 Dim search_row As Integer
 
-j = 4
-Do While Cells(j, 1) <> ""
+j = shift_table_number_start_row
+
+
+Do While Cells(j, shift_table_number_start_colomn) <> ""
 'For j = 4 To 16
-    For i = 3 To 17
+    i = shift_table_time_start_colomn
+    Do While Cells(shift_table_date_start_row, i) <> ""
         
         If Cells(j, i) <> "" Then
             On Error GoTo error
                 search_row = WorksheetFunction.Match(Cells(j, i), Range("B:B"), 0)
             On Error GoTo 0
         End If
-    Next i
+        i = i + 1
+    Loop
 'Next j
 j = j + 1
 Loop

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約フォーム 
    Caption         =   "予約フォーム"
-   ClientHeight    =   7500
-   ClientLeft      =   -460
-   ClientTop       =   -1800
-   ClientWidth     =   6670
+   ClientHeight    =   7497
+   ClientLeft      =   -462
+   ClientTop       =   -1799
+   ClientWidth     =   6671
    OleObjectBlob   =   "予約フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -220,7 +220,7 @@ If チェックボックス2コマ = False Then
 'CNT配列に順に重複数を数える
 '2 以上だったら確認する
 
-   予約コード = 予約日 * 100 + 時間帯 * 10 + 席番号
+   予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
     
 
     On Error GoTo error_process
@@ -237,7 +237,7 @@ If チェックボックス2コマ = False Then
 '    LastRow = Sheets("生データ").Cells(Rows.Count, 1).End(xlUp).Row + 1
     Dim Lastcolumn As Long
     
-    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = 予約日
+    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
     Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯
     Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
     Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード
@@ -290,7 +290,7 @@ If チェックボックス2コマ = True Then
             End If
         Next L
 
-        予約コード = 予約日 * 100 + 時間帯 * 10 + 席番号
+        予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
         On Error GoTo error_process
          現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
         On Error GoTo 0
@@ -303,7 +303,7 @@ If チェックボックス2コマ = True Then
              End If
 
             Sheets("生データ").Rows(現在の位置 + 1).Insert
-            Sheets("生データ").Cells(現在の位置 + 1, 1).Value = 予約日
+            Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
             Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯
             Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
             Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード
@@ -315,12 +315,12 @@ If チェックボックス2コマ = True Then
             Next m
             Call input_res_num(学籍番号リスト(), data_num)
           
-            予約コード = 予約日 * 100 + (時間帯 + 1) * 10 + 席番号
+            予約コード = resreve_day * 100 + (時間帯 + 1) * 10 + 席番号
             On Error GoTo error_process
             現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
             On Error GoTo 0
             Sheets("生データ").Rows(現在の位置 + 1).Insert
-            Sheets("生データ").Cells(現在の位置 + 1, 1).Value = 予約日
+            Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
             Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯 + 1
             Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
             Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード

@@ -8,14 +8,17 @@ OkCancel = MsgBox("シフト表をリセットしてよろしいですか？", vbOKCancel)
 If OkCancel = vbOK Then
     
     Dim i As Integer
-    
-    i = 1
-    
-    Do While Cells(i + 3, 1) <> ""
-    i = i + 1
+    Dim j As Integer
+    i = 0
+    Do While Cells(i + shift_table_number_start_row, shift_table_number_start_colomn) <> ""
+        i = i + 1
+    Loop
+    j = 0
+    Do While Cells(shift_table_date_start_row, shift_table_time_start_colomn + j) <> ""
+        j = j + 1
     Loop
     
-    With Range("C4:Q4").Resize(i - 1, 15)
+    With Range("A1").Offset(shift_table_time_start_row - 1, shift_table_time_start_colomn - 1).Resize(i, j)
         .Clear
         .NumberFormatLocal = "@"
     End With

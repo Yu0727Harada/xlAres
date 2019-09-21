@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 取消フォーム 
    Caption         =   "予約の取消の確認"
    ClientHeight    =   6006
-   ClientLeft      =   90
-   ClientTop       =   410
-   ClientWidth     =   7220
+   ClientLeft      =   91
+   ClientTop       =   413
+   ClientWidth     =   7217
    OleObjectBlob   =   "取消フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -117,7 +117,7 @@ Dim search_stu_row
 Dim i As Integer
 Dim target_stu_list(10) As Variant
 
-予約コード = 予約日 * 100 + 時間帯 * 10 + 席番号
+予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
 現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
 If 予約コード = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), 現在の位置) Then
     

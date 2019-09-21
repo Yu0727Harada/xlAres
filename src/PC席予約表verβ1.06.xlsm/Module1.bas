@@ -1,5 +1,6 @@
 Attribute VB_Name = "Module1"
 Public 予約日 As Long
+Public resreve_day As Long
 Public 時間帯 As Integer
 Public 席番号 As Integer
 Public 連続可能か As String
@@ -8,13 +9,31 @@ Public number_valid As Integer
 Public tm As Double
 Public on_time As Integer
 Public Const passcord As String = 1907
+Public time_sheet As Range
+Public res_table_start_row As Integer
+Public res_table_start_colomn As Integer
+Public res_table_width_row As Integer
+Public res_table_width_colomn As Integer
+Public shift_table_number_start_row As Integer
+Public shift_table_number_start_colomn As Integer
+Public shift_table_time_start_row As Integer
+Public shift_table_time_start_colomn As Integer
+Public shift_table_date_start_row As Integer
+
+Enum shift_table
+'読み込んだシフト表の列の位置を上から昇順で振り分け
+勤務時間帯開始 = 1
+勤務時間帯終了
+勤務No
+End Enum
 
 Public Sub setting_time()
 
 Dim now_time As Date
 
+'違うブックをひらいて作業している場合はメインシートが見つからないためエラーになるので、エラー回避
 On Error GoTo sheet_cal_error
-now_time = Sheets("メイン").Cells(2, 12).Value
+now_time = time_sheet.Value
 On Error GoTo 0
 
 If now_time > 0.4375 And now_time <= 0.50694444 Then
@@ -34,8 +53,6 @@ ElseIf now_time > 0.79166 Then
 Else
     on_time = 2
 End If
-
-
 
 '現在の時刻を取得して数字を代入。数時は時間帯に対応するもの
 
@@ -70,43 +87,43 @@ sheet_cal_error:
 Exit Sub
 End Sub
 Public Sub sheet_color_check()
-On Error GoTo error
-now_time = Sheets("メイン").Cells(2, 12).Value
-On Error GoTo 0
+'On Error GoTo error
+'now_time = time_sheet.Value
+'On Error GoTo 0
 
 Dim 色セルのRow As Integer
 Dim 色セルのcolumn As Integer
 
-色セルのRow = 4
-色セルのcolumn = 3
+色セルのRow = res_table_start_row
+色セルのcolumn = res_table_start_colomn
 
 Call setting_time
 
 With Sheets("メイン")
-Do While 色セルのcolumn < 10
-    Do While 色セルのRow < 9
+Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
+    Do While 色セルのRow < res_table_start_row + res_table_width_row
         If on_time >= 色セルのcolumn And .Range("K2") = Date Then
             If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(195, 160, 160)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 109, 37) '黄色（影）
             ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(198, 118, 123)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 73, 37) 'オレンジ（影）
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(162, 179, 193)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 115, 123) '影
             Else
         '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(139, 180, 191)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(73, 106, 121) '水色（影）
     '           どれにも当てはまらない場合の色設定
             End If
         Else
             If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 209, 209)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 240, 76) '黄色
             ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 153, 160)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 160, 76) 'オレンジ
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 255, 255)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = xlNone '透明
             Else
         '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
-                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(180, 235, 250)
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(180, 235, 250) '水色
     '           どれにも当てはまらない場合の色設定
             End If
         End If
@@ -117,7 +134,7 @@ Do While 色セルのcolumn < 10
     
     Loop
 
-色セルのRow = 4
+色セルのRow = res_table_start_row
 色セルのcolumn = 色セルのcolumn + 1
 '席番号は４列目に戻して次の時間帯の計算に移る
 
@@ -125,16 +142,11 @@ Loop
 
 End With
 
-'灰色 215, 215, 215
-'予約済灰色205 , 162, 128
-'貸し出し灰色 197, 131, 111
-'もじれつはいい215 , 188, 109
-
 Exit Sub
 
-error:
-
-Exit Sub
+'error:
+'
+'Exit Sub
 
 End Sub
 
@@ -142,19 +154,19 @@ Public Sub shift_check()
 On Error GoTo sheet_cal_error
 Worksheets("メイン").EnableCalculation = False
 Dim now_time As Date
-
-
-'now_time = Sheets("メイン").Cells(2, 12).Value
-now_time = Time
+now_time = Time 'TimeはＰＣ上の時刻
 On Error GoTo 0
 
 Dim i As Integer
 
-
+'今の時間が３０分区切りの近辺か判断するif文。now time変数にはシリアル数が入っている。シリアル数は一日＝１なので、３０分は１／４８。
+'iに0から48まで代入してすべての時刻において００分かあるいは３０分からその後の1/24/60（この場合１分）の間に今の時刻が入っていないか調べる。
+'毎分シフトをチェックすると重すぎる気がしたので30分区切りにした｡実行しても大して処理の重さは変わらない気もする。
+'もっと賢い書き方がある気がするがdoble型で約数かどうかの判断するのが怖かったので愚直に実装した。
 For i = 0 To 48
 If now_time > i * 1 / 48 And now_time < i * 1 / 48 + 1 / 24 / 60 Then
-Call shift_output_mainsheet(now_time)
-Exit For
+    Call shift_output_mainsheet(now_time)
+    Exit For
 '    now_date = Sheets("メイン").Cells(2, 11).Value
 '    search = WorksheetFunction.Match(CDbl(now_date), Sheets("シフト表").Range("B:B"), 1) + 1
 '    If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
@@ -180,9 +192,6 @@ Exit For
 End If
 Next i
 
-'i = shift(0)
-'Sheets("メイン").Shapes.Range(Array("Picture 4")).Formula = "=出力!inditrct(address(," + Str(i) + ",2)"
-'=mid(indirect(address(" + Str(現在の位置) + "," + Str(i) + ")),1,8)
 Worksheets("メイン").EnableCalculation = True
 sheet_cal_error:
 Exit Sub
@@ -195,22 +204,24 @@ Dim now_date As Date
 Dim search As Integer
 Dim end_time As Date
 Dim start_time As Date
-Dim shift(4) As Integer
+Dim Shift(4) As Integer
 Dim shp As Shape
 Dim rng As Range
 Dim k As Integer
 j = 0
+Dim shift_time_end As Range
+Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
 
-   now_date = Date
+   now_date = Date 'Dateはコンピューター上の日付
    On Error GoTo sheet_cal_error
-    search = WorksheetFunction.Match(CDbl(now_date), CDbl(Sheets("シフト表").Range("B:B")), 1) + 1
+    search = WorksheetFunction.Match(CDbl(now_date), shift_time_end, 1) + 1 '   CDblで型を変換しないとうまくmatch検索できない｡
     On Error GoTo 0
-    If Int(now_date) <> Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) Then
+    If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'doble型だと時刻まで含、Int型なら日付のみになる
         
             k = 0
             For k = 0 To 1
-                If Cells(1, 15 + k).Value <> shift(k) Then
-                    Cells(1, 15 + k).Value = shift(k)
+                If Cells(1, 15 + k).Value <> Shift(k) Then
+                    Cells(1, 15 + k).Value = Shift(k)
                     
                     For Each shp In Sheets("メイン").Shapes
                         Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
@@ -226,16 +237,16 @@ j = 0
             end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
             start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
             If now_time < end_time And now_time > start_time Then
-                shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+                Shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
                 j = j + 1
             End If
             search = search + 1
         Loop
             Dim L As Integer
             L = 0
-            For L = 0 To j - 1
-                If Cells(1, 15 + L).Value <> shift(k) Then
-                    Cells(1, 15 + L).Value = shift(k)
+            For L = 0 To 2
+                If Cells(1, 15 + L).Value <> Shift(k) Then
+                    Cells(1, 15 + L).Value = Shift(k)
                     
                     For Each shp In Sheets("メイン").Shapes
                         Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
@@ -243,7 +254,7 @@ j = 0
                             shp.Delete
                         End If
                     Next
-                    Sheets("出力").Cells(shift(L) + 1, 2).CopyPicture
+                    Sheets("出力").Cells(Shift(L) + 1, 2).CopyPicture
                     Sheets("メイン").Paste Cells(4 + L * 3, 11)
                 End If
             Next L
@@ -276,7 +287,7 @@ Public Sub recal()
 Application.Calculate
 'シートの再計算を行う
 Call shift_check
-tm = Now() + TimeValue("00:01:00")
+tm = now() + TimeValue("00:01:00")
 Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
 'tm変数に一分後をセット
 'ontime関数で一分後にまたrecalプロシージャを実行
@@ -484,7 +495,7 @@ Public Sub cable()
 
     Dim 予約コード As Long
     Dim 現在の位置 As Long
-    予約コード = 予約日 * 100 + 時間帯 * 10 + 席番号
+    予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
     現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
     If Sheets("生データ").Cells(現在の位置, 5).Value = 0 Then
 '        Dim 貸出確認 As Integer
@@ -544,7 +555,10 @@ Dim search_stu_row
 Dim i As Integer
 
     For i = 0 To stu_data_num
+       On Error GoTo invalid_number_change
+
         search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), Duplicate.Range("A:A"), 1)
+        On Error GoTo 0
         If Int(student_num_list(i)) <> WorksheetFunction.Index(Duplicate.Range("A:A"), search_stu_row) Then
         MsgBox ("該当の学籍番号が重複チェックシートで見つかりませんでした")
         Else
@@ -554,6 +568,9 @@ Dim i As Integer
             End If
         End If
     Next i
+Exit Sub
+invalid_number_change:
+MsgBox ("LAによる生データの学籍番号の変更があったと考えられます。このまま生データ上のこの枠の削除を行いますが、最初に入力した番号の重複チェックシートでの予約数が減少していません。重複チェックシートの日付を変更し、重複チェックシートをリフレッシュすることで正しいものになります")
 
 End Sub
 
@@ -580,7 +597,7 @@ Sub check_res_day()
 Worksheets("メイン").EnableCalculation = False
 Set main = Worksheets("メイン")
 Set Duplicate = Worksheets("重複チェック")
-Set data = Worksheets("生データ")
+Set Data = Worksheets("生データ")
 
 Duplicate.Cells(1, 2).Value = Format(main.Cells(2, 11), "yyyymmdd")
 If Duplicate.Cells(1, 1) = Duplicate.Cells(1, 2) Then
@@ -589,15 +606,15 @@ End If
 Duplicate.Cells.Clear
 Duplicate.Cells(1, 1) = Format(main.Cells(2, 11), "yyyymmdd")
 
-Call data.Range("A:F").Sort(key1:=data.Range("D:D"), order1:=xlAscending, Header:=xlYes)
+Call Data.Range("A:F").Sort(key1:=Data.Range("D:D"), order1:=xlAscending, Header:=xlYes)
 
 Dim search_up As Integer
 
 On Error GoTo error_process
-search_up = WorksheetFunction.Match(Duplicate.Cells(1, 1).Value, data.Range("A:A"), 1)
+search_up = WorksheetFunction.Match(Duplicate.Cells(1, 1).Value, Data.Range("A:A"), 1)
 On Error GoTo 0
 
-If Duplicate.Cells(1, 1).Value <> WorksheetFunction.Index(data.Range("A:A"), search_up) Then
+If Duplicate.Cells(1, 1).Value <> WorksheetFunction.Index(Data.Range("A:A"), search_up) Then
     Exit Sub
 End If
 
@@ -606,17 +623,17 @@ Dim i As Integer
 Dim j As Integer
 
 i = 0
-    While data.Cells(search_up - i, 1) = Duplicate.Cells(1, 1).Value
+    While Data.Cells(search_up - i, 1) = Duplicate.Cells(1, 1).Value
         j = 0
-        While data.Cells(search_up - i, 6 + j).Value <> ""
+        While Data.Cells(search_up - i, 6 + j).Value <> ""
             On Error GoTo error_process_2
-            search_target_Row = WorksheetFunction.Match(data.Cells(search_up - i, 6 + j), Duplicate.Range("A:A"), 1)
+            search_target_Row = WorksheetFunction.Match(Data.Cells(search_up - i, 6 + j), Duplicate.Range("A:A"), 1)
             On Error GoTo 0
-                If data.Cells(search_up - i, 6 + j) = Duplicate.Cells(search_target_Row, 1) Then
+                If Data.Cells(search_up - i, 6 + j) = Duplicate.Cells(search_target_Row, 1) Then
                     Duplicate.Cells(search_target_Row, 2) = Duplicate.Cells(search_target_Row, 2) + 1
                 Else
                     Duplicate.Rows(search_target_Row + 1).Insert
-                    Duplicate.Cells(search_target_Row + 1, 1) = data.Cells(search_up - i, 6 + j)
+                    Duplicate.Cells(search_target_Row + 1, 1) = Data.Cells(search_up - i, 6 + j)
                     Duplicate.Cells(search_target_Row + 1, 2) = Duplicate.Cells(search_target_Row + 1, 2) + 1
                 End If
             j = j + 1

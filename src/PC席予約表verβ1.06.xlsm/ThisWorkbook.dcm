@@ -1,0 +1,39 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "ThisWorkbook"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+'Enum rawdata
+'予約日 = 1
+'予約時間帯
+'席番号
+'予約コード
+'ケーブル貸し出し有無
+'学籍番号1
+'End Enum
+
+
+
+Private Sub Workbook_Open()
+Call Sheets("メイン").Protect(UserInterfaceOnly:=True)
+
+'メインシートの設定
+Set time_sheet = Sheets("メイン").Cells(2, 12) 'メインシート上の時刻が入力されているセル
+res_table_start_row = 4 '予約表の開始位置（左上セル）
+res_table_start_colomn = 3 '予約表の開始位置
+res_table_width_row = 5 '予約表の長さ＝席番号の数
+res_table_width_colomn = 7 '予約表のながさ＝利用時間の区間数
+
+
+'シフト表の読み込み設定
+shift_table_number_start_row = 4 '勤務ナンバーの開始位置。長さは空白のセルが出るまで処理するので設定しなくてもよい。※Noに直下セルにに何か置くとそこまで処理します
+shift_table_number_start_colomn = 1
+shift_table_time_start_row = 4 '１３－１４などのシフトを入力するセルの開始位置。長さはNo列の長さまで処理する
+shift_table_time_start_colomn = 3
+shift_table_date_start_row = 2 '日付を入力している位置。これが空白になるまでシフトの読み込みを続ける
+
+End Sub

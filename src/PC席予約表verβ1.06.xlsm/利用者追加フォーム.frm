@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 利用者追加フォーム 
    Caption         =   "利用者の追加"
    ClientHeight    =   6594
-   ClientLeft      =   110
-   ClientTop       =   450
-   ClientWidth     =   6480
+   ClientLeft      =   112
+   ClientTop       =   448
+   ClientWidth     =   6475
    OleObjectBlob   =   "利用者追加フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -135,7 +135,7 @@ Dim k As Integer
     
 Dim 予約コード As Long
 Dim 追加する位置 As Long
-予約コード = 予約日 * 100 + 時間帯 * 10 + 席番号
+予約コード = resrveday * 100 + 時間帯 * 10 + 席番号
 
 追加する位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
 '予約コードを生成して、それが何番目にあるのか取得
