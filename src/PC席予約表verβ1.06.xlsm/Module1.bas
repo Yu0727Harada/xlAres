@@ -186,6 +186,7 @@ Dim Shift(4) As Integer
 Dim shp As Shape
 Dim rng As Range
 Dim k As Integer
+Dim L As Integer
 j = 0
 Dim shift_time_end As Range
 Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
@@ -198,15 +199,15 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
         
             k = 0
             For k = 0 To 1
-                If Cells(1, 15 + k).Value <> Shift(k) Then
-                    Cells(1, 15 + k).Value = Shift(k)
-                    
-                    For Each shp In Sheets("メイン").Shapes
-                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + k * 3, 11), Cells(4 + k * 3, 11))) Is Nothing) Then
-                            shp.Delete
-                        End If
-                    Next
+                If Cells(7, 20 + k).Value <> Shift(k) Then
+                    Cells(7, 20 + k).Value = Shift(k)
+                    Call shapes_delete(Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11)))
+'                    For Each shp In Sheets("メイン").shapes
+'                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+'                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(5 + k * 3, 11), Cells(5 + k * 3, 11))) Is Nothing) Then
+'                            shp.Delete
+'                        End If
+'                    Next
                 End If
             Next k
     Exit Sub
@@ -220,30 +221,47 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
             End If
             search = search + 1
         Loop
-            Dim L As Integer
+
             L = 0
-            For L = 0 To 2
-                If Cells(1, 15 + L).Value <> Shift(k) Then
-                    Cells(1, 15 + L).Value = Shift(k)
+            For L = 0 To 1
+                If Cells(7, 20 + L).Value <> Shift(L) Then
+                    Cells(7, 20 + L).Value = Shift(L)
                     
-                    For Each shp In Sheets("メイン").Shapes
-                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(4 + L * 3, 11), Cells(4 + L * 3, 11))) Is Nothing) Then
-                            shp.Delete
-                        End If
-                    Next
+                    Call shapes_delete(Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11)))
+'                    For Each shp In Sheets("メイン").shapes
+'                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+'                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11))) Is Nothing) Then
+'                            shp.Delete
+'                        End If
+'                    Next
                     Sheets("出力").Cells(Shift(L) + 1, 2).CopyPicture
-                    Sheets("メイン").Paste Cells(4 + L * 3, 11)
+                    Sheets("メイン").Paste Cells(5 + L * 3, 11)
                 End If
             Next L
 
     End If
+
+Sheets("メイン").Cells(12, 2).Select
 Exit Sub
 sheet_cal_error:
 search = 2
 Resume Next
                 
 End Sub
+
+Function shapes_delete(ByVal delete_area As Range)
+For Each shp In Sheets("メイン").shapes
+    Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+    If shp.Name <> "state" Then
+        If Not (Intersect(rng, delete_area) Is Nothing) Then
+            shp.Delete
+        End If
+    End If
+Next
+
+
+End Function
+
 
 Public Sub recal()
 

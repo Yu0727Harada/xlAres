@@ -112,7 +112,7 @@ Worksheets("メイン").EnableCalculation = False
 Dim 予約コード As Long
 Dim 現在の位置 As Long
 Dim 確認番号 As String
-Set Duplicate = Worksheets("重複チェック")
+Set duplicate = Worksheets("重複チェック")
 Dim search_stu_row
 Dim i As Integer
 Dim target_stu_list(10) As Variant

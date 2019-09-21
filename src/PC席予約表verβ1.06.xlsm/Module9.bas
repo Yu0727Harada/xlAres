@@ -3,18 +3,19 @@ Option Explicit
 
 Sub input_res_num(ByRef student_num_list() As Variant, ByVal stu_data_num As Integer)
 '重複チェックシートにstudent_num_listの学籍番号があるかどうかチェックし、あったらB列に１を足し、なかったら昇順で位置する場所に番号を挿入する
-Set Duplicate = Worksheets("重複チェック")
+Dim duplicate As Worksheet
+Set duplicate = Worksheets("重複チェック")
 Dim search_stu_row
 Dim i As Integer
 
     For i = 0 To stu_data_num
-        search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), Duplicate.Range("A:A"), 1)
-        If Int(student_num_list(i)) <> WorksheetFunction.Index(Duplicate.Range("A:A"), search_stu_row) Then
-            Duplicate.Rows(search_stu_row + 1).Insert
-            Duplicate.Cells(search_stu_row + 1, 1) = student_num_list(i)
-            Duplicate.Cells(search_stu_row + 1, 2) = Duplicate.Cells(search_stu_row + 1, 2) + 1
+        search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), duplicate.Range("A:A"), 1)
+        If Int(student_num_list(i)) <> WorksheetFunction.Index(duplicate.Range("A:A"), search_stu_row) Then
+            duplicate.Rows(search_stu_row + 1).Insert
+            duplicate.Cells(search_stu_row + 1, 1) = student_num_list(i)
+            duplicate.Cells(search_stu_row + 1, 2) = duplicate.Cells(search_stu_row + 1, 2) + 1
         Else
-            Duplicate.Cells(search_stu_row, 2) = Duplicate.Cells(search_stu_row, 2) + 1
+            duplicate.Cells(search_stu_row, 2) = duplicate.Cells(search_stu_row, 2) + 1
         End If
     Next i
 
@@ -22,21 +23,21 @@ End Sub
 
 Sub delete_res_num(ByRef student_num_list() As Variant, ByVal stu_data_num As Integer)
 '予約が削除されたときに重複チェックシートの学籍番号のB列から１を引き、０になった場合は行を削除する
-Set Duplicate = Worksheets("重複チェック")
+Set duplicate = Worksheets("重複チェック")
 Dim search_stu_row
 Dim i As Integer
 
     For i = 0 To stu_data_num
        On Error GoTo invalid_number_change
 
-        search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), Duplicate.Range("A:A"), 1)
+        search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), duplicate.Range("A:A"), 1)
         On Error GoTo 0
-        If Int(student_num_list(i)) <> WorksheetFunction.Index(Duplicate.Range("A:A"), search_stu_row) Then
+        If Int(student_num_list(i)) <> WorksheetFunction.Index(duplicate.Range("A:A"), search_stu_row) Then
         MsgBox ("該当の学籍番号が重複チェックシートで見つかりませんでした")
         Else
-            Duplicate.Cells(search_stu_row, 2) = Duplicate.Cells(search_stu_row, 2) - 1
-            If Duplicate.Cells(search_stu_row, 2) <= 0 Then
-                Call Duplicate.Cells(search_stu_row, 1).EntireRow.Delete(xlShiftUp)
+            duplicate.Cells(search_stu_row, 2) = duplicate.Cells(search_stu_row, 2) - 1
+            If duplicate.Cells(search_stu_row, 2) <= 0 Then
+                Call duplicate.Cells(search_stu_row, 1).EntireRow.Delete(xlShiftUp)
             End If
         End If
     Next i
@@ -48,16 +49,17 @@ End Sub
 
 Sub check_res_num(ByRef student_num_list() As Variant, ByVal stu_data_num As Integer, ByRef CNT() As Integer)
 '重複チェックシートに学籍番号が登録されているかチェックする
-Set Duplicate = Worksheets("重複チェック")
+Dim duplicate As Worksheet
+Set duplicate = Worksheets("重複チェック")
 Dim search_stu_row
 Dim i As Integer
 
     For i = 0 To stu_data_num
-        search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), Duplicate.Range("A:A"), 1)
-        If Int(student_num_list(i)) <> WorksheetFunction.Index(Duplicate.Range("A:A"), search_stu_row) Then
+        search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), duplicate.Range("A:A"), 1)
+        If Int(student_num_list(i)) <> WorksheetFunction.Index(duplicate.Range("A:A"), search_stu_row) Then
             CNT(i) = 0
         Else
-            CNT(i) = Duplicate.Cells(search_stu_row, 2)
+            CNT(i) = duplicate.Cells(search_stu_row, 2)
         End If
     Next i
 
@@ -67,26 +69,29 @@ Sub check_res_day()
 '日付が変わったときに変更された日の重複チェックシートに更新する
 
 Worksheets("メイン").EnableCalculation = False
+Dim main As Worksheet
+Dim duplicate As Worksheet
+Dim data As Worksheet
 Set main = Worksheets("メイン")
-Set Duplicate = Worksheets("重複チェック")
-Set Data = Worksheets("生データ")
+Set duplicate = Worksheets("重複チェック")
+Set data = Worksheets("生データ")
 
-Duplicate.Cells(1, 2).Value = Format(main.Cells(2, 11), "yyyymmdd")
-If Duplicate.Cells(1, 1) = Duplicate.Cells(1, 2) Then
+duplicate.Cells(1, 2).Value = Format(main.Cells(2, 11), "yyyymmdd")
+If duplicate.Cells(1, 1) = duplicate.Cells(1, 2) Then
     Exit Sub
 End If
-Duplicate.Cells.Clear
-Duplicate.Cells(1, 1) = Format(main.Cells(2, 11), "yyyymmdd")
+duplicate.Cells.Clear
+duplicate.Cells(1, 1) = Format(main.Cells(2, 11), "yyyymmdd")
 
-Call Data.Range("A:F").Sort(key1:=Data.Range("D:D"), order1:=xlAscending, Header:=xlYes)
+Call data.Range("A:F").Sort(key1:=data.Range("D:D"), order1:=xlAscending, Header:=xlYes)
 
 Dim search_up As Integer
 
 On Error GoTo error_process
-search_up = WorksheetFunction.Match(Duplicate.Cells(1, 1).Value, Data.Range("A:A"), 1)
+search_up = WorksheetFunction.Match(duplicate.Cells(1, 1).Value, data.Range("A:A"), 1)
 On Error GoTo 0
 
-If Duplicate.Cells(1, 1).Value <> WorksheetFunction.Index(Data.Range("A:A"), search_up) Then
+If duplicate.Cells(1, 1).Value <> WorksheetFunction.Index(data.Range("A:A"), search_up) Then
     Exit Sub
 End If
 
@@ -95,18 +100,18 @@ Dim i As Integer
 Dim j As Integer
 
 i = 0
-    While Data.Cells(search_up - i, 1) = Duplicate.Cells(1, 1).Value
+    While data.Cells(search_up - i, 1) = duplicate.Cells(1, 1).Value
         j = 0
-        While Data.Cells(search_up - i, 6 + j).Value <> ""
+        While data.Cells(search_up - i, 6 + j).Value <> ""
             On Error GoTo error_process_2
-            search_target_Row = WorksheetFunction.Match(Data.Cells(search_up - i, 6 + j), Duplicate.Range("A:A"), 1)
+            search_target_Row = WorksheetFunction.Match(data.Cells(search_up - i, 6 + j), duplicate.Range("A:A"), 1)
             On Error GoTo 0
-                If Data.Cells(search_up - i, 6 + j) = Duplicate.Cells(search_target_Row, 1) Then
-                    Duplicate.Cells(search_target_Row, 2) = Duplicate.Cells(search_target_Row, 2) + 1
+                If data.Cells(search_up - i, 6 + j) = duplicate.Cells(search_target_Row, 1) Then
+                    duplicate.Cells(search_target_Row, 2) = duplicate.Cells(search_target_Row, 2) + 1
                 Else
-                    Duplicate.Rows(search_target_Row + 1).Insert
-                    Duplicate.Cells(search_target_Row + 1, 1) = Data.Cells(search_up - i, 6 + j)
-                    Duplicate.Cells(search_target_Row + 1, 2) = Duplicate.Cells(search_target_Row + 1, 2) + 1
+                    duplicate.Rows(search_target_Row + 1).Insert
+                    duplicate.Cells(search_target_Row + 1, 1) = data.Cells(search_up - i, 6 + j)
+                    duplicate.Cells(search_target_Row + 1, 2) = duplicate.Cells(search_target_Row + 1, 2) + 1
                 End If
             j = j + 1
         Wend

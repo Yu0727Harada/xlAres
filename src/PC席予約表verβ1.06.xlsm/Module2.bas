@@ -11,7 +11,7 @@ Worksheets("ÉÅÉCÉì").EnableCalculation = False
 
 Dim shp As Shape
 
-For Each shp In outputsheet.Shapes
+For Each shp In outputsheet.shapes
     shp.Delete
 Next shp
 
@@ -41,7 +41,7 @@ i = 2
         W = cellW / 2
         H = cellH - cellH / 4
         
-        With outputsheet.Shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L, Top:=T, Width:=W, Height:=H)
+        With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L, Top:=T, Width:=W, Height:=H)
             .TextFrame.Characters.Text = inputsheet.Cells(i, 2) & vbLf & inputsheet.Cells(i, 3) & vbLf & inputsheet.Cells(i, 4)
             .Fill.Visible = False
             .Line.Visible = False
@@ -60,7 +60,7 @@ i = 2
         L2 = cellL
         W2 = cellW
         H2 = cellH * 0.25
-        With outputsheet.Shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L2, Top:=T2, Width:=W2, Height:=H2)
+        With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L2, Top:=T2, Width:=W2, Height:=H2)
             .TextFrame.Characters.Text = inputsheet.Cells(i, 6)
             .Fill.Visible = False
             .Line.Visible = False
