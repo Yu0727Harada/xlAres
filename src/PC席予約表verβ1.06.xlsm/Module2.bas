@@ -2,6 +2,8 @@ Attribute VB_Name = "Module2"
 Option Explicit
 
 Sub profile_update()
+'入力シートのプロフィール更新ボタン
+
 Dim inputsheet As Object
 Dim outputsheet As Object
 Set inputsheet = Worksheets("入力")
@@ -36,17 +38,18 @@ i = 2
         Dim W As Variant
         Dim H As Variant
         
-        T = cellT + cellH / 10
-        L = cellL + cellW / 2
-        W = cellW / 2
-        H = cellH - cellH / 4
+        
+        T = cellT + cellH * 0.02 '名前と所属を表示するテキストボックスの左上の位置のｙ軸方向の位置。cellTは表示するセルの左上の位置。cellHはセルの高さ。かける数字を調整することで位置を調整できる
+        L = cellL + cellW * 0.45 '上記のｘ軸方向の位置。かける数字を調整することで位置を調整できる
+        W = cellW / 2 'テキストボックスの幅の大きさ。
+        H = cellH - cellH / 4 'テキストボックスの高さの大きさ
         
         With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L, Top:=T, Width:=W, Height:=H)
             .TextFrame.Characters.Text = inputsheet.Cells(i, 2) & vbLf & inputsheet.Cells(i, 3) & vbLf & inputsheet.Cells(i, 4)
             .Fill.Visible = False
             .Line.Visible = False
-                With .TextFrame.Characters.Font
-                            .Size = 18
+                With .TextFrame.Characters.Font  'テキストボックスのフォントの設定
+                            .Size = 14
                             .Name = "源ノ角ゴシック JP"
                 End With
         End With
@@ -56,16 +59,17 @@ i = 2
         Dim W2 As Variant
         Dim H2 As Variant
         
-        T2 = cellT + cellH * 0.75
-        L2 = cellL
-        W2 = cellW
-        H2 = cellH * 0.25
+        T2 = cellT + cellH * 0.55 'コメントのテキストボックスの左上の位置のｙ軸方向の位置。cellTは表示するセルの左上の位置。cellHはセルの高さ。かける数字を調整することで位置を調整できる
+        L2 = cellL '上記のｘ軸方向の位置。かける数字を調整することで位置を調整できる
+        W2 = cellW 'テキストボックスの幅の大きさ。
+        H2 = cellH * 0.45 'テキストボックスの高さの大きさ
+        
         With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L2, Top:=T2, Width:=W2, Height:=H2)
             .TextFrame.Characters.Text = inputsheet.Cells(i, 6)
             .Fill.Visible = False
             .Line.Visible = False
-                With .TextFrame.Characters.Font
-                            .Size = 12
+                With .TextFrame.Characters.Font 'フォントの設定
+                            .Size = 10
                             .Name = "源ノ角ゴシック JP"
                 End With
         End With
@@ -121,10 +125,10 @@ i = 2
 
             End If
 '            MsgBox CLng(Selection.Width) & "*" & CLng(Selection.Height)
-            Selection.ShapeRange.AutoShapeType = msoShapeOval
-            Selection.Top = cellT + cellH * 0.1
-            Selection.Left = cellL + cellL * 0.2
-            Selection.Width = cellW * 0.4
+            Selection.ShapeRange.AutoShapeType = msoShapeOval '画像の形
+            Selection.Top = cellT + cellH * 0.05 '画像の左上のｙ軸の位置
+            Selection.Left = cellL + cellL * 0.1 '画像の左上のｘ軸の位置
+            Selection.Width = cellW * 0.37 '画像の幅
         End If
                 
         i = i + 1

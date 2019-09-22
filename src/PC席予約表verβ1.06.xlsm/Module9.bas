@@ -23,6 +23,7 @@ End Sub
 
 Sub delete_res_num(ByRef student_num_list() As Variant, ByVal stu_data_num As Integer)
 '予約が削除されたときに重複チェックシートの学籍番号のB列から１を引き、０になった場合は行を削除する
+Dim duplicate As Worksheet
 Set duplicate = Worksheets("重複チェック")
 Dim search_stu_row
 Dim i As Integer

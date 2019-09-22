@@ -8,17 +8,34 @@ Public frag As Integer
 Public number_valid As Integer
 Public tm As Double
 Public on_time As Integer
+
 Public Const passcord As String = 1907
-Public time_sheet As Range
-Public res_table_start_row As Integer
-Public res_table_start_colomn As Integer
-Public res_table_width_row As Integer
-Public res_table_width_colomn As Integer
-Public shift_table_number_start_row As Integer
-Public shift_table_number_start_colomn As Integer
-Public shift_table_time_start_row As Integer
-Public shift_table_time_start_colomn As Integer
-Public shift_table_date_start_row As Integer
+
+Public Const time_sheet As String = "L2" '時刻セルの位置
+Public Const date_sheet As String = "K2" '日付セルの位置
+Public Const master_on_off As String = "T4" 'マスター入力モードのオンオフを記述してるセルの位置
+Public Const cell_corsor_move As String = "T5" '強制カーソル移動オンオフを記述してるセルの位置
+Public Const corsor_move_target As String = "B12" '強制カーソル移動の移動先
+
+Public Const res_table_start_row As Integer = 4 '予約表の開始位置（左上セル）
+Public Const res_table_start_colomn As Integer = 3 '予約表の開始位置
+Public Const res_table_width_row As Integer = 5 '予約表の長さ＝席番号の数
+Public Const res_table_width_colomn As Integer = 7 '予約表のながさ＝利用時間の区間数
+
+Public Const now_shift_number_row As Integer = 7 'LAコントロール部分の現在のシフトNoを表示するセルの行の位置
+Public Const now_shift_number_column As Integer = 20 '上の列の位置。現状はこの左に順に表示されます
+
+Public Const now_shift_menber_profile_output_row As Integer = 5 'プロフィールを表示するセルの行
+Public Const now_shift_menber_profile_output_column As Integer = 11 '上の列
+Public Const now_shift_menber_profile_output_row_move As Integer = 3 '二人目を表示するときにいくつ移動した行に表示するか
+Public Const now_shift_menber_profile_output_column_move As Integer = 0 '上の列バージョン
+
+Public Const shift_table_number_start_row As Integer = 4 '勤務ナンバーの開始位置。長さは空白のセルが出るまで処理するので設定しなくてもよい。※Noに直下セルにに何か置くとそこまで処理します
+Public Const shift_table_number_start_colomn As Integer = 1
+Public Const shift_table_time_start_row As Integer = 4 '１３－１４などのシフトを入力するセルの開始位置。長さはNo列の長さまで処理する
+Public Const shift_table_time_start_colomn As Integer = 3
+Public Const shift_table_date_start_row As Integer = 2 '日付を入力している位置。これが空白になるまでシフトの読み込みを続ける
+
 
 Enum shift_table
 '読み込んだシフト表の列の位置を上から昇順で振り分け
@@ -27,13 +44,23 @@ Enum shift_table
 勤務No
 End Enum
 
+Public Sub setting_sheet()
+'シートをひらいたときに自動で実行されるプロシージャ
+
+'シートの保護
+Call Sheets("メイン").Protect(UserInterfaceOnly:=True)
+Call sheet_color_check
+
+End Sub
+
 Public Sub setting_time()
+'現在の時刻がコマごとにした場合いくつになるか入力するプロシージャ
 
 Dim now_time As Date
 
 '違うブックをひらいて作業している場合はメインシートが見つからないためエラーになるので、エラー回避
 On Error GoTo sheet_cal_error
-now_time = time_sheet.Value
+now_time = Sheets("メイン").Range(time_sheet).Value
 On Error GoTo 0
 
 If now_time > 0.4375 And now_time <= 0.50694444 Then
@@ -87,6 +114,8 @@ sheet_cal_error:
 Exit Sub
 End Sub
 Public Sub sheet_color_check()
+'表に入力されているテキストに従ってセルの背景色を設定するプロシージャ
+
 'On Error GoTo error
 'now_time = time_sheet.Value
 'On Error GoTo 0
@@ -151,6 +180,8 @@ Exit Sub
 End Sub
 
 Public Sub shift_check()
+'現在のシフトを更新するべきか判断するプロシージャ
+
 On Error GoTo sheet_cal_error
 Worksheets("メイン").EnableCalculation = False
 Dim now_time As Date
@@ -176,13 +207,15 @@ Exit Sub
 End Sub
 
 Public Sub shift_output_mainsheet(ByVal now_time As Date)
+'現在のシフトを取得して、シフトの変更があったらシフトを表示するセルのオブジェクトを削除してあらたにプロフィールを出力する
+
 Worksheets("メイン").EnableCalculation = False
 Dim j As Integer
 Dim now_date As Date
 Dim search As Integer
 Dim end_time As Date
 Dim start_time As Date
-Dim Shift(4) As Integer
+Dim Shift(15) As Integer
 Dim shp As Shape
 Dim rng As Range
 Dim k As Integer
@@ -199,9 +232,9 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
         
             k = 0
             For k = 0 To 1
-                If Cells(7, 20 + k).Value <> Shift(k) Then
-                    Cells(7, 20 + k).Value = Shift(k)
-                    Call shapes_delete(Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11)))
+                If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
+                    Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
+                    Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)))
 '                    For Each shp In Sheets("メイン").shapes
 '                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
 '                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(5 + k * 3, 11), Cells(5 + k * 3, 11))) Is Nothing) Then
@@ -224,10 +257,10 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
 
             L = 0
             For L = 0 To 1
-                If Cells(7, 20 + L).Value <> Shift(L) Then
-                    Cells(7, 20 + L).Value = Shift(L)
-                    
-                    Call shapes_delete(Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11)))
+                If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then
+                    Cells(now_shift_number_row, now_shift_number_column + L).Value = Shift(L)
+                    Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)))
+'                    Call shapes_delete(Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11)))
 '                    For Each shp In Sheets("メイン").shapes
 '                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
 '                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11))) Is Nothing) Then
@@ -235,13 +268,13 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
 '                        End If
 '                    Next
                     Sheets("出力").Cells(Shift(L) + 1, 2).CopyPicture
-                    Sheets("メイン").Paste Cells(5 + L * 3, 11)
+                    Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)
                 End If
             Next L
 
     End If
 
-Sheets("メイン").Cells(12, 2).Select
+Sheets("メイン").Range(corsor_move_target).Select
 Exit Sub
 sheet_cal_error:
 search = 2
@@ -250,6 +283,8 @@ Resume Next
 End Sub
 
 Function shapes_delete(ByVal delete_area As Range)
+'対象の範囲にある図形を削除。ただし図形の名前がstateの場合は削除しない
+
 For Each shp In Sheets("メイン").shapes
     Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
     If shp.Name <> "state" Then
@@ -259,12 +294,14 @@ For Each shp In Sheets("メイン").shapes
     End If
 Next
 
-
 End Function
 
 
 Public Sub recal()
-
+'定期的にシートの再計算を行うためのプロシージャ
+If Worksheets("メイン").EnableCalculation = False Then
+    Worksheets("メイン").EnableCalculation = True
+End If
 Application.Calculate
 'シートの再計算を行う
 Call shift_check

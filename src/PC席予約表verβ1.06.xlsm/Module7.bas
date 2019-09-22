@@ -2,20 +2,25 @@ Attribute VB_Name = "Module7"
 Option Explicit
 
 Sub worksheet_recalculate()
+'ワークシート再計算を行うプロシージャ
+
 If Worksheets("メイン").EnableCalculation = False Then
     Worksheets("メイン").EnableCalculation = True
 End If
+Application.Calculate
 End Sub
 Sub past_enable_switch()
+'マスター入力モードのオンオフプロシージャ
+
     Dim inputpass As String
     inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
     If inputpass = passcord Then
-        If Cells(4, 20) = "off" Then
-            Cells(4, 20) = "on"
-        ElseIf Cells(4, 20) = "on" Then
-            Cells(4, 20) = "off"
+        If Range(master_on_off).Value = "off" Then
+            Range(master_on_off).Value = "on"
+        ElseIf Range(master_on_off).Value = "on" Then
+            Range(master_on_off).Value = "off"
         Else
-            Cells(4, 20) = "off"
+            Range(master_on_off).Value = "off"
         End If
     ElseIf inputpass = "" Then
     
@@ -24,22 +29,23 @@ Sub past_enable_switch()
     End If
 End Sub
 Sub main_sheet_sort()
-
+'生データをソートするプロシージャ
     Call Worksheets("生データ").Range("A:F").Sort(key1:=Worksheets("生データ").Range("D:D"), order1:=xlAscending, Header:=xlYes)
 
 End Sub
 
 Sub selction_move()
+'カーソル強制カーソル移動のオンオフを切り替えるプロシージャ
 
     Dim inputpass As String
     inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
     If inputpass = passcord Then
-        If Cells(5, 20) = "off" Then
-            Cells(5, 20) = "on"
-        ElseIf Cells(5, 20) = "on" Then
-            Cells(5, 20) = "off"
+        If Range(cell_corsor_move).Value = "off" Then
+            Range(cell_corsor_move).Value = "on"
+        ElseIf Range(cell_corsor_move).Value = "on" Then
+            Range(cell_corsor_move).Value = "off"
         Else
-            Cells(5, 20) = "off"
+            Range(cell_corsor_move).Value = "off"
         End If
     ElseIf inputpass = "" Then
     
@@ -51,6 +57,8 @@ Sub selction_move()
 End Sub
 
 Sub refresh_diplicate_sheet()
+'重複チェックシートを一度削除してもう一度入れなおすプロシージャ
+
 Worksheets("メイン").EnableCalculation = False
 Dim main As Worksheet
 Dim duplicate As Worksheet

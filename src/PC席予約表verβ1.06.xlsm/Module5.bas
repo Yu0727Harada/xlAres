@@ -2,6 +2,7 @@ Attribute VB_Name = "Module5"
 Option Explicit
 
 Sub Quick_sort(ByRef data() As Variant, key As Integer, min As Integer, max As Integer)
+'クイックソート行うプロシージャ
 
 Dim i As Integer
 Dim j As Integer

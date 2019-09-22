@@ -1,6 +1,7 @@
 Attribute VB_Name = "Module3"
 Option Explicit
 Public Sub textbox_restrict(ByVal textbox_name As Object, student_number As Variant)
+'テキストボックスに入力された番号を変換するプロシージャ
 
 Dim 入学年度 As Integer
 Dim 学科 As Integer
@@ -192,6 +193,7 @@ If Chr(KeyAscii) < "0" Or Chr(KeyAscii) > "9" And Chr(KeyAscii) <> "M" And Chr(K
 End If
 End Sub
 Public Sub cable()
+'ケーブル貸し出しをするプロシージャ
 
     Dim 予約コード As Long
     Dim 現在の位置 As Long
@@ -230,7 +232,7 @@ End If
 End Sub
 
 Function res_duplicate_check(ByVal data_number As Integer, situation As Integer, count() As Integer)
-
+'既定の予約数を超えていないかチェックするプロシージャ
 Dim i As Integer
 Dim bl_res As String
 For i = 0 To data_number
@@ -262,7 +264,7 @@ res_duplicate_check = True
 End Function
 
 Function res_input_rawsheet(ByVal resrve_day_for_input As Long, ByVal time_cord As Integer, ByVal seat_number As Integer, cable As Boolean, stu_list() As Variant, data_number As Integer)
-
+'生データシートにデータを入力するプロシージャ
 Dim resrve_code_number As Long
 resrve_code_number = resrve_day_for_input * 100 + time_cord * 10 + seat_number
         
@@ -295,6 +297,7 @@ Resume Next
 End Function
 
 Function stu_num_list_input_rawsheet(ByVal Row As Integer, stu_list() As Variant, data_number)
+'生データシートに学籍番号を入力するプロシージャ
 
 Dim Lastcolumn As Long
 Dim i As Integer

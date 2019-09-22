@@ -2,6 +2,8 @@ Attribute VB_Name = "Module4"
 Option Explicit
 
 Sub import_Shift()
+'シフトを読み込むプロシージャ
+
 Dim shift_year As Range
 Dim shift_month As Range
 

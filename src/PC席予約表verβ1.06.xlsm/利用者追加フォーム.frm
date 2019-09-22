@@ -13,6 +13,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Label1_Click()
+
+End Sub
+
 Private Sub UserForm_Initialize()
 number_valid = 0
 学籍番号テキストボックス6.SetFocus
