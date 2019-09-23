@@ -114,37 +114,6 @@ If bl_res_dup_check = False Then
     Exit Sub
 End If
 
-'Dim k As Integer
-'    For k = 0 To data_num
-'        If CNT(k) >= 2 Then
-'            予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
-'                If 予約確認 = vbNo Then
-'                    Worksheets("メイン").EnableCalculation = True
-'                    Unload 予約フォーム
-'                    Exit Sub
-'                Else
-'                    Exit For
-'                End If
-'        End If
-'    Next k
-
-
-'Set 複数人表示参照 = Worksheets("複数人表示参照")
-'Dim i As Integer
-'For i = 0 To data_num
-'    CNT(i) = WorksheetFunction.CountIf(複数人表示参照.Range("C16:L62"), 学籍番号リスト(i))
-'        If CNT(i) >= 2 Then
-'
-'            予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
-'                If 予約確認 = vbNo Then
-'                    Worksheets("メイン").EnableCalculation = True
-'                    Unload 利用者追加フォーム
-'                    Exit Sub
-'                Else
-'                    Exit For
-'                End If
-'        End If
-'Next i
     
 Dim 予約コード As Long
 Dim add_search As Long
@@ -155,18 +124,9 @@ add_search = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D")
 
 Call stu_num_list_input_rawsheet(add_search, 学籍番号リスト(), data_num)
 
-'Dim Lastcolumn As Long
-'
-'Lastcolumn = Sheets("生データ").Cells(追加する位置, Columns.count).End(xlToLeft).Column + 1
-'
-'For j = 0 To i
-'    Sheets("生データ").Cells(追加する位置, Lastcolumn + j).Value = 学籍番号リスト(j)
-'Next j
-'Call input_res_num(学籍番号リスト(), data_num)
-
 Worksheets("メイン").EnableCalculation = True
 
-'追加する位置の空いている学籍番号の位置を右側から取得して、そこに順に代入していく
+
 adduser.Show
 Unload 利用者追加フォーム
 

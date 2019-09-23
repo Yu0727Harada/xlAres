@@ -8,20 +8,21 @@ Public frag As Integer
 Public number_valid As Integer
 Public tm As Double
 Public on_time As Integer
+Public passcord_input As Variant
 
 Public Const passcord As String = 1907
+
+Public Const limit_res_day As Integer = 2
 
 Public Const time_sheet As String = "L2" '時刻セルの位置
 Public Const date_sheet As String = "K2" '日付セルの位置
 Public Const master_on_off As String = "T4" 'マスター入力モードのオンオフを記述してるセルの位置
 Public Const cell_corsor_move As String = "T5" '強制カーソル移動オンオフを記述してるセルの位置
 Public Const corsor_move_target As String = "B12" '強制カーソル移動の移動先
-
 Public Const res_table_start_row As Integer = 4 '予約表の開始位置（左上セル）
 Public Const res_table_start_colomn As Integer = 3 '予約表の開始位置
 Public Const res_table_width_row As Integer = 5 '予約表の長さ＝席番号の数
 Public Const res_table_width_colomn As Integer = 7 '予約表のながさ＝利用時間の区間数
-
 Public Const now_shift_number_row As Integer = 7 'LAコントロール部分の現在のシフトNoを表示するセルの行の位置
 Public Const now_shift_number_column As Integer = 20 '上の列の位置。現状はこの左に順に表示されます
 
@@ -81,32 +82,8 @@ Else
     on_time = 2
 End If
 
-'現在の時刻を取得して数字を代入。数時は時間帯に対応するもの
-
-'If Time > 0.4375 And Time <= 0.50694444 Then
-'    on_time = 3
-'ElseIf Time > 0.5069444 And Time <= 0.5416 Then
-'    on_time = 4
-'ElseIf Time > 0.5416 And Time <= 0.60416 Then
-'    on_time = 5
-'ElseIf Time > 0.60416 And Time <= 0.6736 Then
-'    on_time = 6
-'ElseIf Time > 0.6736 And Time <= 0.74305 Then
-'    on_time = 7
-'ElseIf Time > 0.74305 And Time <= 0.79166 Then
-'    on_time = 8
-'ElseIf Time > 0.79166 Then
-'    on_time = 9
-''ElseIf Time < 0.44 Then
-'    on_time = 5
-'Else
-'    on_time = 2
-'
 'Timeを用いればコンピューター時計準拠に､
 '変数now_timeを使えばセルでいじれます
-
-'End If
-
 Exit Sub
 
 
@@ -128,6 +105,8 @@ Dim 色セルのcolumn As Integer
 
 Call setting_time
 
+On Error GoTo Sheet_protect_error
+
 With Sheets("メイン")
 Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     Do While 色セルのRow < res_table_start_row + res_table_width_row
@@ -139,7 +118,6 @@ Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 115, 123) '影
             Else
-        '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(73, 106, 121) '水色（影）
     '           どれにも当てはまらない場合の色設定
             End If
@@ -151,11 +129,11 @@ Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = xlNone '透明
             Else
-        '        If Cells(色セルのRow, 色セルのcolumn).Text <> "" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済" And Cells(色セルのRow, 色セルのcolumn).Text <> "予約済(貸出中)" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(180, 235, 250) '水色
     '           どれにも当てはまらない場合の色設定
             End If
         End If
+        On Error GoTo 0
         
         色セルのRow = 色セルのRow + 1
     
@@ -176,6 +154,9 @@ Exit Sub
 'error:
 '
 'Exit Sub
+Sheet_protect_error:
+MsgBox ("シートが保護されているため、セルの背景色を変更できません。マニュアルのエラー番号００２をみて対処してください")
+Exit Sub
 
 End Sub
 
@@ -235,12 +216,6 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
                 If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
                     Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
                     Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)))
-'                    For Each shp In Sheets("メイン").shapes
-'                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-'                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(5 + k * 3, 11), Cells(5 + k * 3, 11))) Is Nothing) Then
-'                            shp.Delete
-'                        End If
-'                    Next
                 End If
             Next k
     Exit Sub
@@ -259,14 +234,9 @@ Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
             For L = 0 To 1
                 If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then
                     Cells(now_shift_number_row, now_shift_number_column + L).Value = Shift(L)
+                    On Error GoTo object_error
                     Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)))
-'                    Call shapes_delete(Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11)))
-'                    For Each shp In Sheets("メイン").shapes
-'                        Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-'                        If Not (Intersect(rng, Sheets("メイン").Range(Cells(5 + L * 3, 11), Cells(5 + L * 3, 11))) Is Nothing) Then
-'                            shp.Delete
-'                        End If
-'                    Next
+                    On Error GoTo 0
                     Sheets("出力").Cells(Shift(L) + 1, 2).CopyPicture
                     Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)
                 End If
@@ -279,6 +249,8 @@ Exit Sub
 sheet_cal_error:
 search = 2
 Resume Next
+object_error:
+Exit Sub
                 
 End Sub
 
@@ -313,3 +285,8 @@ Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
 
 End Sub
 
+Function passcord_inputform()
+
+passcordform.Show
+
+End Function

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約変更フォーム 
    Caption         =   "予約の変更など"
-   ClientHeight    =   4200
+   ClientHeight    =   6132
    ClientLeft      =   112
    ClientTop       =   448
-   ClientWidth     =   4501
+   ClientWidth     =   5285
    OleObjectBlob   =   "予約変更フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -65,38 +65,9 @@ End If
         Exit Sub
     End If
 
-'        Do While Sheets("生データ").Cells(現在の位置, k + 6) <> ""
-'            If CNT(k) >= 2 And 予約確認 = 0 Then
-'                予約確認 = MsgBox("既に２コマ以上予約していますが、予約してよろしいですか？", vbYesNo + vbwuestion, "予約の確認")
-'                    If 予約確認 = vbNo Then
-'                        Worksheets("メイン").EnableCalculation = True
-'                        Unload 予約変更フォーム
-'                        Exit Sub
-'                    End If
-'            End If
-'            k = k + 1
-'        Loop
-
     Dim bl_res_input As Boolean
     bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), j - 1)
     
-'    予約コード = resreve_day * 100 + (時間帯 + 1) * 10 + 席番号
-'    現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
-'    Sheets("生データ").Rows(現在の位置 + 1).Insert
-'
-''    LastRow = Sheets("生データ").Cells(Rows.Count, 1).End(xlUp).Row + 1
-'    Sheets("生データ").Cells(現在の位置 + 1, 1).Value = resreve_day
-'    Sheets("生データ").Cells(現在の位置 + 1, 2).Value = 時間帯 + 1
-'    Sheets("生データ").Cells(現在の位置 + 1, 3).Value = 席番号
-'    Sheets("生データ").Cells(現在の位置 + 1, 4).Value = 予約コード
-'    Sheets("生データ").Cells(現在の位置 + 1, 5).Value = cable_check
-'
-'
-'        For L = 0 To k - 1
-'            Sheets("生データ").Cells(現在の位置 + 1, 6 + L).Value = 学籍番号リスト(L)
-'        Next L
-'    Call input_res_num(学籍番号リスト(), k - 1)
-
     Worksheets("メイン").EnableCalculation = True
     Unload 予約変更フォーム
 

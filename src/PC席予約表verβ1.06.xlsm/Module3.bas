@@ -200,23 +200,9 @@ Public Sub cable()
     予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
     現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
     If Sheets("生データ").Cells(現在の位置, 5).Value = 0 Then
-'        Dim 貸出確認 As Integer
-'        貸出確認 = MsgBox("HDMIケーブル等を貸し出します", vbYesNo + vbwuestion, "貸出の確認")
-'            If 貸出確認 = vbNo Then
-'                Unload 予約変更フォーム
-'                Exit Sub
-'            Else
                 Sheets("生データ").Cells(現在の位置, 5).Value = 1
-'            End If
     Else
-'        Dim 返却確認 As Integer
-'        返却確認 = MsgBox("HDMIケーブル等の返却を受け付けました", vbYesNo + vbwuestion, "返却の確認")
-'            If 返却確認 = vbNo Then
-'                Unload 予約変更フォーム
-'                Exit Sub
-'            Else
                 Sheets("生データ").Cells(現在の位置, 5).Value = 0
-'            End If
     End If
 
 End Sub
@@ -236,17 +222,19 @@ Function res_duplicate_check(ByVal data_number As Integer, situation As Integer,
 Dim i As Integer
 Dim bl_res As String
 For i = 0 To data_number
-    If count(i) >= 2 - situation Then
+    If count(i) >= limit_res_day - situation Then
             bl_res = MsgBox("１日に予約できるコマ上限数をオーバーしてしまいます。予約を続けますか？", vbYesNo + vbQuestion, "予約の確認")
                 If bl_res = vbNo Then
                     res_duplicate_check = False
                     Exit Function
                 Else
-                    Dim inputpass As String
-                    inputpass = InputBox("予約を続ける場合はLAを呼び、パスコードの入力を依頼してください", "パスコードの入力")
-                    If inputpass = passcord Then
+'                    Dim inputpass As String
+'                    inputpass = InputBox("予約を続ける場合はLAを呼び、パスコードの入力を依頼してください", "パスコードの入力")
+'                    If inputpass = passcord Then
+                    Call passcord_inputform
+                    If passcord_input = passcord Then
                         Exit For
-                    ElseIf inputpass = "" Then
+                    ElseIf passcord_input = "" Then
                         MsgBox ("予約画面に移動します。")
                         res_duplicate_check = False
                         Exit Function
@@ -273,7 +261,7 @@ On Error GoTo error_process
     search = WorksheetFunction.Match(resrve_code_number, Sheets("生データ").Range("D:D"), 1)
 On Error GoTo 0
 If resrve_code_number = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), search) Then
-    MsgBox ("すでにこの枠の予約があるため予約ができません。LAに確認を依頼してください(error code:001)")
+    MsgBox ("すでにこの枠の予約があるため予約ができません。LAに確認を依頼してください(エラー番号:１01)")
     res_input_rawsheet = False
     Exit Function
 End If

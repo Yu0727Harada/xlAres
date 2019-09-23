@@ -34,7 +34,7 @@ Dim i As Integer
         search_stu_row = WorksheetFunction.Match(Int(student_num_list(i)), duplicate.Range("A:A"), 1)
         On Error GoTo 0
         If Int(student_num_list(i)) <> WorksheetFunction.Index(duplicate.Range("A:A"), search_stu_row) Then
-        MsgBox ("該当の学籍番号が重複チェックシートで見つかりませんでした")
+        MsgBox ("該当の学籍番号が重複チェックシートで見つかりませんでした。エラー番号１０２")
         Else
             duplicate.Cells(search_stu_row, 2) = duplicate.Cells(search_stu_row, 2) - 1
             If duplicate.Cells(search_stu_row, 2) <= 0 Then
@@ -44,7 +44,7 @@ Dim i As Integer
     Next i
 Exit Sub
 invalid_number_change:
-MsgBox ("LAによる生データの学籍番号の変更があったと考えられます。このまま生データ上のこの枠の削除を行いますが、最初に入力した番号の重複チェックシートでの予約数が減少していません。重複チェックシートの日付を変更し、重複チェックシートをリフレッシュすることで正しいものになります")
+MsgBox ("該当の学籍番号が重複チェックシートで見つかりませんでした。エラー番号１０２")
 
 End Sub
 

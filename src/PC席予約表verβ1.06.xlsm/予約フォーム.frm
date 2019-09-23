@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約フォーム 
    Caption         =   "予約フォーム"
-   ClientHeight    =   7497
+   ClientHeight    =   8449
    ClientLeft      =   -462
    ClientTop       =   -1799
-   ClientWidth     =   6671
+   ClientWidth     =   8015
    OleObjectBlob   =   "予約フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -169,28 +169,6 @@ If bl_res_input_raw = False Then
     Exit Sub
 End If
     
-'End If
-        
-'If extend_check = True Then
-'    If 連続可能か = True Then
-'
-'        Call check_res_day
-'        Call check_res_num(学籍番号リスト(), data_num, CNT())
-'
-'        bl_dup_check = res_duplicate_check(data_num, 1, CNT())
-'
-'        If bl_dup_check = False Then
-'            Worksheets("メイン").EnableCalculation = True
-'            Unload 予約フォーム
-'            Exit Sub
-'        End If
-'
-'    bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯, 席番号, cable_check, 学籍番号リスト(), data_num)
-'    If bl_res_input_raw = False Then
-'        Worksheets("メイン").EnableCalculation = True
-'        Unload 予約フォーム
-'        Exit Sub
-'    End If
           
 If extend_check = True Then
     bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), data_num)

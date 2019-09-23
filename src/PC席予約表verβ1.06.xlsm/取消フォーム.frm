@@ -13,98 +13,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'
-'
-'Private Sub CommandButton1_Click()
-'
-'Worksheets("ƒƒCƒ“").EnableCalculation = False
-'
-'Dim —\–ñƒR[ƒh As Long
-'Dim Œ»İ‚ÌˆÊ’u As Long
-'Dim Šm”F”Ô† As String
-'
-'—\–ñƒR[ƒh = —\–ñ“ú * 100 + ŠÔ‘Ñ * 10 + È”Ô†
-'Œ»İ‚ÌˆÊ’u = WorksheetFunction.Match(—\–ñƒR[ƒh, Sheets("¶ƒf[ƒ^").Range("D:D"), 1)
-'If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚ÌˆÊ’u) Then
-'
-'    If TextBox1 = passcord Then
-'        Call Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, 1).EntireRow.Delete(xlShiftUp)
-'        MsgBox ("—\–ñ‚ğæ‚èÁ‚µ‚Ü‚µ‚½")
-'        Worksheets("ƒƒCƒ“").EnableCalculation = True
-'        Unload æÁƒtƒH[ƒ€
-'        Exit Sub
-'    End If
-'
-'    'ƒeƒLƒXƒgƒ{ƒbƒNƒX‚ğ•ÏŠ·‚·‚é‘O‚ÉƒpƒXƒR[ƒh‚ª“ü—Í‚³‚ê‚Ä‚¢‚é‚©‚ğê‡•ª‚¯‚·‚é
-'
-'    Call textbox_restrict(TextBox1, Šm”F”Ô†)
-'    '“ü—Í‚³‚ê‚½”Ô†‚ğ•ÏŠ·‚·‚é
-'
-'    If Šm”F”Ô† = "" Then
-'        MsgBox ("ŠwĞ”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
-'        Worksheets("ƒƒCƒ“").EnableCalculation = True
-'        Exit Sub
-'    End If
-'    If number_valid <> 0 Then
-'        number_valid = 0
-'        Worksheets("ƒƒCƒ“").EnableCalculation = True
-'        Exit Sub
-'    End If
-'
-'    Dim i As Integer
-'    For i = 6 To 10
-'    '‚Æ‚è‚ ‚¦‚¸“K“–‚É1‚O‚Ü‚Å‰ñ‚µ‚Ä‚é
-'    '    LastRow = Sheets("¶ƒf[ƒ^").Cells(Rows.Count, 1).End(xlUp).Row + 1
-'    '    Œ»İ‚ÌÅIs‚ğæ“¾
-'
-'    '    Sheets("¶ƒf[ƒ^").Cells(LastRow, 6).Formula = "=mid(indirect(address(" + Str(Œ»İ‚ÌˆÊ’u) + "," + Str(i) + ")),1,8)"
-'    '    Sheets("¶ƒf[ƒ^").Cells(LastRow, 7).Formula = "=mid(indirect(address(" + Str(Œ»İ‚ÌˆÊ’u) + "," + Str(i) + ")),9,16)"
-'    ''    ÅIs‚ÉŠY“–‚Ì—\–ñ‚ÌŠwĞ”Ô†‚ğ‚Q‚Â‚É•ª‚¯‚é‚½‚ß‚Ì®‚ğ“ü‚ê‚é
-'    '    'Œ…”‚ª‘½‚·‚¬‚Ä•’Ê‚Éæ“¾‚·‚é‚ÆE{Œ`®‚É‚È‚Á‚Ä‚µ‚Ü‚¢Astring‚É•ÏŠ·‚µ‚½‚è‚µ‚Ä‚à‚¤‚Ü‚­‚¢‚©‚È‚©‚Á‚½Bƒ[ƒNƒV[ƒgã‚ÅmidŠÖ”‚ğg‚¦‚Î•’Ê‚Éæ“¾‚Å‚«‚½‚Ì‚Å‹ê“÷‚Ìô‚Æ‚µ‚Ä‚±‚¤‚µ‚Ä‚Ü‚·B
-'    '    k = Sheets("¶ƒf[ƒ^").Cells(LastRow, 6).Value
-'    '    l = Sheets("¶ƒf[ƒ^").Cells(LastRow, 7).Value
-'    ''    ÅIs‚ÌŒvZŒ‹‰Ê‚ğkA‚Œ‚ÉŠi”[
-'    '
-'    '    If k = Mid(Šm”F”Ô†, 1, 8) And l = Mid(Šm”F”Ô†, 9) Then
-'    '            Sheets("¶ƒf[ƒ^").Cells(LastRow, 6).Clear
-'    '            Sheets("¶ƒf[ƒ^").Cells(LastRow, 7).Clear
-'    '            “ü—Í‚µ‚½®‚ğíœ‚·‚é
-'        If Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, i).Value = "" Then
-'            Exit For
-'        End If
-'        If Šm”F”Ô† = Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, i).Value Then
-'            Call Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, 1).EntireRow.Delete(xlShiftUp)
-'    '        —\–ñ‚µ‚½ƒf[ƒ^‚ğíœ
-'            Worksheets("ƒƒCƒ“").EnableCalculation = True
-'            MsgBox ("—\–ñ‚ğæ‚èÁ‚µ‚Ü‚µ‚½")
-'            Unload æÁƒtƒH[ƒ€
-'            Exit Sub
-'        End If
-'    Next i
-'
-'    '‰½–‚à‚È‚­ƒ‹[ƒv‚ğ‚Å‚½‚ç“ü—Í‚µ‚½“à—e‚ğíœ
-'    MsgBox ("ŠwĞ”Ô†‚ªˆê’v‚µ‚Ü‚¹‚ñB‚à‚¤ˆê“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
-'    Worksheets("ƒƒCƒ“").EnableCalculation = True
-'    TextBox1 = ""
-'
-'Else
-'    MsgBox ("—\–ñ‚ª‚ ‚è‚Ü‚¹‚ñBLA‚ÉŠm”F‚ğˆË—Š‚µ‚Ä‚­‚¾‚³‚¢B")
-'End If
-'
-'End Sub
-'
-'Private Sub TextBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
-'
-'Call keypressrestrict(KeyAscii)
-'
-'End Sub
-'
-'Private Sub UserForm_Click()
-'
-'End Sub
-
-
-
 Private Sub CommandButton1_Click()
 
 Worksheets("ƒƒCƒ“").EnableCalculation = False
@@ -176,12 +84,13 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
     TextBox1 = ""
 
 Else
-    MsgBox ("—\–ñ‚ª‚ ‚è‚Ü‚¹‚ñBLA‚ÉŠm”F‚ğˆË—Š‚µ‚Ä‚­‚¾‚³‚¢B")
+    MsgBox ("—\–ñ‚ª‚ ‚è‚Ü‚¹‚ñBLA‚ÉŠm”F‚ğˆË—Š‚µ‚Ä‚­‚¾‚³‚¢BƒGƒ‰[”Ô†‚P‚O‚R")
 End If
 
 End Sub
 
-Private Sub Label1_Click()
+
+Private Sub Label2_Click()
 
 End Sub
 
