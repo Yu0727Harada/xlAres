@@ -75,3 +75,23 @@ Profile.Show
 
 End Sub
 
+Sub limit_res_on_off_pass()
+
+    Dim inputpass As String
+    inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
+    If inputpass = passcord Then
+        If Range(limit_res_on_off).Value = "off" Then
+            Range(limit_res_on_off).Value = "on"
+        ElseIf Range(limit_res_on_off).Value = "on" Then
+            Range(limit_res_on_off).Value = "off"
+        Else
+            Range(limit_res_on_off).Value = "off"
+        End If
+    ElseIf inputpass = "" Then
+    
+    Else
+        MsgBox ("パスコードが一致しません")
+    End If
+    
+End Sub
+

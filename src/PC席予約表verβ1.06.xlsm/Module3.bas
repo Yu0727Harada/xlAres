@@ -221,6 +221,14 @@ Function res_duplicate_check(ByVal data_number As Integer, situation As Integer,
 '既定の予約数を超えていないかチェックするプロシージャ
 Dim i As Integer
 Dim bl_res As String
+Dim limit_res_day As Integer
+
+If IsNumeric(Range("T14").Value) = False Then
+    limit_res_day = 36
+Else
+    limit_res_day = Range("T14").Value
+End If
+
 For i = 0 To data_number
     If count(i) >= limit_res_day - situation Then
             bl_res = MsgBox("１日に予約できるコマ上限数をオーバーしてしまいます。予約を続けますか？", vbYesNo + vbQuestion, "予約の確認")

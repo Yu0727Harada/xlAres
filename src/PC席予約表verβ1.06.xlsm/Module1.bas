@@ -12,13 +12,12 @@ Public passcord_input As Variant
 
 Public Const passcord As String = 1907
 
-Public Const limit_res_day As Integer = 2
-
 Public Const time_sheet As String = "L2" '時刻セルの位置
 Public Const date_sheet As String = "K2" '日付セルの位置
 Public Const master_on_off As String = "T4" 'マスター入力モードのオンオフを記述してるセルの位置
 Public Const cell_corsor_move As String = "T5" '強制カーソル移動オンオフを記述してるセルの位置
 Public Const corsor_move_target As String = "B12" '強制カーソル移動の移動先
+Public Const limit_res_on_off As String = "T16" '予約制限モードのオンオフ
 Public Const res_table_start_row As Integer = 4 '予約表の開始位置（左上セル）
 Public Const res_table_start_colomn As Integer = 3 '予約表の開始位置
 Public Const res_table_width_row As Integer = 5 '予約表の長さ＝席番号の数
