@@ -81,6 +81,8 @@ If Range(date_sheet).Value = Date And Range(master_on_off).Value = "off" Then
         'セルが空白だった場合は予約フォームを開く
     ElseIf Target.Text = "" And Target.Column - 1 = on_time And Range(limit_res_on_off).Value = "on" Then
           予約フォーム.Show
+    ElseIf Target.Text = "" And Target.Column > on_time And Range(limit_res_on_off).Value = "on" Then
+            limit_res_inform.Show
     ElseIf InStr(Target.Text, "貸出中") > 0 And Target.Column <= on_time Then
         Call cable
     End If

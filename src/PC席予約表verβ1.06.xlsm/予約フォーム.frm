@@ -130,11 +130,21 @@ If data_num = -1 Then
 End If
 
 '学籍番号リストに変換した番号を０から順に格納。何も入力されてないdata_num=-1の時にはプロシージャを抜ける
+Dim extend_bl As String
 
 If extend_check = True Then
     If 連続可能か = False Then
-        Dim extend_bl As String
         extend_bl = MsgBox("次の時間帯は予約できません。一コマだけ予約しますか？", vbYesNo + vbQuestion, "予約の確認")
+        If extend_bl = vbNo Then
+            MsgBox ("予約画面に移動します。")
+            Worksheets("メイン").EnableCalculation = True
+            Unload 予約フォーム
+            Exit Sub
+        Else
+            extend_check = False
+        End If
+    ElseIf Worksheets("メイン").Range(limit_res_on_off).Value = "on" Then
+            extend_bl = MsgBox("現在、混雑のため予約の制限をしています。１コマだけ予約しますか？", vbYesNo + vbQuestion, "予約の確認")
         If extend_bl = vbNo Then
             MsgBox ("予約画面に移動します。")
             Worksheets("メイン").EnableCalculation = True

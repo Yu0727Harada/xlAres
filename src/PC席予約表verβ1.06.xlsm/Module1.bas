@@ -24,6 +24,7 @@ Public Const res_table_width_row As Integer = 5 '予約表の長さ＝席番号の数
 Public Const res_table_width_colomn As Integer = 7 '予約表のながさ＝利用時間の区間数
 Public Const now_shift_number_row As Integer = 7 'LAコントロール部分の現在のシフトNoを表示するセルの行の位置
 Public Const now_shift_number_column As Integer = 20 '上の列の位置。現状はこの左に順に表示されます
+Public Const on_time_output As String = "AA3"
 
 Public Const now_shift_menber_profile_output_row As Integer = 5 'プロフィールを表示するセルの行
 Public Const now_shift_menber_profile_output_column As Integer = 11 '上の列
@@ -83,6 +84,9 @@ End If
 
 'Timeを用いればコンピューター時計準拠に､
 '変数now_timeを使えばセルでいじれます
+
+Sheets("メイン").Range(on_time_output).Value = on_time
+
 Exit Sub
 
 

@@ -25,7 +25,10 @@ If 連続可能か = False Then
     post_confirm.Show
     Unload 予約変更フォーム
     Exit Sub
-
+ElseIf Sheets("メイン").Range(limit_res_on_off).Value = "on" Then
+    limit_res_inform.Show
+    Unload 予約変更フォーム
+    Exit Sub
 Else
 '    Worksheets("メイン").EnableCalculation = False
     Dim 予約コード As Long
