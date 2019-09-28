@@ -50,7 +50,7 @@ End Sub
 
 Private Sub 追加登録ボタン_Click()
 
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 '生データにデータを入れるたびにメインシート再計算が起こると処理が重くなるので再計算を停止する
 
 Dim 学籍番号6 As Variant
@@ -117,7 +117,7 @@ End If
     
 Dim 予約コード As Long
 Dim add_search As Long
-予約コード = resrveday * 100 + 時間帯 * 10 + 席番号
+予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
 
 add_search = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
 '予約コードを生成して、それが何番目にあるのか取得

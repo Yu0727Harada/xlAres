@@ -9,7 +9,7 @@ Dim outputsheet As Object
 Set inputsheet = Worksheets("“ü—Í")
 Set outputsheet = Worksheets("o—Í")
 
-Worksheets("ƒƒCƒ“").EnableCalculation = False
+'Worksheets("ƒƒCƒ“").EnableCalculation = False
 
 Dim shp As Shape
 

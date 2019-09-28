@@ -163,7 +163,7 @@ Public Sub shift_check()
 '現在のシフトを更新するべきか判断するプロシージャ
 
 On Error GoTo sheet_cal_error
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 Dim now_time As Date
 now_time = Time 'TimeはＰＣ上の時刻
 On Error GoTo 0
@@ -189,7 +189,7 @@ End Sub
 Public Sub shift_output_mainsheet(ByVal now_time As Date)
 '現在のシフトを取得して、シフトの変更があったらシフトを表示するセルのオブジェクトを削除してあらたにプロフィールを出力する
 
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 Dim j As Integer
 Dim now_date As Date
 Dim search As Integer

@@ -15,7 +15,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub CommandButton1_Click()
 
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 
 Dim 予約コード As Long
 Dim 現在の位置 As Long

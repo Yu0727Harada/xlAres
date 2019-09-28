@@ -69,7 +69,7 @@ End Sub
 Sub check_res_day()
 '日付が変わったときに変更された日の重複チェックシートに更新する
 
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 Dim main As Worksheet
 Dim duplicate As Worksheet
 Dim data As Worksheet

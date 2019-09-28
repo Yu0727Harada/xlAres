@@ -27,7 +27,7 @@ If 連続可能か = False Then
     Exit Sub
 
 Else
-    Worksheets("メイン").EnableCalculation = False
+'    Worksheets("メイン").EnableCalculation = False
     Dim 予約コード As Long
     Dim 現在の位置 As Long
     予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号

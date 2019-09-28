@@ -59,7 +59,7 @@ End Sub
 Sub refresh_diplicate_sheet()
 '重複チェックシートを一度削除してもう一度入れなおすプロシージャ
 
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 Dim main As Worksheet
 Dim duplicate As Worksheet
 Set main = Worksheets("メイン")

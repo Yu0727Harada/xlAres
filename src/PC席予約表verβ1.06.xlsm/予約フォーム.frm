@@ -69,7 +69,7 @@ Call keypressrestrict(KeyAscii)
 End Sub
 Private Sub 登録_Click()
 
-Worksheets("メイン").EnableCalculation = False
+'Worksheets("メイン").EnableCalculation = False
 '生データにデータを入れるたびにメインシート再計算が起こると処理が重くなるので再計算を停止する
 
 Dim 学籍番号1 As Variant
