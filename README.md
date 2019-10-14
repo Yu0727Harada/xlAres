@@ -1,4 +1,4 @@
-# PCresrveSystem
+# PC-Reserve_System
 
 ラーニングコモンズのPC席の予約状況を管理することを目的としたエクセルマクロファイルです。
 
