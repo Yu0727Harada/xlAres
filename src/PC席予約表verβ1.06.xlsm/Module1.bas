@@ -17,6 +17,7 @@ Public Const date_sheet As String = "K2" '日付セルの位置
 Public Const master_on_off As String = "T4" 'マスター入力モードのオンオフを記述してるセルの位置
 Public Const cell_corsor_move As String = "T5" '強制カーソル移動オンオフを記述してるセルの位置
 Public Const corsor_move_target As String = "B12" '強制カーソル移動の移動先
+Public Const limit_reserve_count As String = "T14" '一日の予約上限数を入力しているセルの位置
 Public Const limit_res_on_off As String = "T16" '予約制限モードのオンオフ
 Public Const res_table_start_row As Integer = 4 '予約表の開始位置（左上セル）
 Public Const res_table_start_colomn As Integer = 3 '予約表の開始位置
