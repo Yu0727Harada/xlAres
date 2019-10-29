@@ -17,7 +17,10 @@ For Each shp In outputsheet.shapes
     shp.Delete
 Next shp
 
+Call Worksheets("“ü—Í").Range("A:F").Sort(key1:=Worksheets("“ü—Í").Cells(1, 1).EntireColumn, order1:=xlAscending, Header:=xlYes)
+
 Dim i As Integer
+
 i = 2
     Do While inputsheet.Cells(i, 1) <> ""
         outputsheet.Cells(i, 1).Value = inputsheet.Cells(i, 1).Value

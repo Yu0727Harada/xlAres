@@ -30,7 +30,7 @@ Sub past_enable_switch()
 End Sub
 Sub main_sheet_sort()
 '生データをソートするプロシージャ
-    Call Worksheets("生データ").Range("A:AA").Sort(key1:=Worksheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("生データ").Range("A:AA").Sort(key1:=Worksheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 End Sub
 

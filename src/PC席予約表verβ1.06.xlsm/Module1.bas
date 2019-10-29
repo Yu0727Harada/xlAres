@@ -31,6 +31,7 @@ Public Const now_shift_menber_profile_output_row As Integer = 5 'ƒvƒƒtƒB[ƒ‹‚ğ•
 Public Const now_shift_menber_profile_output_column As Integer = 11 'ã‚Ì—ñ
 Public Const now_shift_menber_profile_output_row_move As Integer = 3 '“ñl–Ú‚ğ•\¦‚·‚é‚Æ‚«‚É‚¢‚­‚ÂˆÚ“®‚µ‚½s‚É•\¦‚·‚é‚©
 Public Const now_shift_menber_profile_output_column_move As Integer = 0 'ã‚Ì—ñƒo[ƒWƒ‡ƒ“
+Public Const shift_profile_count As Integer = 2 '•\¦‚·‚éƒvƒƒtƒB[ƒ‹‚ğ‚¢‚­‚Â‚É‚·‚é‚©
 
 Public Const shift_table_number_start_row As Integer = 4 '‹Î–±ƒiƒ“ƒo[‚ÌŠJnˆÊ’uB’·‚³‚Í‹ó”’‚ÌƒZƒ‹‚ªo‚é‚Ü‚Åˆ—‚·‚é‚Ì‚Åİ’è‚µ‚È‚­‚Ä‚à‚æ‚¢B¦No‚É’¼‰ºƒZƒ‹‚É‚É‰½‚©’u‚­‚Æ‚»‚±‚Ü‚Åˆ—‚µ‚Ü‚·
 Public Const shift_table_number_start_colomn As Integer = 1
@@ -200,7 +201,7 @@ Dim now_date As Date
 Dim search As Integer
 Dim end_time As Date
 Dim start_time As Date
-Dim Shift(15) As Integer
+Dim Shift(5) As Integer
 Dim shp As Shape
 Dim rng As Range
 Dim k As Integer
@@ -214,13 +215,18 @@ Set shift_time_end = Sheets("ƒVƒtƒg•\").Columns(‹Î–±ŠÔ‘ÑI—¹)
     search = WorksheetFunction.Match(CDbl(now_date), shift_time_end, 1) + 1 '   CDbl‚ÅŒ^‚ğ•ÏŠ·‚µ‚È‚¢‚Æ‚¤‚Ü‚­matchŒŸõ‚Å‚«‚È‚¢¡
     On Error GoTo 0
     If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'dobleŒ^‚¾‚Æ‚Ü‚ÅŠÜAIntŒ^‚È‚ç“ú•t‚Ì‚İ‚É‚È‚é
-        
+            '“ú•t‚ªˆê’v‚µ‚È‚¢ê‡A‚·‚È‚í‚¿‚»‚Ì“ú‚ÌƒVƒtƒg‚ª‚È‚©‚Á‚½ê‡‚Ìˆ—
             k = 0
-            For k = 0 To 1
-                If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
-                    Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
-                    Call shapes_delete(Sheets("ƒƒCƒ“").Range(Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)))
+            For k = 0 To 5 '“¯‚É‹Î–±‚·‚él”‚ÌÅ‘å’l‚T‚Ü‚Åƒ‹[ƒv‚ğ‰ñ‚µ‚ÄƒƒCƒ“ƒV[ƒg‚Ì”Ô†‚ğo—Í‚·‚é‚Æ‚±‚ë‚ª‹ó”’‚Å‚È‚¢‚È‚ç‚O‚ğ“ü—Í
+                'If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
+                '    Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
+                If Cells(now_shift_number_row, now_shift_number_column + k).Value <> "" Then
+                    Cells(now_shift_number_row, now_shift_number_column + k).Value = 0
                 End If
+            Next k
+            
+            For k = 0 To shift_profile_count  '•\¦‚³‚ê‚Ä‚¢‚éƒvƒƒtƒB[ƒ‹‚ğíœ
+                Call shapes_delete(Sheets("ƒƒCƒ“").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
             Next k
     Exit Sub
     Else
@@ -234,16 +240,28 @@ Set shift_time_end = Sheets("ƒVƒtƒg•\").Columns(‹Î–±ŠÔ‘ÑI—¹)
             search = search + 1
         Loop
 
+            Dim profile_count As Integer
+            profile_count = 0
             L = 0
-            For L = 0 To 1
-                If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then
+            For L = 0 To 4
+                'If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then 'ƒVƒtƒg”Ô†‚Ì•Ï‰»‚ª‚È‚¢‚È‚çˆÈ‰º‚Ì‘€ì‚Í‚µ‚È‚¢
                     Cells(now_shift_number_row, now_shift_number_column + L).Value = Shift(L)
-                    On Error GoTo object_error
-                    Call shapes_delete(Sheets("ƒƒCƒ“").Range(Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)))
-                    On Error GoTo 0
-                    Sheets("o—Í").Cells(Shift(L) + 1, 2).CopyPicture
-                    Sheets("ƒƒCƒ“").Paste Cells(now_shift_menber_profile_output_row + L * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + L * now_shift_menber_profile_output_column_move)
-                End If
+                                        
+                    If profile_count < shift_profile_count And Shift(L) <> 0 Then '‚Ü‚¾ƒvƒƒtƒB[ƒ‹•\¦”‚ªİ’èˆÈ‰º‚È‚çˆÈ‰º‚Ìˆ—‚ğs‚¤
+                        On Error GoTo object_error
+                        Call shapes_delete(Sheets("ƒƒCƒ“").Range(Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move)))
+                        On Error GoTo 0
+                        Dim shift_row As Integer
+                        shift_row = WorksheetFunction.Match(Shift(L), Sheets("o—Í").Cells(1, 1).EntireColumn, 1)
+                        If Shift(L) <> WorksheetFunction.Index(Sheets("o—Í").Cells(1, 1).EntireColumn, shift_row) Then
+                            MsgBox ("ƒGƒ‰[”Ô†‚Q‚O‚Q@”Ô†‚ªo—ÍƒV[ƒg‚É‘¶İ‚µ‚Ü‚¹‚ñB‚±‚Ì‚Ü‚Üˆ—‚ğÀs‚µ‚Ü‚·")
+                        Else
+                            Sheets("o—Í").Cells(shift_row, 2).CopyPicture
+                            Sheets("ƒƒCƒ“").Paste Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move)
+                            profile_count = profile_count + 1
+                        End If
+                    End If
+                'End If
             Next L
 
     End If
