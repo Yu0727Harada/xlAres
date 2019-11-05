@@ -16,6 +16,8 @@ Dim shp As Shape
 For Each shp In outputsheet.shapes
     shp.Delete
 Next shp
+outputsheet.Cells.Clear
+outputsheet.Cells(1, 1) = 0
 
 Call Worksheets("“ü—Í").Range("A:F").Sort(key1:=Worksheets("“ü—Í").Cells(1, 1).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
