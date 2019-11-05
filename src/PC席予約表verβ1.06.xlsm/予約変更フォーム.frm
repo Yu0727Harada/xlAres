@@ -41,9 +41,9 @@ Else
     Dim cable_check As Boolean
     Dim j As Integer
     Dim k As Integer
-    Dim L As Integer
+    Dim l As Integer
     k = 0
-    L = 0
+    l = 0
     
     j = 0
     While Sheets("生データ").Cells(現在の位置, j + 6) <> ""

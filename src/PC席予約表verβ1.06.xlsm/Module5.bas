@@ -49,3 +49,47 @@ End If
 End Sub
 
 
+Sub Quick_sort_single(ByRef data() As Variant, min As Integer, max As Integer)
+'クイックソート行うプロシージャ
+
+Dim i As Integer
+Dim j As Integer
+Dim R As Variant
+Dim temp As Variant
+
+i = min
+j = max
+
+R = (data(min) + data(max)) / 2
+
+Do
+
+    Do While data(i) < R
+        i = i + 1
+    Loop
+    Do While data(j) > R
+        j = j - 1
+    Loop
+    
+    If i >= j Then Exit Do
+    
+    temp = data(i)
+    data(i) = data(j)
+    data(j) = temp
+    
+    i = i + 1
+    j = j - 1
+
+Loop
+
+If min < i - 1 Then
+    Call Quick_sort_single(data, min, i - 1)
+End If
+If max > j + 1 Then
+    Call Quick_sort_single(data, j + 1, max)
+End If
+
+End Sub
+
+
+

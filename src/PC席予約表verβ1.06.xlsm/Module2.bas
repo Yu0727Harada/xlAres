@@ -21,9 +21,9 @@ Call Worksheets("入力").Range("A:F").Sort(key1:=Worksheets("入力").Cells(1, 1).E
 
 Dim i As Integer
 
-i = 2
-    Do While inputsheet.Cells(i, 1) <> ""
-        outputsheet.Cells(i, 1).Value = inputsheet.Cells(i, 1).Value
+i = 1
+    Do While inputsheet.Cells(i + 1, 1) <> ""
+        outputsheet.Cells(i, 1).Value = inputsheet.Cells(i + 1, 1).Value
         Dim cellT As Variant
         Dim cellL As Variant
         Dim cellW As Variant
@@ -37,17 +37,17 @@ i = 2
         End With
         
         Dim T As Variant
-        Dim L As Variant
+        Dim l As Variant
         Dim W As Variant
         Dim H As Variant
         
         T = cellT + cellH * 0.02 '名前と所属を表示するテキストボックスの左上の位置のｙ軸方向の位置。cellTは表示するセルの左上の位置。cellHはセルの高さ。かける数字を調整することで位置を調整できる
-        L = cellL + cellW * 0.45 '上記のｘ軸方向の位置。かける数字を調整することで位置を調整できる
+        l = cellL + cellW * 0.45 '上記のｘ軸方向の位置。かける数字を調整することで位置を調整できる
         W = cellW / 2 'テキストボックスの幅の大きさ。
         H = cellH - cellH / 4 'テキストボックスの高さの大きさ
         
-        With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L, Top:=T, Width:=W, Height:=H)
-            .TextFrame.Characters.Text = inputsheet.Cells(i, 2) & vbLf & inputsheet.Cells(i, 3) & vbLf & inputsheet.Cells(i, 4)
+        With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=l, Top:=T, Width:=W, Height:=H)
+            .TextFrame.Characters.Text = inputsheet.Cells(i + 1, 2) & vbLf & inputsheet.Cells(i + 1, 3) & vbLf & inputsheet.Cells(i + 1, 4)
             .Fill.Visible = False
             .Line.Visible = False
                 With .TextFrame.Characters.Font  'テキストボックスのフォントの設定
@@ -67,7 +67,7 @@ i = 2
         H2 = cellH * 0.45 'テキストボックスの高さの大きさ
         
         With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L2, Top:=T2, Width:=W2, Height:=H2)
-            .TextFrame.Characters.Text = inputsheet.Cells(i, 6)
+            .TextFrame.Characters.Text = inputsheet.Cells(i + 1, 6)
             .Fill.Visible = False
             .Line.Visible = False
                 With .TextFrame.Characters.Font 'フォントの設定
@@ -78,7 +78,7 @@ i = 2
         
         Dim picfile_path As String
 '        Dim pic As Object
-        picfile_path = inputsheet.Cells(i, 5).Value
+        picfile_path = inputsheet.Cells(i + 1, 5).Value
         If picfile_path = "" Then
             MsgBox ("画像のパスがありません")
         Else

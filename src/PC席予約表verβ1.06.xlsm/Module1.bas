@@ -201,70 +201,111 @@ Dim now_date As Date
 Dim search As Integer
 Dim end_time As Date
 Dim start_time As Date
-Dim Shift(5) As Integer
+Dim Shift() As Integer
 Dim shp As Shape
 Dim rng As Range
 Dim k As Integer
-Dim L As Integer
+Dim l As Integer
 j = 0
+ReDim Preserve Shift(0)
 Dim shift_time_end As Range
 Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
+Dim shift_row As Integer
 
    now_date = Date 'Dateはコンピューター上の日付
    On Error GoTo sheet_cal_error
     search = WorksheetFunction.Match(CDbl(now_date), shift_time_end, 1) + 1 '   CDblで型を変換しないとうまくmatch検索できない｡
     On Error GoTo 0
     If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'doble型だと時刻まで含、Int型なら日付のみになる
-            '日付が一致しない場合、すなわちその日のシフトがなかった場合の処理
-            k = 0
-            For k = 0 To 5 '同時に勤務する人数の最大値５までループを回してメインシートの番号を出力するところが空白でないなら０を入力
-                'If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
-                '    Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
-                If Cells(now_shift_number_row, now_shift_number_column + k).Value <> "" Then
-                    Cells(now_shift_number_row, now_shift_number_column + k).Value = 0
-                End If
-            Next k
-            
-            For k = 0 To shift_profile_count  '表示されているプロフィールを削除
-                Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
-            Next k
-    Exit Sub
-    Else
-        Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search))
+'            '日付が一致しない場合、すなわちその日のシフトがなかった場合の処理
+'            k = 0
+'            For k = 0 To 5 '同時に勤務する人数の最大値５までループを回してメインシートの番号を出力するところが空白でないなら０を入力
+'                'If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
+'                '    Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
+'                If Cells(now_shift_number_row, now_shift_number_column + k).Value <> 0 Then
+'                    Cells(now_shift_number_row, now_shift_number_column + k).Value = 0
+'                End If
+'            Next k
+'
+'            For k = 0 To shift_profile_count  '表示されているプロフィールを削除
+'                Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
+'            Next k
+'
+''            shift_row = WorksheetFunction.Match(0, Sheets("出力").Cells(1, 1).EntireColumn, 1)
+''            If 0 <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
+''                MsgBox ("エラー番号２０２　番号が出力シートに存在しません。このまま処理を実行します")
+''            Else
+''                Sheets("出力").Cells(1, 2).CopyPicture
+''                Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row, now_shift_menber_profile_output_column)
+''
+'                Exit Sub
+'            End If
+    Else '日付が一致した場合、すなわち当日のシフトがにゅうりょくされていたばあい
+        Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) '
             end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
             start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
             If now_time < end_time And now_time > start_time Then
+                ReDim Preserve Shift(j + 1)
                 Shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
                 j = j + 1
+                If j > 5 Then 'シフト人数が５人より多い場合はループを抜ける
+                    Exit Do
+                End If
             End If
             search = search + 1
         Loop
 
-            Dim profile_count As Integer
-            profile_count = 0
-            L = 0
-            For L = 0 To 4
-                'If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then 'シフト番号の変化がないなら以下の操作はしない
-                    Cells(now_shift_number_row, now_shift_number_column + L).Value = Shift(L)
-                                        
-                    If profile_count < shift_profile_count And Shift(L) <> 0 Then 'まだプロフィール表示数が設定以下なら以下の処理を行う
-                        On Error GoTo object_error
-                        Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move)))
-                        On Error GoTo 0
-                        Dim shift_row As Integer
-                        shift_row = WorksheetFunction.Match(Shift(L), Sheets("出力").Cells(1, 1).EntireColumn, 1)
-                        If Shift(L) <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
-                            MsgBox ("エラー番号２０２　番号が出力シートに存在しません。このまま処理を実行します")
-                        Else
-                            Sheets("出力").Cells(shift_row, 2).CopyPicture
-                            Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move)
-                            profile_count = profile_count + 1
-                        End If
-                    End If
-                'End If
-            Next L
-
     End If
+            
+    Dim profile_count As Integer '表示したプロフィールの数を記録
+    profile_count = 0
+    
+    For k = 0 To shift_profile_count  '表示されているプロフィールを削除
+            On Error GoTo object_error
+            Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
+            On Error GoTo 0
+    Next k
+    
+    If UBound(Shift) = 0 Then 'シフト配列の要素数が０かどうか
+        shift_row = WorksheetFunction.Match(0, Sheets("出力").Cells(1, 1).EntireColumn, 1)
+            If 0 = WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then 'シフトが０だったら番号０のプロフィールを表示。０のプロフィールがないなら表示しない
+                Sheets("出力").Cells(shift_row, 2).CopyPicture
+                Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row, now_shift_menber_profile_output_column)
+            End If
+    Else
+        'Call Quick_sort_single(Shift(), 0, UBound(Shift))
+        For l = 0 To UBound(Shift) 'シフト配列の要素数だけ回す
+            'If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then 'シフト番号の変化がないなら以下の操作はしない
+                Cells(now_shift_number_row, now_shift_number_column + l).Value = Shift(l)
+                
+                If profile_count < shift_profile_count And Shift(l) <> 0 Then 'まだプロフィール表示数が設定以下かつシフト番号が０以外なら以下の処理を行う
+                    shift_row = WorksheetFunction.Match(Shift(l), Sheets("出力").Cells(1, 1).EntireColumn, 1)
+                    If Shift(l) <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
+                        MsgBox ("エラー番号２０２　番号が出力シートに存在しません。このまま処理を実行します")
+                    Else
+                        Sheets("出力").Cells(shift_row, 2).CopyPicture
+                        Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row + profile_count * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + profile_count * now_shift_menber_profile_output_column_move)
+                        profile_count = profile_count + 1
+                    End If
+                End If
+            'End If
+        Next l
+    End If
+    
+'            表示したプロフィールの数が足りていないようならすでに表示してあるところを削除
+'    For k = profile_count To shift_profile_count   '表示されているプロフィールを削除
+'        Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
+'    Next k
+'
+'
+
+Dim m As Integer
+m = UBound(Shift) '前に表示していたシフトの人数が今のシフトの人数が多かったら前のシフトのコントロールパネルの要素数を削除
+Do While Cells(now_shift_number_row, now_shift_number_column + m) <> ""
+    Cells(now_shift_number_row, now_shift_number_column + m).Value = ""
+    m = m + 1
+Loop
+
 
 Sheets("メイン").Range(corsor_move_target).Select
 Exit Sub
@@ -279,6 +320,7 @@ End Sub
 Function shapes_delete(ByVal delete_area As Range)
 '対象の範囲にある図形を削除。ただし図形の名前がstateの場合は削除しない
 
+Call Sheets("メイン").Unprotect
 For Each shp In Sheets("メイン").shapes
     Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
     If shp.Name <> "state" Then
@@ -287,6 +329,8 @@ For Each shp In Sheets("メイン").shapes
         End If
     End If
 Next
+
+Call Sheets("メイン").Protect(UserInterfaceOnly:=True)
 
 End Function
 
