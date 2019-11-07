@@ -80,10 +80,14 @@ i = 1
         
         Dim picfile_path As String
 '        Dim pic As Object
-        picfile_path = inputsheet.Cells(i + 1, 5).Value
+        picfile_path = ThisWorkbook.Path + inputsheet.Cells(i + 1, 5).Value
         If picfile_path = "" Then
-            MsgBox ("画像のパスがありません")
-        Else
+            picfile_path = ThisWorkbook.Path
+            picfile_path = picfile_path + "\Noimage.png"
+        
+        End If
+        
+        
 '            Set pic = LoadPicture(picfile_path)
             Dim pic_W As Variant
             Dim pic_H As Variant
@@ -96,7 +100,9 @@ i = 1
             
             outputsheet.Activate
 '            なんかよくわからないけど､出力シートをアクティブにしないとうまくいかない｡たぶんselectionで処理しているからだと思うけど､shapeオブジェクト難解でよくわからない
+            On Error GoTo insert_error
             ActiveSheet.Pictures.Insert(picfile_path).Select
+            On Error GoTo 0
             With Application.CommandBars
                 If .GetEnabledMso("PictureResetAndSize") = True Then .ExecuteMso "PictureResetAndSize"
             End With
@@ -133,10 +139,20 @@ i = 1
             Selection.Top = cellT + cellH * 0.05 '画像の左上のｙ軸の位置
             Selection.Left = cellL + cellL * 0.1 '画像の左上のｘ軸の位置
             Selection.Width = cellW * 0.37 '画像の幅
-        End If
+        
+skip_insert_picture:
                 
         i = i + 1
     Loop
 
-Worksheets("メイン").EnableCalculation = True
+Exit Sub
+
+error:
+MsgBox ("Noimageのファイルパスが間違ってるみたいなので直してください")
+Resume Next
+
+insert_error:
+MsgBox ("入力シートに入力されている画像ファイルパスが間違っているか、Noimageファイルがエクセルファイルの入っているフォルダにありません。")
+GoTo skip_insert_picture
+
 End Sub

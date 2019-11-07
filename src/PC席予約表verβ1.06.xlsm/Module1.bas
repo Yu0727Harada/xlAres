@@ -47,14 +47,6 @@ Enum shift_table
 勤務No
 End Enum
 
-Public Sub setting_sheet()
-'シートをひらいたときに自動で実行されるプロシージャ
-
-'シートの保護
-Call Sheets("メイン").Protect(UserInterfaceOnly:=True)
-Call sheet_color_check
-
-End Sub
 
 Public Sub setting_time()
 '現在の時刻がコマごとにした場合いくつになるか入力するプロシージャ
@@ -110,11 +102,12 @@ Dim 色セルのcolumn As Integer
 
 Call setting_time
 
-On Error GoTo Sheet_protect_error
 
+On Error GoTo diffrent_book
 With Sheets("メイン")
 Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     Do While 色セルのRow < res_table_start_row + res_table_width_row
+        On Error GoTo Sheet_protect_error
         If on_time >= 色セルのcolumn And .Range("K2") = Date Then
             If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 109, 37) '黄色（影）
@@ -153,6 +146,7 @@ Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
 Loop
 
 End With
+On Error GoTo 0
 
 Exit Sub
 
@@ -163,13 +157,14 @@ Sheet_protect_error:
 MsgBox ("シートが保護されているため、セルの背景色を変更できません。マニュアルのエラー番号００２をみて対処してください")
 Exit Sub
 
+diffrent_book:
+Exit Sub
 End Sub
 
 Public Sub shift_check()
 '現在のシフトを更新するべきか判断するプロシージャ
 
 On Error GoTo sheet_cal_error
-'Worksheets("メイン").EnableCalculation = False
 Dim now_time As Date
 now_time = Time 'TimeはＰＣ上の時刻
 On Error GoTo 0
@@ -187,7 +182,7 @@ If now_time > i * 1 / 48 And now_time < i * 1 / 48 + 1 / 24 / 60 Then
 End If
 Next i
 
-Worksheets("メイン").EnableCalculation = True
+
 sheet_cal_error:
 Exit Sub
 End Sub
@@ -195,7 +190,6 @@ End Sub
 Public Sub shift_output_mainsheet(ByVal now_time As Date)
 '現在のシフトを取得して、シフトの変更があったらシフトを表示するセルのオブジェクトを削除してあらたにプロフィールを出力する
 
-'Worksheets("メイン").EnableCalculation = False
 Dim j As Integer
 Dim now_date As Date
 Dim search As Integer
@@ -209,7 +203,11 @@ Dim l As Integer
 j = 0
 ReDim Preserve Shift(0)
 Dim shift_time_end As Range
+
+On Error GoTo object_error
 Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
+On Error GoTo 0
+
 Dim shift_row As Integer
 
    now_date = Date 'Dateはコンピューター上の日付
@@ -267,7 +265,9 @@ Dim shift_row As Integer
     Next k
     
     If UBound(Shift) = 0 Then 'シフト配列の要素数が０かどうか
+        On Error GoTo nothingzero
         shift_row = WorksheetFunction.Match(0, Sheets("出力").Cells(1, 1).EntireColumn, 1)
+        On Error GoTo 0
             If 0 = WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then 'シフトが０だったら番号０のプロフィールを表示。０のプロフィールがないなら表示しない
                 Sheets("出力").Cells(shift_row, 2).CopyPicture
                 Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row, now_shift_menber_profile_output_column)
@@ -314,6 +314,10 @@ search = 2
 Resume Next
 object_error:
 Exit Sub
+
+nothingzero:
+shift_row = 1
+Resume Next
                 
 End Sub
 
@@ -337,12 +341,11 @@ End Function
 
 Public Sub recal()
 '定期的にシートの再計算を行うためのプロシージャ
-If Worksheets("メイン").EnableCalculation = False Then
-    Worksheets("メイン").EnableCalculation = True
-End If
 Application.Calculate
 'シートの再計算を行う
 Call shift_check
+Call sheet_color_check
+
 tm = now() + TimeValue("00:01:00")
 Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
 'tm変数に一分後をセット

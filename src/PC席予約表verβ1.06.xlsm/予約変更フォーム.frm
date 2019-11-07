@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約変更フォーム 
    Caption         =   "予約の変更など"
-   ClientHeight    =   6132
-   ClientLeft      =   112
+   ClientHeight    =   6139
+   ClientLeft      =   105
    ClientTop       =   448
-   ClientWidth     =   5285
+   ClientWidth     =   5292
    OleObjectBlob   =   "予約変更フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -13,6 +13,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Image2_Click()
+
+End Sub
+
 Private Sub UserForm_Initialize()
 追加ボタン.SetFocus
 End Sub
@@ -30,7 +34,6 @@ ElseIf Sheets("メイン").Range(limit_res_on_off).Value = "on" Then
     Unload 予約変更フォーム
     Exit Sub
 Else
-'    Worksheets("メイン").EnableCalculation = False
     Dim 予約コード As Long
     Dim 現在の位置 As Long
     予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
@@ -63,7 +66,6 @@ End If
     Dim bl_res_dup_check As Boolean
     bl_res_dup_check = res_duplicate_check(j - 1, 0, CNT())
     If bl_res_dup_check = False Then
-        Worksheets("メイン").EnableCalculation = True
         Unload 予約変更フォーム
         Exit Sub
     End If
@@ -71,7 +73,6 @@ End If
     Dim bl_res_input As Boolean
     bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), j - 1)
     
-    Worksheets("メイン").EnableCalculation = True
     Unload 予約変更フォーム
 
 End If
@@ -80,8 +81,8 @@ End Sub
 
 Private Sub 取消ボタン_Click()
 
-            Unload 予約変更フォーム
-            取消フォーム.Show
+Unload 予約変更フォーム
+取消フォーム.Show
             
 
 End Sub
@@ -89,7 +90,6 @@ End Sub
 Private Sub 貸出ボタン_Click()
 
 Call cable
-
 Unload 予約変更フォーム
 
 End Sub
@@ -97,8 +97,6 @@ End Sub
 Private Sub 追加ボタン_Click()
 
 Unload 予約変更フォーム
-
 利用者追加フォーム.Show
-
 
 End Sub

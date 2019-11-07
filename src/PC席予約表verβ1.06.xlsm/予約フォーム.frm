@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約フォーム 
    Caption         =   "予約フォーム"
-   ClientHeight    =   8449
+   ClientHeight    =   8442
    ClientLeft      =   -462
    ClientTop       =   -1799
-   ClientWidth     =   8015
+   ClientWidth     =   8022
    OleObjectBlob   =   "予約フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -85,7 +85,6 @@ Call textbox_restrict(学籍番号テキストボックス4, 学籍番号4)
 Call textbox_restrict(学籍番号テキストボックス5, 学籍番号5)
 If number_valid <> 0 Then
     number_valid = 0
-    Worksheets("メイン").EnableCalculation = True
     Exit Sub
 End If
 
@@ -125,7 +124,6 @@ End If
 
 If data_num = -1 Then
     MsgBox ("学籍番号を入力してください")
-    Worksheets("メイン").EnableCalculation = True
     Exit Sub
 End If
 
@@ -137,7 +135,6 @@ If extend_check = True Then
         extend_bl = MsgBox("次の時間帯は予約できません。一コマだけ予約しますか？", vbYesNo + vbQuestion, "予約の確認")
         If extend_bl = vbNo Then
             MsgBox ("予約画面に移動します。")
-            Worksheets("メイン").EnableCalculation = True
             Unload 予約フォーム
             Exit Sub
         Else
@@ -147,7 +144,6 @@ If extend_check = True Then
             extend_bl = MsgBox("現在、混雑のため予約の制限をしています。１コマだけ予約しますか？", vbYesNo + vbQuestion, "予約の確認")
         If extend_bl = vbNo Then
             MsgBox ("予約画面に移動します。")
-            Worksheets("メイン").EnableCalculation = True
             Unload 予約フォーム
             Exit Sub
         Else
@@ -156,9 +152,6 @@ If extend_check = True Then
     End If
 End If
     
-
-'If extend_check = False Then
-
 Call check_res_day
 Call check_res_num(学籍番号リスト(), data_num, CNT())
     
@@ -174,27 +167,20 @@ End If
 Dim bl_res_input_raw As Integer
 bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯, 席番号, cable_check, 学籍番号リスト(), data_num)
 If bl_res_input_raw = False Then
-    Worksheets("メイン").EnableCalculation = True
     Unload 予約フォーム
     Exit Sub
 End If
-    
-          
+      
 If extend_check = True Then
     bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), data_num)
     If bl_res_input_raw = False Then
-        Worksheets("メイン").EnableCalculation = True
         Unload 予約フォーム
         Exit Sub
     End If
-    Worksheets("メイン").EnableCalculation = True
-    Call sheet_color_check
     Unload 予約フォーム
     Exit Sub
 End If
 
-Worksheets("メイン").EnableCalculation = True
-Call sheet_color_check
 Unload 予約フォーム
 
 

@@ -11,7 +11,8 @@ Attribute VB_Exposed = True
 Private Sub Worksheet_Activate()
 
 Call shift_output_mainsheet(Time)
-Call setting_sheet
+Call Sheets("メイン").Protect(UserInterfaceOnly:=True) 'シートの保護
+Call sheet_color_check
 Call recal
 'シートがactiveになった場合recalプロシージャに行く
 
@@ -104,7 +105,8 @@ ElseIf Range(master_on_off).Value = "on" Then
     End If
 End If
 
-Call setting_sheet
+Application.Calculate
+Call sheet_color_check
 
 If Range(cell_corsor_move).Value = "on" Then
     Range(corsor_move_target).Select

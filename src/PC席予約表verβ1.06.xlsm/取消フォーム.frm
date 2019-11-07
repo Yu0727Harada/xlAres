@@ -1,9 +1,9 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} æÁƒtƒH[ƒ€ 
    Caption         =   "—\–ñ‚ÌæÁ‚ÌŠm”F"
-   ClientHeight    =   6006
+   ClientHeight    =   5999
    ClientLeft      =   91
-   ClientTop       =   413
+   ClientTop       =   420
    ClientWidth     =   7217
    OleObjectBlob   =   "æÁƒtƒH[ƒ€.frx":0000
    StartUpPosition =   1  'ƒI[ƒi[ ƒtƒH[ƒ€‚Ì’†‰›
@@ -14,8 +14,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub CommandButton1_Click()
-
-'Worksheets("ƒƒCƒ“").EnableCalculation = False
 
 Dim —\–ñƒR[ƒh As Long
 Dim Œ»İ‚ÌˆÊ’u As Long
@@ -39,7 +37,6 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
         Call Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, 1).EntireRow.Delete(xlShiftUp)
         Call delete_res_num(target_stu_list, i - 1)
 '        MsgBox ("—\–ñ‚ğæ‚èÁ‚µ‚Ü‚µ‚½")
-        Worksheets("ƒƒCƒ“").EnableCalculation = True
         delete_confirm.Show
         Unload æÁƒtƒH[ƒ€
         Exit Sub
@@ -52,12 +49,10 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
     
     If Šm”F”Ô† = "" Then
         MsgBox ("ŠwĞ”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
-        Worksheets("ƒƒCƒ“").EnableCalculation = True
         Exit Sub
     End If
     If number_valid <> 0 Then
         number_valid = 0
-        Worksheets("ƒƒCƒ“").EnableCalculation = True
         Exit Sub
     End If
     
@@ -71,6 +66,7 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
         '        —\–ñ‚µ‚½ƒf[ƒ^‚ğíœ
         Call delete_res_num(target_stu_list, i - 1)
         Worksheets("ƒƒCƒ“").EnableCalculation = True
+        Application.Calculate
 '        MsgBox ("—\–ñ‚ğæ‚èÁ‚µ‚Ü‚µ‚½")
         delete_confirm.Show
         Unload æÁƒtƒH[ƒ€
@@ -80,7 +76,6 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
     
     '‰½–‚à‚È‚­ƒ‹[ƒv‚ğ‚Å‚½‚ç“ü—Í‚µ‚½“à—e‚ğíœ
     MsgBox ("ŠwĞ”Ô†‚ªˆê’v‚µ‚Ü‚¹‚ñB‚à‚¤ˆê“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
-    Worksheets("ƒƒCƒ“").EnableCalculation = True
     TextBox1 = ""
 
 Else

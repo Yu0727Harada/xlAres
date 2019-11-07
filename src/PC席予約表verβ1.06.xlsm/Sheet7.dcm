@@ -13,10 +13,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
 Dim image_filepath As String
 If Target.Column = 5 And Target.Row > 1 Then
-    image_filepath = Application.GetOpenFilename
+    image_filepath = Application.GetOpenFilename(MultiSelect:=False)
     If image_filepath = "False" Then
         image_filepath = ""
     End If
+    image_filepath = Replace(image_filepath, ThisWorkbook.Path, "")
     Cells(Target.Row, Target.Column).Value = image_filepath
 End If
 End Sub
