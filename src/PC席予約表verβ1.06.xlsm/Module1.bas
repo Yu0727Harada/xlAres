@@ -148,7 +148,7 @@ Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 240, 76) '黄色
             ElseIf (InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用中") > 0 Or InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用済") > 0) And InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 82, 77) '赤
-            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "使用中" Or .Cells(色セルのRow, 色セルのcolumn).Text = "使用済" Then
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "使用中" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 160, 76) 'オレンジ
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = xlNone '透明
@@ -370,9 +370,8 @@ Public Sub recal()
 Application.Calculate
 'シートの再計算を行う
 Call shift_check
-Call sheet_color_check
 Call setting_time
-
+Call sheet_color_check
 Application.Calculate
 
 tm = now() + TimeValue("00:01:00")
