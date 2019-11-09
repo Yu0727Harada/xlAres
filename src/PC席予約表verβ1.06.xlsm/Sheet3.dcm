@@ -74,7 +74,7 @@ End If
 '予約フォームでの処理のために連続可能かという変数に次の時間が予約済みかと、閉室後でないかどうかでTRUEかFALSEかを入れておく
 
 If Range(date_sheet).Value = Date And Range(master_on_off).Value = "off" Then
-    If InStr(Target.Text, "予約済") > 0 And Target.Column > on_time Then
+    If (InStr(Target.Text, "予約済") > 0 Or InStr(Target.Text, "使用中") > 0) And Target.Column > on_time Then
         予約変更フォーム.Show
     '    予約済のセルの場合は予約変更フォームを開く
     ElseIf Target.Text = "" And Target.Column > on_time And Range(limit_res_on_off) = "off" Then
@@ -96,7 +96,7 @@ ElseIf Range(date_sheet).Value > Date Then
         'セルが空白だった場合は予約フォームを開く
     End If
 ElseIf Range(master_on_off).Value = "on" Then
-    If InStr(Target.Text, "予約済") > 0 Then
+    If InStr(Target.Text, "使用済") > 0 Or InStr(Target.Text, "予約済") > 0 Or InStr(Target.Text, "使用中") > 0 Then
         予約変更フォーム.Show
     '    予約済のセルの場合は予約変更フォームを開く
     ElseIf Target.Text = "" Then

@@ -25,7 +25,8 @@ Public Const res_table_width_row As Integer = 5 '予約表の長さ＝席番号の数
 Public Const res_table_width_colomn As Integer = 7 '予約表のながさ＝利用時間の区間数
 Public Const now_shift_number_row As Integer = 7 'LAコントロール部分の現在のシフトNoを表示するセルの行の位置
 Public Const now_shift_number_column As Integer = 20 '上の列の位置。現状はこの左に順に表示されます
-Public Const on_time_output As String = "AA3"
+Public Const on_time_output As String = "AC2"
+Public Const time_for_dup_sheet As String = "AE4"
 
 Public Const now_shift_menber_profile_output_row As Integer = 5 'プロフィールを表示するセルの行
 Public Const now_shift_menber_profile_output_column As Integer = 11 '上の列
@@ -79,7 +80,8 @@ End If
 'Timeを用いればコンピューター時計準拠に､
 '変数now_timeを使えばセルでいじれます
 
-Sheets("メイン").Range(on_time_output).Value = on_time
+Sheets("メイン").Range(on_time_output).Value = on_time - 1
+Sheets("メイン").Range(time_for_dup_sheet).Value = on_time - 1
 
 Exit Sub
 
@@ -87,6 +89,26 @@ Exit Sub
 sheet_cal_error:
 Exit Sub
 End Sub
+
+Function get_view_string(ByVal time_number As Integer)
+
+If Range(date_sheet).Value = Date Then
+    If time_number > Sheets("メイン").Range(on_time_output).Value Then
+        get_view_string = "予約済"
+    ElseIf time_number = Sheets("メイン").Range(on_time_output).Value Then
+        get_view_string = "使用中"
+    Else
+        get_view_string = "使用済"
+    End If
+ElseIf Range(date_sheet).Value > Date Then
+    get_view_string = "予約済"
+ElseIf Range(date_sheet).Value < Date Then
+    get_view_string = "使用済"
+End If
+
+End Function
+
+
 Public Sub sheet_color_check()
 '表に入力されているテキストに従ってセルの背景色を設定するプロシージャ
 
@@ -109,9 +131,11 @@ Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     Do While 色セルのRow < res_table_start_row + res_table_width_row
         On Error GoTo Sheet_protect_error
         If on_time >= 色セルのcolumn And .Range("K2") = Date Then
-            If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
+            If InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "予約済") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 109, 37) '黄色（影）
-            ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
+            ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用済") > 0 And InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 37, 37) '赤（影）
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "使用済" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 73, 37) 'オレンジ（影）
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 115, 123) '影
@@ -120,9 +144,11 @@ Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     '           どれにも当てはまらない場合の色設定
             End If
         Else
-            If .Cells(色セルのRow, 色セルのcolumn).Text = "予約済" Then
+            If InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "予約済") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 240, 76) '黄色
-            ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
+            ElseIf (InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用中") > 0 Or InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用済") > 0) And InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
+                .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 82, 77) '赤
+            ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "使用中" Or .Cells(色セルのRow, 色セルのcolumn).Text = "使用済" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(255, 160, 76) 'オレンジ
             ElseIf .Cells(色セルのRow, 色セルのcolumn).Text = "" Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = xlNone '透明
@@ -345,6 +371,9 @@ Application.Calculate
 'シートの再計算を行う
 Call shift_check
 Call sheet_color_check
+Call setting_time
+
+Application.Calculate
 
 tm = now() + TimeValue("00:01:00")
 Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
