@@ -59,29 +59,32 @@ On Error GoTo sheet_cal_error
 now_time = Sheets("メイン").Range(time_sheet).Value
 On Error GoTo 0
 
-If now_time > 0.4375 And now_time <= 0.50694444 Then
-    on_time = 3
-ElseIf now_time > 0.5069444 And now_time <= 0.5416 Then
-    on_time = 4
-ElseIf now_time > 0.5416 And now_time <= 0.60416 Then
-    on_time = 5
-ElseIf now_time > 0.60416 And now_time <= 0.6736 Then
-    on_time = 6
-ElseIf now_time > 0.6736 And now_time <= 0.74305 Then
-    on_time = 7
-ElseIf now_time > 0.74305 And now_time <= 0.79166 Then
-    on_time = 8
-ElseIf now_time > 0.79166 Then
-    on_time = 9
-Else
+'現在の時刻（メインシートに入っている時刻）≠PCの設定時刻ではない　の時間帯コードを返す。数字は時刻のシリアル値
+If now_time < 0.375 Then '-9:00
+    on_time = 0
+ElseIf 0.375 < now_time And now_time < 0.4375 Then '9:00-10:30
+    on_time = 1
+ElseIf 0.4375 < now_time And now_time <= 0.50694444 Then '10:30-12:10
     on_time = 2
+ElseIf 0.5069444 < now_time And now_time <= 0.5416 Then '12:10-13:00
+    on_time = 3
+ElseIf 0.5416 < now_time And now_time <= 0.60416 Then '13:00-14:30
+    on_time = 4
+ElseIf 0.60416 < now_time And now_time <= 0.6736 Then '14:30-16:10
+    on_time = 5
+ElseIf 0.6736 < now_time And now_time <= 0.74305 Then '16:10-17:50
+    on_time = 6
+ElseIf 0.74305 < now_time And now_time <= 0.79166 Then '17:50-19:00
+    on_time = 7
+ElseIf 0.79166 < now_time Then '19:00-
+    on_time = 8
 End If
 
 'Timeを用いればコンピューター時計準拠に､
 '変数now_timeを使えばセルでいじれます
 
-Sheets("メイン").Range(on_time_output).Value = on_time - 1
-Sheets("メイン").Range(time_for_dup_sheet).Value = on_time - 1
+Sheets("メイン").Range(on_time_output).Value = on_time
+Sheets("メイン").Range(time_for_dup_sheet).Value = on_time
 
 Exit Sub
 
@@ -130,7 +133,7 @@ With Sheets("メイン")
 Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     Do While 色セルのRow < res_table_start_row + res_table_width_row
         On Error GoTo Sheet_protect_error
-        If on_time >= 色セルのcolumn And .Range("K2") = Date Then
+        If on_time > 色セルのcolumn - 2 And .Range("K2") = Date Then
             If InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "予約済") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 109, 37) '黄色（影）
             ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用済") > 0 And InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
@@ -370,7 +373,9 @@ Public Sub recal()
 Application.Calculate
 'シートの再計算を行う
 Call shift_check
+ Application.Calculate
 Call setting_time
+Application.Calculate
 Call sheet_color_check
 Application.Calculate
 
