@@ -401,5 +401,45 @@ End Sub
 Function passcord_inputform()
 
 passcordform.Show
+If passcord_input = passcord Then
+    passcord_inputform = 0
+    Exit Function
+End If
 
+Dim search As Integer
+
+trans_passcord_input = translate_number(passcord_input)
+On Error GoTo error_nothing
+search = WorksheetFunction.Match(Int(trans_passcord_input), Sheets("passcord").Cells(1, 1).EntireColumn, 1)
+On Error GoTo 0
+
+If Int(trans_passcord_input) = WorksheetFunction.Index(Sheets("passcord").Cells(1, 1).EntireColumn, search) Then
+    passcord_inputform = 0
+
+ElseIf passcord_input = "" Then
+    passcord_inputform = 2
+Else
+    passcord_inputform = 1
+End If
+
+
+Exit Function
+
+error_nothing:
+
+search = 1
+Resume Next
 End Function
+
+Private Sub unvisible_passcord_sheet()
+
+Worksheets("passcord").Visible = False
+Worksheets("passcord").Visible = xlVeryHidden
+
+End Sub
+
+Private Sub visible_passcord_sheet()
+Worksheets("passcord").Visible = True
+
+End Sub
+

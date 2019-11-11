@@ -174,3 +174,51 @@ End Sub
 Sub vbe_open()
 Application.VBE.Windows(1).SetFocus
 End Sub
+Public Sub input_new_passcord()
+
+Dim pass_yesno As Integer
+
+pass_yesno = passcord_inputform
+If pass_yesno = 2 Then
+    Exit Sub
+ElseIf pass_yesno = 1 Then
+    Exit Sub
+Else
+
+    Dim input_new_pass As String
+    input_new_pass = InputBox("パスコードとして追加する学籍番号を入力するか、学生証のバーコードをスキャンしてください。すでに登録されている番号を入力することで削除することもできます。")
+    Dim trans_input_new_pass As Variant
+    trans_input_new_pass = translate_number(input_new_pass)
+    If trans_input_new_pass = "" Then
+        Exit Sub
+    ElseIf Int(trans_input_new_pass) = -1 Then
+        MsgBox ("有効な学籍番号ではありません")
+        Exit Sub
+    Else
+        Dim search As Integer
+        On Error GoTo match_error
+        search = WorksheetFunction.Match(Int(trans_input_new_pass), Sheets("passcord").Range("A:A"), 1)
+        On Error GoTo 0
+        If Int(trans_input_new_pass) = WorksheetFunction.Index(Sheets("passcord").Range("A:A"), search) Then
+            Dim delete_yesno As String
+            delete_yesno = MsgBox("この番号はすでに登録されています。この番号を削除しますか？", vbYesNo + vbQuestion, "番号の削除の確認")
+            If delete_yesno = vbNo Then
+                Exit Sub
+            Else
+                Call Sheets("passcord").Cells(search, 1).EntireRow.Delete(xlShiftUp)
+                Exit Sub
+            End If
+        Else
+            Sheets("passcord").Rows(search + 1).Insert
+            Sheets("passcord").Cells(search + 1, 1).Value = trans_input_new_pass
+        End If
+    End If
+
+End If
+
+Exit Sub
+match_error:
+search = 0
+Sheets("passcord").Rows(search + 1).Insert
+Sheets("passcord").Cells(search + 1, 1).Value = trans_input_new_pass
+End Sub

@@ -72,54 +72,70 @@ Private Sub 登録_Click()
 'Worksheets("メイン").EnableCalculation = False
 '生データにデータを入れるたびにメインシート再計算が起こると処理が重くなるので再計算を停止する
 
-Dim 学籍番号1 As Variant
-Dim 学籍番号2 As Variant
-Dim 学籍番号3 As Variant
-Dim 学籍番号4 As Variant
-Dim 学籍番号5 As Variant
+Dim student_number_1 As Variant
+Dim student_number_2 As Variant
+Dim student_number_3 As Variant
+Dim student_number_4 As Variant
+Dim student_number_5 As Variant
 
-Call textbox_restrict(学籍番号テキストボックス1, 学籍番号1)
-Call textbox_restrict(学籍番号テキストボックス2, 学籍番号2)
-Call textbox_restrict(学籍番号テキストボックス3, 学籍番号3)
-Call textbox_restrict(学籍番号テキストボックス4, 学籍番号4)
-Call textbox_restrict(学籍番号テキストボックス5, 学籍番号5)
+student_number_1 = translate_number(学籍番号テキストボックス1)
+If student_number_1 = -1 Then
+    学籍番号テキストボックス1 = ""
+End If
+student_number_2 = translate_number(学籍番号テキストボックス2)
+If student_number_2 = -1 Then
+    学籍番号テキストボックス2 = ""
+End If
+student_number_3 = translate_number(学籍番号テキストボックス3)
+If student_number_3 = -1 Then
+    学籍番号テキストボックス3 = ""
+End If
+student_number_4 = translate_number(学籍番号テキストボックス4)
+If student_number_4 = -1 Then
+    学籍番号テキストボックス4 = ""
+End If
+student_number_5 = translate_number(学籍番号テキストボックス5)
+If student_number_5 = -1 Then
+    学籍番号テキストボックス5 = ""
+End If
+
 If number_valid <> 0 Then
     number_valid = 0
     Exit Sub
 End If
 
-'テキストボックスに入力されたのを変換し学籍番号1 -5にいれる
+'テキストボックスに入力されたのを変換しstudent_number_1 -5にいれる
 'ループでやらないのは無効な番号が入力されたときに入力された内容を削除するときにめんどいから
 
-Dim 複数人表示参照 As Worksheet
+'Dim 複数人表示参照 As Worksheet
 Dim CNT(5) As Integer
-Dim 予約確認 As Integer
-Dim 学籍番号リスト(5) As Variant
+'Dim 予約確認 As Integer
+Dim student_number_list(5) As Variant
 Dim data_num As Integer
 data_num = -1
 
 Dim 現在の位置 As Integer
  
 
-If 学籍番号1 <> "" Then
+If student_number_1 <> "" Then
     data_num = data_num + 1
-    学籍番号リスト(data_num) = 学籍番号1
+    student_number_list(data_num) = student_number_1
 End If
-If 学籍番号2 <> "" Then
+If student_number_2 <> "" Then
     data_num = data_num + 1
-    学籍番号リスト(data_num) = 学籍番号2
+    student_number_list(data_num) = student_number_2
 End If
-If 学籍番号3 <> "" Then
+If student_number_3 <> "" Then
     data_num = data_num + 1
-     学籍番号リスト(data_num) = 学籍番号3
+     student_number_list(data_num) = student_number_3
 End If
-If 学籍番号4 <> "" Then
+If student_number_4 <> "" Then
     data_num = data_num + 1
-    学籍番号リスト(data_num) = 学籍番号4
+    student_number_list(data_num) = student_number_4
 End If
-If 学籍番号5 <> "" Then
+If student_number_5 <> "" Then
     data_num = data_num + 1
-    学籍番号リスト(data_num) = 学籍番号5
+    student_number_list(data_num) = student_number_5
 End If
 
 If data_num = -1 Then
@@ -127,7 +143,7 @@ If data_num = -1 Then
     Exit Sub
 End If
 
-'学籍番号リストに変換した番号を０から順に格納。何も入力されてないdata_num=-1の時にはプロシージャを抜ける
+'student_number_listに変換した番号を０から順に格納。何も入力されてないdata_num=-1の時にはプロシージャを抜ける
 Dim extend_bl As String
 
 If extend_check = True Then
@@ -153,7 +169,7 @@ If extend_check = True Then
 End If
     
 Call check_res_day
-Call check_res_num(学籍番号リスト(), data_num, CNT())
+Call check_res_num(student_number_list(), data_num, CNT())
     
 Dim bl_dup_check As Boolean
 bl_dup_check = res_duplicate_check(data_num, 0, CNT())
@@ -164,15 +180,15 @@ If bl_dup_check = False Then
     Exit Sub
 End If
        
-Dim bl_res_input_raw As Integer
-bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯, 席番号, cable_check, 学籍番号リスト(), data_num)
+Dim bl_res_input_raw As Boolean
+bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯, 席番号, cable_check, student_number_list(), data_num)
 If bl_res_input_raw = False Then
     Unload 予約フォーム
     Exit Sub
 End If
       
 If extend_check = True Then
-    bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), data_num)
+    bl_res_input_raw = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, student_number_list(), data_num)
     If bl_res_input_raw = False Then
         Unload 予約フォーム
         Exit Sub

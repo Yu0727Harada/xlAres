@@ -11,189 +11,190 @@ student_num_start
 
 End Enum
 
-Public Sub textbox_restrict(ByVal textbox_name As Object, student_number As Variant)
+Function translate_number(ByVal raw_number As String)
 'テキストボックスに入力された番号を変換するプロシージャ
 'student_numberのデータ型はvaliantじゃないとダメ。桁数がおおいので。
+'when raw_number is a invalid number,this procedure return -1
 
 Dim enter_year As Integer
 Dim subject As Integer
 'number_valid変数はこのプロシージャでexitsubをしても元のプロシージャを抜けることはできないので、１以上の値ならエラーを出したというフラグとして使っています。
 'ここで二重のプロシージャを抜ける方法もあるのかもしれないが、そうすると、複数のテキストボックスに入力に誤りがあった際に、最初にエラーを見つけた時点で抜けてしまうと、そのテキストボックスしか空白にできないので現状このようにしています。
 
-If textbox_name <= 0 Then
-'    MsgBox ("有効な学籍番号を入力してください")
-    stunum_error.Show
-    number_valid = number_valid + 1
-    textbox_name = ""
-    ''0以下が入力された場合はテキストボックスを空にした入力フォームに戻る
-    Exit Sub
-End If
+'If raw_number <= 0 Then
+''    MsgBox ("有効な学籍番号を入力してください")
+'    stunum_error.Show
+'    number_valid = number_valid + 1
+'    translate_number = -1
+'    ''0以下が入力された場合は-1
+'    Exit Function
+'End If
 
-If Len(textbox_name) = 7 Then
+If Len(raw_number) = 7 Then
 '学籍番号は７桁なので、７桁入力された場合は下の処理を行って変換する
 '    enter_yearの処理
-    If IsNumeric(Mid(textbox_name, 3, 2)) = True Then
-        enter_year = Mid(textbox_name, 3, 2)
+    If IsNumeric(Mid(raw_number, 3, 2)) = True Then
+        enter_year = Mid(raw_number, 3, 2)
     Else
 '        MsgBox ("有効な学籍番号を入力してください")
         stunum_error.Show
         number_valid = number_valid + 1
-        textbox_name = ""
-        Exit Sub
+        translate_number = -1
+        Exit Function
     End If
     
         '5文字目がMだった場合はマスターの処理
-    If Mid(textbox_name, 5, 1) = "M" Or Mid(textbox_name, 5, 1) = "m" Then
-        If Mid(textbox_name, 1, 2) <= 10 Then
-            subject = Mid(textbox_name, 1, 2) + 2000
-        ElseIf Mid(textbox_name, 1, 2) = "61" Then
+    If Mid(raw_number, 5, 1) = "M" Or Mid(raw_number, 5, 1) = "m" Then
+        If Mid(raw_number, 1, 2) <= 10 Then
+            subject = Mid(raw_number, 1, 2) + 2000
+        ElseIf Mid(raw_number, 1, 2) = "61" Then
             subject = 2201
-        ElseIf Mid(textbox_name, 1, 2) = "62" Then
+        ElseIf Mid(raw_number, 1, 2) = "62" Then
             subject = 2202
-        ElseIf Mid(textbox_name, 1, 2) = "51" Then
+        ElseIf Mid(raw_number, 1, 2) = "51" Then
             subject = 2101
-        ElseIf IsNumeric(Mid(textbox_name, 1, 2)) = False Then
+        ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
             stunum_error.Show
 '            MsgBox ("有効な学籍番号を入力してください")
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         Else
             subject = 2099        '2099は予想しない学籍番号来た場合のワイルドカード
         End If
-        If IsNumeric(Mid(textbox_name, 6, 2)) = False Then
+        If IsNumeric(Mid(raw_number, 6, 2)) = False Then
 '            MsgBox ("有効な学籍番号を入力してください")
             stunum_error.Show
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         End If
-        student_number = enter_year & subject & "0" & Mid(textbox_name, 6, 2)
+        translate_number = enter_year & subject & "0" & Mid(raw_number, 6, 2)
 'ドクターの処理
-    ElseIf Mid(textbox_name, 5, 1) = "D" Or Mid(textbox_name, 5, 1) = "d" Then
-        If Mid(textbox_name, 1, 2) = 1 Then
-            subject = Mid(textbox_name, 1, 2) + 2010
-        ElseIf Mid(textbox_name, 1, 2) >= 2 Then
-            subject = Mid(textbox_name, 1, 2) + 2011
-        ElseIf Mid(textbox_name, 1, 2) = "61" Then
+    ElseIf Mid(raw_number, 5, 1) = "D" Or Mid(raw_number, 5, 1) = "d" Then
+        If Mid(raw_number, 1, 2) = 1 Then
+            subject = Mid(raw_number, 1, 2) + 2010
+        ElseIf Mid(raw_number, 1, 2) >= 2 Then
+            subject = Mid(raw_number, 1, 2) + 2011
+        ElseIf Mid(raw_number, 1, 2) = "61" Then
             subject = 2211
-        ElseIf Mid(textbox_name, 1, 2) = "62" Then
+        ElseIf Mid(raw_number, 1, 2) = "62" Then
             subject = 2212
-        ElseIf Mid(textbox_name, 1, 2) = "51" Then
+        ElseIf Mid(raw_number, 1, 2) = "51" Then
             subject = 2111
-        ElseIf IsNumeric(Mid(textbox_name, 1, 2)) = False Then
+        ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
 '            MsgBox ("有効な学籍番号を入力してください")
             stunum_error.Show
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         Else
             subject = 2199  'ワイルドカード
         End If
-        If IsNumeric(Mid(textbox_name, 6, 2)) = False Then
+        If IsNumeric(Mid(raw_number, 6, 2)) = False Then
 '                MsgBox ("有効な学籍番号を入力してください")
             stunum_error.Show
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         End If
-            student_number = enter_year & subject & "0" & Mid(textbox_name, 6, 2)
-    ElseIf Mid(textbox_name, 5, 1) = "s" Or Mid(textbox_name, 5, 1) = "S" Then
-        If Mid(textbox_name, 1, 2) <= 10 Then
-            subject = Mid(textbox_name, 1, 2) + 2500
-        ElseIf Mid(textbox_name, 1, 2) >= 51 And Mid(textbox_name, 1, 2) <= 57 Then
-            subject = Mid(textbox_name, 1, 2) - 40 + 2500
-        ElseIf Mid(textbox_name, 1, 2) = 11 Then
+            translate_number = enter_year & subject & "0" & Mid(raw_number, 6, 2)
+    ElseIf Mid(raw_number, 5, 1) = "s" Or Mid(raw_number, 5, 1) = "S" Then
+        If Mid(raw_number, 1, 2) <= 10 Then
+            subject = Mid(raw_number, 1, 2) + 2500
+        ElseIf Mid(raw_number, 1, 2) >= 51 And Mid(raw_number, 1, 2) <= 57 Then
+            subject = Mid(raw_number, 1, 2) - 40 + 2500
+        ElseIf Mid(raw_number, 1, 2) = 11 Then
             subject = 2521
-        ElseIf IsNumeric(Mid(textbox_name, 1, 2)) = False Then
+        ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
 '                MsgBox ("有効な学籍番号を入力してください")
             stunum_error.Show
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         Else
             subject = 2599 'ワイルドカード
         End If
             
-        If IsNumeric(Mid(textbox_name, 6, 2)) = False Then
+        If IsNumeric(Mid(raw_number, 6, 2)) = False Then
 '               MsgBox ("有効な学籍番号を入力してください")
             stunum_error.Show
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         End If
             '５文字目がSの交換留学生に対応。めんどくさいので学科番号のあとすぐを９にすることで解決。多分ほとんど来ないでしょう
-            student_number = enter_year & subject & "9" & Mid(textbox_name, 6, 2)
+            translate_number = enter_year & subject & "9" & Mid(raw_number, 6, 2)
         ' MでもDでもSでもない場合の処理
     Else
-        If Mid(textbox_name, 1, 2) <= 10 Then
-            subject = Mid(textbox_name, 1, 2) + 2500
-        ElseIf Mid(textbox_name, 1, 2) >= 51 And Mid(textbox_name, 1, 2) <= 57 Then
-            subject = Mid(textbox_name, 1, 2) - 40 + 2500
-        ElseIf Mid(textbox_name, 1, 2) = 11 Then
+        If Mid(raw_number, 1, 2) <= 10 Then
+            subject = Mid(raw_number, 1, 2) + 2500
+        ElseIf Mid(raw_number, 1, 2) >= 51 And Mid(raw_number, 1, 2) <= 57 Then
+            subject = Mid(raw_number, 1, 2) - 40 + 2500
+        ElseIf Mid(raw_number, 1, 2) = 11 Then
             subject = 2521
-        ElseIf IsNumeric(Mid(textbox_name, 1, 2)) = False Then
+        ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
 '                MsgBox ("有効な学籍番号を入力してください")
             stunum_error.Show
             number_valid = number_valid + 1
-            textbox_name = ""
-            Exit Sub
+            translate_number = -1
+            Exit Function
         Else
             subject = 2599 'ワイルドカード
         End If
-            If IsNumeric(Mid(textbox_name, 6, 2)) = False Then
+            If IsNumeric(Mid(raw_number, 6, 2)) = False Then
 '                    MsgBox ("有効な学籍番号を入力してください")
                 stunum_error.Show
                 number_valid = number_valid + 1
-                textbox_name = ""
-                Exit Sub
+                translate_number = -1
+                Exit Function
             End If
-        student_number = enter_year & subject & Mid(textbox_name, 5, 3)
+        translate_number = enter_year & subject & Mid(raw_number, 5, 3)
         
     '   社会福祉学科だけ台帳番号が謎なので最後に特例的に処理を書いた
     End If
 
-ElseIf Len(textbox_name) = 16 Then
+ElseIf Len(raw_number) = 16 Then
     
-        enter_year = Mid(textbox_name, 3, 2)
-        subject = Mid(textbox_name, 8, 4)
-        student_number = enter_year & subject & Mid(textbox_name, 13, 3)
+        enter_year = Mid(raw_number, 3, 2)
+        subject = Mid(raw_number, 8, 4)
+        translate_number = enter_year & subject & Mid(raw_number, 13, 3)
  Else
  
-    If textbox_name <> "" Then
-    student_number = textbox_name
+    If raw_number <> "" Then
+    translate_number = raw_number
     
     'テキストボックスに何か入力されていて７桁の文字列でない場合はそのまま代入する
     End If
 
 End If
 
-If textbox_name <> "" Then
+If raw_number <> "" Then
 'テキストボックスに何も入力されていない場合は処理を行わない
     
-    If student_number <= 0 Then
+    If translate_number <= 0 Then
 '        MsgBox ("有効な学籍番号を入力してください")
         stunum_error.Show
         number_valid = number_valid + 1
-        textbox_name = ""
+        translate_number = -1
         ''0以下が入力された場合はテキストボックスを空にした入力フォームに戻る
-    Exit Sub
-    ElseIf IsNumeric(student_number) = False And student_number <> "" Then
+    Exit Function
+    ElseIf IsNumeric(translate_number) = False And translate_number <> "" Then
 '        MsgBox ("有効な学籍番号を入力してください")
         stunum_error.Show
         number_valid = number_valid + 1
-        textbox_name = ""
-        Exit Sub
-    ElseIf Len(student_number) <> 9 Then
+        translate_number = -1
+        Exit Function
+    ElseIf Len(translate_number) <> 9 Then
 '        MsgBox ("有効な学籍番号を入力してください")
         stunum_error.Show
         number_valid = number_valid + 1
-        textbox_name = ""
-        Exit Sub
+        translate_number = -1
+        Exit Function
     End If
 End If
 
-End Sub
+End Function
 Public Sub keypressrestrict(ByVal KeyAscii As MSForms.ReturnInteger)
 'キー入力でM、D、Sと数字以外が入力できないようにしてる
 If Chr(KeyAscii) < "0" Or Chr(KeyAscii) > "9" And Chr(KeyAscii) <> "M" And Chr(KeyAscii) <> "D" And Chr(KeyAscii) <> "m" And Chr(KeyAscii) <> "d" And Chr(KeyAscii) <> "s" And Chr(KeyAscii) <> "S" Then
@@ -247,15 +248,15 @@ For i = 0 To data_number
 '                    Dim inputpass As String
 '                    inputpass = InputBox("予約を続ける場合はLAを呼び、パスコードの入力を依頼してください", "パスコードの入力")
 '                    If inputpass = passcord Then
-                    Call passcord_inputform
-                    If passcord_input = passcord Then
+                    Dim get_pass As Integer
+                    get_pass = passcord_inputform
+                    If get_pass = 0 Then
                         Exit For
-                    ElseIf passcord_input = "" Then
-                        MsgBox ("予約画面に移動します。")
+                    ElseIf get_pass = 1 Then
+                        MsgBox ("パスコードが一致しません。予約画面に移動します。")
                         res_duplicate_check = False
                         Exit Function
-                    Else
-                        MsgBox ("パスコードが一致しません。予約画面に移動します。")
+                    ElseIf get_pass = 2 Then
                         res_duplicate_check = False
                         Exit Function
                     End If

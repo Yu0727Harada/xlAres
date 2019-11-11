@@ -40,7 +40,7 @@ Else
     現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
     Dim 予約確認 As Integer
     Dim CNT(10) As Integer
-    Dim 学籍番号リスト(10) As Variant
+    Dim student_number_list(10) As Variant
     Dim cable_check As Boolean
     Dim j As Integer
     Dim k As Integer
@@ -50,7 +50,7 @@ Else
     
     j = 0
     While Sheets("生データ").Cells(現在の位置, j + 6) <> ""
-            学籍番号リスト(j) = Sheets("生データ").Cells(現在の位置, j + 6)
+            student_number_list(j) = Sheets("生データ").Cells(現在の位置, j + 6)
             j = j + 1
     Wend
 
@@ -61,7 +61,7 @@ Else
 End If
 
     Call check_res_day
-    Call check_res_num(学籍番号リスト(), data_num, CNT())
+    Call check_res_num(student_number_list(), data_num, CNT())
     
     Dim bl_res_dup_check As Boolean
     bl_res_dup_check = res_duplicate_check(j - 1, 0, CNT())
@@ -71,7 +71,7 @@ End If
     End If
 
     Dim bl_res_input As Boolean
-    bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, 学籍番号リスト(), j - 1)
+    bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, student_number_list(), j - 1)
     
     Unload 予約変更フォーム
 

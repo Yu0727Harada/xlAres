@@ -17,7 +17,7 @@ Private Sub CommandButton1_Click()
 
 Dim —\–ñƒR[ƒh As Long
 Dim Œ»İ‚ÌˆÊ’u As Long
-Dim Šm”F”Ô† As String
+Dim confirm_number As Variant
 Set duplicate = Worksheets("d•¡ƒ`ƒFƒbƒN")
 Dim search_stu_row
 Dim i As Integer
@@ -44,11 +44,15 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
     
     'ƒeƒLƒXƒgƒ{ƒbƒNƒX‚ğ•ÏŠ·‚·‚é‘O‚ÉƒpƒXƒR[ƒh‚ª“ü—Í‚³‚ê‚Ä‚¢‚é‚©‚ğê‡•ª‚¯‚·‚é
     
-    Call textbox_restrict(TextBox1, Šm”F”Ô†)
+'    Call textbox_restrict(TextBox1, Šm”F”Ô†)
+    confirm_number = translate_number(TextBox1)
     '“ü—Í‚³‚ê‚½”Ô†‚ğ•ÏŠ·‚·‚é
     
-    If Šm”F”Ô† = "" Then
+    If confirm_number = "" Then
         MsgBox ("ŠwĞ”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
+        Exit Sub
+    ElseIf confirm_number = -1 Then
+        TextBox1 = ""
         Exit Sub
     End If
     If number_valid <> 0 Then
