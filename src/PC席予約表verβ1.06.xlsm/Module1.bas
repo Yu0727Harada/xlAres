@@ -363,7 +363,7 @@ For Each shp In Sheets("メイン").shapes
     End If
 Next
 
-Call Sheets("メイン").Protect(UserInterfaceOnly:=True)
+Call Sheets("メイン").protect(UserInterfaceOnly:=True)
 
 End Function
 
@@ -384,6 +384,17 @@ Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
 'tm変数に一分後をセット
 'ontime関数で一分後にまたrecalプロシージャを実行
 'なぜかシートモジュールにrecalプロシージャを書くとうまくいかない
+
+End Sub
+ 
+Private Sub Auto_open()
+Application.Calculate
+If ActiveSheet.Name = "メイン" Then
+    Call shift_output_mainsheet(Time)
+    Call Sheets("メイン").protect(UserInterfaceOnly:=True) 'シートの保護
+    Call sheet_color_check
+    Call recal
+End If
 
 End Sub
 

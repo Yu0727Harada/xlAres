@@ -95,3 +95,82 @@ Sub limit_res_on_off_pass()
     
 End Sub
 
+Sub formulabar_display()
+
+If Application.DisplayFormulaBar = True Then
+    Application.DisplayFormulaBar = False
+Else
+    Application.DisplayFormulaBar = True
+End If
+
+End Sub
+
+Sub headings_display()
+
+If ActiveWindow.DisplayHeadings = True Then
+    ActiveWindow.DisplayHeadings = False
+Else
+    ActiveWindow.DisplayHeadings = True
+End If
+
+End Sub
+
+Sub statusbar_display()
+If Application.DisplayStatusBar = True Then
+    Application.DisplayStatusBar = False
+Else
+    Application.DisplayStatusBar = True
+End If
+
+End Sub
+
+Sub scrollbar_display()
+Dim inputpass As String
+    inputpass = InputBox("パスコードを入力してください", "パスコードの入力")
+    If inputpass = passcord Then
+        If Application.DisplayScrollBars = True Then
+            Application.DisplayScrollBars = False
+        Else
+            Application.DisplayScrollBars = True
+        End If
+   ElseIf inputpass = "" Then
+    
+    Else
+        MsgBox ("パスコードが一致しません")
+    End If
+    
+End Sub
+
+Sub tabs_display()
+
+If ActiveWindow.DisplayWorkbookTabs = True Then
+    ActiveWindow.DisplayWorkbookTabs = False
+Else
+    ActiveWindow.DisplayWorkbookTabs = True
+End If
+
+End Sub
+
+Sub un_protect()
+Call Sheets("メイン").Unprotect
+End Sub
+
+Sub protect()
+Call Sheets("メイン").protect(UserInterfaceOnly:=True)
+End Sub
+
+Sub ribbon_display()
+
+Application.ExecuteExcel4Macro "SHOW.TOOLBAR(""Ribbon"",True)"
+
+End Sub
+
+Sub ribbon_undisplay()
+
+Application.ExecuteExcel4Macro "SHOW.TOOLBAR(""Ribbon"",False)"
+
+End Sub
+
+Sub vbe_open()
+Application.VBE.Windows(1).SetFocus
+End Sub

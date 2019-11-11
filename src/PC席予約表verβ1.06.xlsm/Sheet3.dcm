@@ -11,7 +11,7 @@ Attribute VB_Exposed = True
 Private Sub Worksheet_Activate()
 
 Call shift_output_mainsheet(Time)
-Call Sheets("メイン").Protect(UserInterfaceOnly:=True) 'シートの保護
+Call Sheets("メイン").protect(UserInterfaceOnly:=True) 'シートの保護
 Call sheet_color_check
 Call recal
 'シートがactiveになった場合recalプロシージャに行く
@@ -30,11 +30,10 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
 If Target.count > 1 Then
-
-If Range(cell_corsor_move).Value = "on" Then
-    Range(corsor_move_target).Select
-End If
-End
+    If Range(cell_corsor_move).Value = "on" Then
+        Range(corsor_move_target).Select
+    End If
+    End
 End If
 
 If Not (Target.Row >= res_table_start_row And Target.Row < res_table_start_row + res_table_width_row And Target.Column >= res_table_start_colomn And Target.Column < res_table_start_colomn + res_table_width_colomn) Then
@@ -74,17 +73,17 @@ End If
 '予約フォームでの処理のために連続可能かという変数に次の時間が予約済みかと、閉室後でないかどうかでTRUEかFALSEかを入れておく
 
 If Range(date_sheet).Value = Date And Range(master_on_off).Value = "off" Then
-    If (InStr(Target.Text, "予約済") > 0 Or InStr(Target.Text, "使用中") > 0) And Target.Column > on_time Then
+    If (InStr(Target.Text, "予約済") > 0 Or InStr(Target.Text, "使用中") > 0) And Target.Column - 2 >= on_time Then
         予約変更フォーム.Show
     '    予約済のセルの場合は予約変更フォームを開く
-    ElseIf Target.Text = "" And Target.Column > on_time And Range(limit_res_on_off) = "off" Then
+    ElseIf Target.Text = "" And Target.Column - 2 = on_time And Range(limit_res_on_off).Value = "on" Then
+          予約フォーム.Show
+    ElseIf Target.Text = "" And Target.Column - 2 >= on_time And Range(limit_res_on_off) = "off" Then
           予約フォーム.Show
         'セルが空白だった場合は予約フォームを開く
-    ElseIf Target.Text = "" And Target.Column - 1 = on_time And Range(limit_res_on_off).Value = "on" Then
-          予約フォーム.Show
-    ElseIf Target.Text = "" And Target.Column > on_time And Range(limit_res_on_off).Value = "on" Then
+    ElseIf Target.Text = "" And Target.Column - 2 > on_time And Range(limit_res_on_off).Value = "on" Then
             limit_res_inform.Show
-    ElseIf InStr(Target.Text, "貸出中") > 0 And Target.Column <= on_time Then
+    ElseIf InStr(Target.Text, "貸出中") > 0 And Target.Column - 2 < on_time Then
         Call cable
     End If
 ElseIf Range(date_sheet).Value > Date Then
