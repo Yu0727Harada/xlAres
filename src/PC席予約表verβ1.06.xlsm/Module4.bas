@@ -10,7 +10,7 @@ Dim shift_month As Range
 Application.Calculation = xlCalculationManual
 
 Dim wb As Workbook
-Set wb = Workbooks(Application.ThisWorkbook.Name)
+Set wb = Workbooks(Application.ThisWorkbook.name)
 
 Dim Open_Filepath As String
 Open_Filepath = Application.GetOpenFilename

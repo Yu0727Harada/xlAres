@@ -218,73 +218,55 @@ End Sub
 Public Sub shift_output_mainsheet(ByVal now_time As Date)
 '現在のシフトを取得して、シフトの変更があったらシフトを表示するセルのオブジェクトを削除してあらたにプロフィールを出力する
 
-Dim j As Integer
-Dim now_date As Date
-Dim search As Integer
-Dim end_time As Date
-Dim start_time As Date
-Dim Shift() As Integer
-Dim shp As Shape
-Dim rng As Range
-Dim k As Integer
-Dim l As Integer
-j = 0
-ReDim Preserve Shift(0)
-Dim shift_time_end As Range
+'Dim now_date As Date
+'Dim search As Integer
+'Dim end_time As Date
+'Dim start_time As Date
+Dim shift() As Integer
+Dim shift_row_list() As Integer
+'Dim j As Integer
 
-On Error GoTo object_error
-Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
-On Error GoTo 0
+'ReDim Preserve shift(0)
+'Dim shift_time_end As Range
 
-Dim shift_row As Integer
+'On Error GoTo object_error
+'Set shift_time_end = Sheets("シフト表").Columns(勤務時間帯終了)
+'On Error GoTo 0
+'j = 0
 
-   now_date = Date 'Dateはコンピューター上の日付
-   On Error GoTo sheet_cal_error
-    search = WorksheetFunction.Match(CDbl(now_date), shift_time_end, 1) + 1 '   CDblで型を変換しないとうまくmatch検索できない｡
-    On Error GoTo 0
-    If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'doble型だと時刻まで含、Int型なら日付のみになる
-'            '日付が一致しない場合、すなわちその日のシフトがなかった場合の処理
-'            k = 0
-'            For k = 0 To 5 '同時に勤務する人数の最大値５までループを回してメインシートの番号を出力するところが空白でないなら０を入力
-'                'If Cells(now_shift_number_row, now_shift_number_column + k).Value <> Shift(k) Then
-'                '    Cells(now_shift_number_row, now_shift_number_column + k).Value = Shift(k)
-'                If Cells(now_shift_number_row, now_shift_number_column + k).Value <> 0 Then
-'                    Cells(now_shift_number_row, now_shift_number_column + k).Value = 0
+'   now_date = Date 'Dateはコンピューター上の日付
+'   On Error GoTo sheet_cal_error
+'    search = WorksheetFunction.Match(CDbl(now_date), shift_time_end, 1) + 1 '   CDblで型を変換しないとうまくmatch検索できない｡
+'    On Error GoTo 0
+'    If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'doble型だと時刻まで含、Int型なら日付のみになる
+'
+'    Else '日付が一致した場合、すなわち当日のシフトがにゅうりょくされていたばあい
+'        Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) '
+'            end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
+'            start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
+'            If now_time < end_time And now_time > start_time Then
+'                ReDim Preserve shift(j + 1)
+'                shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+'                j = j + 1
+'                If j > 5 Then 'シフト人数が５人より多い場合はループを抜ける
+'                    Exit Do
 '                End If
-'            Next k
-'
-'            For k = 0 To shift_profile_count  '表示されているプロフィールを削除
-'                Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
-'            Next k
-'
-''            shift_row = WorksheetFunction.Match(0, Sheets("出力").Cells(1, 1).EntireColumn, 1)
-''            If 0 <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
-''                MsgBox ("エラー番号２０２　番号が出力シートに存在しません。このまま処理を実行します")
-''            Else
-''                Sheets("出力").Cells(1, 2).CopyPicture
-''                Sheets("メイン").Paste Cells(now_shift_menber_profile_output_row, now_shift_menber_profile_output_column)
-''
-'                Exit Sub
 '            End If
-    Else '日付が一致した場合、すなわち当日のシフトがにゅうりょくされていたばあい
-        Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) '
-            end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
-            start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
-            If now_time < end_time And now_time > start_time Then
-                ReDim Preserve Shift(j + 1)
-                Shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
-                j = j + 1
-                If j > 5 Then 'シフト人数が５人より多い場合はループを抜ける
-                    Exit Do
-                End If
-            End If
-            search = search + 1
-        Loop
-
-    End If
+'            search = search + 1
+'        Loop
+'
+'    End If
             
+   Call get_shift(Time, Date, shift(), shift_row_list())
+    
     Dim profile_count As Integer '表示したプロフィールの数を記録
     profile_count = 0
+    
+    Dim k As Integer
+    Dim l As Integer
+    Dim shp As Shape
+    Dim rng As Range
+    Dim shift_row As Integer
     
     For k = 0 To shift_profile_count  '表示されているプロフィールを削除
             On Error GoTo object_error
@@ -292,7 +274,7 @@ Dim shift_row As Integer
             On Error GoTo 0
     Next k
     
-    If UBound(Shift) = 0 Then 'シフト配列の要素数が０かどうか
+    If UBound(shift) = 0 Then 'シフト配列の要素数が０かどうか
         On Error GoTo nothingzero
         shift_row = WorksheetFunction.Match(0, Sheets("出力").Cells(1, 1).EntireColumn, 1)
         On Error GoTo 0
@@ -302,13 +284,13 @@ Dim shift_row As Integer
             End If
     Else
         'Call Quick_sort_single(Shift(), 0, UBound(Shift))
-        For l = 0 To UBound(Shift) 'シフト配列の要素数だけ回す
+        For l = 0 To UBound(shift) 'シフト配列の要素数だけ回す
             'If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then 'シフト番号の変化がないなら以下の操作はしない
-                Cells(now_shift_number_row, now_shift_number_column + l).Value = Shift(l)
+                Cells(now_shift_number_row, now_shift_number_column + l).Value = shift(l)
                 
-                If profile_count < shift_profile_count And Shift(l) <> 0 Then 'まだプロフィール表示数が設定以下かつシフト番号が０以外なら以下の処理を行う
-                    shift_row = WorksheetFunction.Match(Shift(l), Sheets("出力").Cells(1, 1).EntireColumn, 1)
-                    If Shift(l) <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
+                If profile_count < shift_profile_count And shift(l) <> 0 Then 'まだプロフィール表示数が設定以下かつシフト番号が０以外なら以下の処理を行う
+                    shift_row = WorksheetFunction.Match(shift(l), Sheets("出力").Cells(1, 1).EntireColumn, 1)
+                    If shift(l) <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
                         MsgBox ("エラー番号２０２　番号が出力シートに存在しません。このまま処理を実行します")
                     Else
                         Sheets("出力").Cells(shift_row, 2).CopyPicture
@@ -328,7 +310,7 @@ Dim shift_row As Integer
 '
 
 Dim m As Integer
-m = UBound(Shift) '前に表示していたシフトの人数が今のシフトの人数が多かったら前のシフトのコントロールパネルの要素数を削除
+m = UBound(shift) '前に表示していたシフトの人数が今のシフトの人数が多かったら前のシフトのコントロールパネルの要素数を削除
 Do While Cells(now_shift_number_row, now_shift_number_column + m) <> ""
     Cells(now_shift_number_row, now_shift_number_column + m).Value = ""
     m = m + 1
@@ -349,13 +331,60 @@ Resume Next
                 
 End Sub
 
+Sub get_shift(ByVal now_time As Date, now_date As Date, ByRef shift() As Integer, ByRef shift_row() As Integer)
+
+Dim search As Integer
+Dim end_time As Date
+Dim start_time As Date
+Dim j As Integer
+Dim shift_time_end As Range
+
+On Error GoTo object_error
+Set shift_time_end = Sheets("シフト表").Columns(shift_table.勤務時間帯終了)
+On Error GoTo 0
+ReDim Preserve shift(0)
+ReDim Preserve shift_row(0)
+On Error GoTo sheet_cal_error
+search = WorksheetFunction.Match(CDbl(now_date), shift_time_end, 1) + 1 '   CDblで型を変換しないとうまくmatch検索できない｡
+On Error GoTo 0
+If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'doble型だと時刻まで含、Int型なら日付のみになる
+ 
+Else '日付が一致した場合、すなわち当日のシフトがにゅうりょくされていたばあい
+     j = 0
+     Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) '
+         end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
+         start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
+         If now_time < end_time And now_time > start_time Then
+             ReDim Preserve shift(j + 1)
+             ReDim Preserve shift_row(j + 1)
+             shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+             shift_row(j) = search
+             j = j + 1
+             If j > 5 Then 'シフト人数が５人より多い場合はループを抜ける
+                 Exit Do
+             End If
+         End If
+         search = search + 1
+     Loop
+
+End If
+
+
+Exit Sub
+sheet_cal_error:
+search = 2
+Resume Next
+object_error:
+Exit Sub
+End Sub
+
 Function shapes_delete(ByVal delete_area As Range)
 '対象の範囲にある図形を削除。ただし図形の名前がstateの場合は削除しない
 
 Call Sheets("メイン").Unprotect
 For Each shp In Sheets("メイン").shapes
     Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
-    If shp.Name <> "state" Then
+    If shp.name <> "state" Then
         If Not (Intersect(rng, delete_area) Is Nothing) Then
             shp.Delete
         End If
@@ -387,7 +416,7 @@ End Sub
  
 Private Sub Auto_open()
 Application.Calculate
-If ActiveSheet.Name = "メイン" Then
+If ActiveSheet.name = "メイン" Then
     Call shift_output_mainsheet(Time)
     Call Sheets("メイン").protect(UserInterfaceOnly:=True) 'シートの保護
     Call sheet_color_check

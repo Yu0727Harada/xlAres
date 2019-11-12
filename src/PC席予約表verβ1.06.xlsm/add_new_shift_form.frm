@@ -19,8 +19,6 @@ Option Explicit
 
 Private Sub CommandButton1_Click()
 
-MsgBox (ComboBox1.ListIndex)
-MsgBox (ComboBox2.ListIndex)
 If ComboBox2.ListIndex = -1 Then
     MsgBox ("名前を選択してください")
     Exit Sub
@@ -49,7 +47,7 @@ With Worksheets("シフト表")
 End With
 
 MsgBox ("シフトに追加しました")
-
+Call shift_output_mainsheet(Time)
 Unload add_new_shift_form
 
 Exit Sub
@@ -81,4 +79,7 @@ With ComboBox2
         i = i + 1
     Wend
 End With
+
+ComboBox2.ListRows = 5
+
 End Sub

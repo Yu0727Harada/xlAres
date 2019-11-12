@@ -54,7 +54,7 @@ i = 1
             .Line.Visible = False
                 With .TextFrame.Characters.Font  'テキストボックスのフォントの設定
                             .Size = 14
-                            .Name = "源ノ角ゴシック JP"
+                            .name = "源ノ角ゴシック JP"
                 End With
         End With
         
@@ -74,7 +74,7 @@ i = 1
             .Line.Visible = False
                 With .TextFrame.Characters.Font 'フォントの設定
                             .Size = 10
-                            .Name = "源ノ角ゴシック JP"
+                            .name = "源ノ角ゴシック JP"
                 End With
         End With
         

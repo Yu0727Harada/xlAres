@@ -252,3 +252,9 @@ add_new_shift_form.Show
 
 
 End Sub
+
+Public Sub edit_shift()
+
+edit_shift_form.Show
+
+End Sub
