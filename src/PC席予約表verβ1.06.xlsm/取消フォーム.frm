@@ -45,7 +45,7 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
     'ƒeƒLƒXƒgƒ{ƒbƒNƒX‚ğ•ÏŠ·‚·‚é‘O‚ÉƒpƒXƒR[ƒh‚ª“ü—Í‚³‚ê‚Ä‚¢‚é‚©‚ğê‡•ª‚¯‚·‚é
     
 '    Call textbox_restrict(TextBox1, Šm”F”Ô†)
-    confirm_number = translate_number(TextBox1)
+    confirm_number = translate_number(TextBox1, 1)
     '“ü—Í‚³‚ê‚½”Ô†‚ğ•ÏŠ·‚·‚é
     
     If confirm_number = "" Then
@@ -64,7 +64,7 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
 '    If Šm”F”Ô† = Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, i).Value Then
 
     Dim result_list As Variant
-    result_list = Filter(target_stu_list, Int(Šm”F”Ô†))
+    result_list = Filter(target_stu_list, Int(confirm_number))
     If UBound(result_list) <> -1 Then
         Call Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, 1).EntireRow.Delete(xlShiftUp)
         '        —\–ñ‚µ‚½ƒf[ƒ^‚ğíœ
@@ -76,7 +76,22 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
         Unload æÁƒtƒH[ƒ€
         Exit Sub
     End If
-
+    
+    Dim search As Integer
+    On Error GoTo error_nothing
+    search = WorksheetFunction.Match(Int(confirm_number), Sheets("passcord").Cells(1, 1).EntireColumn, 1)
+    On Error GoTo 0
+    If Int(confirm_number) = WorksheetFunction.Index(Sheets("passcord").Cells(1, 1).EntireColumn, search) Then
+        Call Sheets("¶ƒf[ƒ^").Cells(Œ»İ‚ÌˆÊ’u, 1).EntireRow.Delete(xlShiftUp)
+        '        —\–ñ‚µ‚½ƒf[ƒ^‚ğíœ
+        Call delete_res_num(target_stu_list, i - 1)
+        Worksheets("ƒƒCƒ“").EnableCalculation = True
+        Application.Calculate
+'        MsgBox ("—\–ñ‚ğæ‚èÁ‚µ‚Ü‚µ‚½")
+        delete_confirm.Show
+        Unload æÁƒtƒH[ƒ€
+        Exit Sub
+    End If
     
     '‰½–‚à‚È‚­ƒ‹[ƒv‚ğ‚Å‚½‚ç“ü—Í‚µ‚½“à—e‚ğíœ
     MsgBox ("ŠwĞ”Ô†‚ªˆê’v‚µ‚Ü‚¹‚ñB‚à‚¤ˆê“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
@@ -85,6 +100,12 @@ If —\–ñƒR[ƒh = WorksheetFunction.Index(Sheets("¶ƒf[ƒ^").Range("D:D"), Œ»İ‚Ìˆ
 Else
     MsgBox ("—\–ñ‚ª‚ ‚è‚Ü‚¹‚ñBLA‚ÉŠm”F‚ğˆË—Š‚µ‚Ä‚­‚¾‚³‚¢BƒGƒ‰[”Ô†‚P‚O‚R")
 End If
+
+Exit Sub
+
+error_nothing:
+search = 1
+Resume Next
 
 End Sub
 

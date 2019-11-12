@@ -114,10 +114,10 @@ Dim Okcancel As Integer
     End If
 End If
 With wb.Worksheets("シフト表")
-.Activate
-.Range(Cells(search_up, 1), Cells(search_up + UBound(Shift_data_aray_trans, 1) - 1, 1)).EntireRow.Insert
-'.Resize(UBound(Shift_data_aray_trans, 1), 3).NumberFormatLocal = "G/標準"
-.Range("A1").Offset(search_up - 1, 0).Resize(UBound(Shift_data_aray_trans, 1), 3) = Shift_data_aray_trans
+    .Activate
+    .Range(Cells(search_up, 1), Cells(search_up + UBound(Shift_data_aray_trans, 1) - 1, 1)).EntireRow.Insert
+    '.Resize(UBound(Shift_data_aray_trans, 1), 3).NumberFormatLocal = "G/標準"
+    .Range("A1").Offset(search_up - 1, 0).Resize(UBound(Shift_data_aray_trans, 1), 3) = Shift_data_aray_trans
 End With
 
 Application.Calculation = xlCalculationAutomatic

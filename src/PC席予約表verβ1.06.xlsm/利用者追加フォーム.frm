@@ -60,23 +60,23 @@ Dim student_number_9 As Variant
 Dim student_number_10 As Variant
 
 
-student_number_6 = translate_number(学籍番号テキストボックス6)
+student_number_6 = translate_number(学籍番号テキストボックス6, 1)
 If student_number_6 = -1 Then
     学籍番号テキストボックス6 = ""
 End If
-student_number_7 = translate_number(学籍番号テキストボックス7)
+student_number_7 = translate_number(学籍番号テキストボックス7, 1)
 If student_number_7 = -1 Then
     学籍番号テキストボックス7 = ""
 End If
-student_number_8 = translate_number(学籍番号テキストボックス8)
+student_number_8 = translate_number(学籍番号テキストボックス8, 1)
 If student_number_8 = -1 Then
     学籍番号テキストボックス8 = ""
 End If
-student_number_9 = translate_number(学籍番号テキストボックス9)
+student_number_9 = translate_number(学籍番号テキストボックス9, 1)
 If student_number_9 = -1 Then
     学籍番号テキストボックス9 = ""
 End If
-student_number_10 = translate_number(学籍番号テキストボックス10)
+student_number_10 = translate_number(学籍番号テキストボックス10, 1)
 If student_number_10 = -1 Then
     学籍番号テキストボックス10 = ""
 End If

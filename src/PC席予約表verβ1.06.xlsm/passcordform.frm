@@ -24,4 +24,5 @@ End Sub
 
 Private Sub UserForm_Initialize()
 TextBox1.PasswordChar = "*"
+passcord_input = -1
 End Sub

@@ -21,3 +21,7 @@ Private Sub CommandButton1_Click()
 Unload delete_confirm
 
 End Sub
+
+Private Sub Label2_Click()
+
+End Sub

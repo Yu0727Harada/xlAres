@@ -11,10 +11,11 @@ student_num_start
 
 End Enum
 
-Function translate_number(ByVal raw_number As String)
+Function translate_number(ByVal raw_number As String, option_number As Integer)
 'テキストボックスに入力された番号を変換するプロシージャ
 'student_numberのデータ型はvaliantじゃないとダメ。桁数がおおいので。
 'when raw_number is a invalid number,this procedure return -1
+'option_number 0の時は無効な学籍番号が入力されてもエラーメッセージを表示しない。１の時はエラーメッセージを表示する
 
 Dim enter_year As Integer
 Dim subject As Integer
@@ -36,8 +37,9 @@ If Len(raw_number) = 7 Then
     If IsNumeric(Mid(raw_number, 3, 2)) = True Then
         enter_year = Mid(raw_number, 3, 2)
     Else
-'        MsgBox ("有効な学籍番号を入力してください")
-        stunum_error.Show
+        If option_number = 1 Then
+            stunum_error.Show
+        End If
         number_valid = number_valid + 1
         translate_number = -1
         Exit Function
@@ -54,8 +56,9 @@ If Len(raw_number) = 7 Then
         ElseIf Mid(raw_number, 1, 2) = "51" Then
             subject = 2101
         ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
-            stunum_error.Show
-'            MsgBox ("有効な学籍番号を入力してください")
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -63,8 +66,9 @@ If Len(raw_number) = 7 Then
             subject = 2099        '2099は予想しない学籍番号来た場合のワイルドカード
         End If
         If IsNumeric(Mid(raw_number, 6, 2)) = False Then
-'            MsgBox ("有効な学籍番号を入力してください")
-            stunum_error.Show
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -83,8 +87,9 @@ If Len(raw_number) = 7 Then
         ElseIf Mid(raw_number, 1, 2) = "51" Then
             subject = 2111
         ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
-'            MsgBox ("有効な学籍番号を入力してください")
-            stunum_error.Show
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -92,8 +97,9 @@ If Len(raw_number) = 7 Then
             subject = 2199  'ワイルドカード
         End If
         If IsNumeric(Mid(raw_number, 6, 2)) = False Then
-'                MsgBox ("有効な学籍番号を入力してください")
-            stunum_error.Show
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -107,8 +113,9 @@ If Len(raw_number) = 7 Then
         ElseIf Mid(raw_number, 1, 2) = 11 Then
             subject = 2521
         ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
-'                MsgBox ("有効な学籍番号を入力してください")
-            stunum_error.Show
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -117,8 +124,9 @@ If Len(raw_number) = 7 Then
         End If
             
         If IsNumeric(Mid(raw_number, 6, 2)) = False Then
-'               MsgBox ("有効な学籍番号を入力してください")
-            stunum_error.Show
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -134,8 +142,9 @@ If Len(raw_number) = 7 Then
         ElseIf Mid(raw_number, 1, 2) = 11 Then
             subject = 2521
         ElseIf IsNumeric(Mid(raw_number, 1, 2)) = False Then
-'                MsgBox ("有効な学籍番号を入力してください")
-            stunum_error.Show
+            If option_number = 1 Then
+                stunum_error.Show
+            End If
             number_valid = number_valid + 1
             translate_number = -1
             Exit Function
@@ -143,8 +152,9 @@ If Len(raw_number) = 7 Then
             subject = 2599 'ワイルドカード
         End If
             If IsNumeric(Mid(raw_number, 6, 2)) = False Then
-'                    MsgBox ("有効な学籍番号を入力してください")
-                stunum_error.Show
+                If option_number = 1 Then
+                    stunum_error.Show
+                End If
                 number_valid = number_valid + 1
                 translate_number = -1
                 Exit Function
@@ -173,21 +183,24 @@ If raw_number <> "" Then
 'テキストボックスに何も入力されていない場合は処理を行わない
     
     If translate_number <= 0 Then
-'        MsgBox ("有効な学籍番号を入力してください")
-        stunum_error.Show
+        If option_number = 1 Then
+            stunum_error.Show
+        End If
         number_valid = number_valid + 1
         translate_number = -1
         ''0以下が入力された場合はテキストボックスを空にした入力フォームに戻る
     Exit Function
     ElseIf IsNumeric(translate_number) = False And translate_number <> "" Then
-'        MsgBox ("有効な学籍番号を入力してください")
-        stunum_error.Show
+        If option_number = 1 Then
+            stunum_error.Show
+        End If
         number_valid = number_valid + 1
         translate_number = -1
         Exit Function
     ElseIf Len(translate_number) <> 9 Then
-'        MsgBox ("有効な学籍番号を入力してください")
-        stunum_error.Show
+        If option_number = 1 Then
+            stunum_error.Show
+        End If
         number_valid = number_valid + 1
         translate_number = -1
         Exit Function
@@ -209,9 +222,9 @@ Public Sub cable()
     search_target_code = resreve_day * 100 + 時間帯 * 10 + 席番号
     result_row = WorksheetFunction.Match(search_target_code, Sheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, 1)
     If Sheets("生データ").Cells(result_row, data_sheet.cable_frag).Value = 0 Then
-                Sheets("生データ").Cells(result_row, data_sheet.cable_frag).Value = 1
+        Sheets("生データ").Cells(result_row, data_sheet.cable_frag).Value = 1
     Else
-                Sheets("生データ").Cells(result_row, data_sheet.cable_frag).Value = 0
+        Sheets("生データ").Cells(result_row, data_sheet.cable_frag).Value = 0
     End If
 
 End Sub
@@ -253,10 +266,10 @@ For i = 0 To data_number
                     If get_pass = 0 Then
                         Exit For
                     ElseIf get_pass = 1 Then
-                        MsgBox ("パスコードが一致しません。予約画面に移動します。")
+                        'MsgBox ("パスコードが一致しません。予約画面に移動します。")
                         res_duplicate_check = False
                         Exit Function
-                    ElseIf get_pass = 2 Then
+                    ElseIf get_pass = 2 Or get_pass = 3 Then
                         res_duplicate_check = False
                         Exit Function
                     End If

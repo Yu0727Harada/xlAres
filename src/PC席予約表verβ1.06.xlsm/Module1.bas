@@ -25,8 +25,8 @@ Public Const res_table_width_row As Integer = 5 '予約表の長さ＝席番号の数
 Public Const res_table_width_colomn As Integer = 7 '予約表のながさ＝利用時間の区間数
 Public Const now_shift_number_row As Integer = 7 'LAコントロール部分の現在のシフトNoを表示するセルの行の位置
 Public Const now_shift_number_column As Integer = 20 '上の列の位置。現状はこの左に順に表示されます
-Public Const on_time_output As String = "AC2"
-Public Const time_for_dup_sheet As String = "AE4"
+Public Const on_time_output As String = "AC2" '時間帯コードの入るセル
+Public Const time_for_dup_sheet As String = "AE4" '予約している番号を表示する表の時刻設定
 
 Public Const now_shift_menber_profile_output_row As Integer = 5 'プロフィールを表示するセルの行
 Public Const now_shift_menber_profile_output_column As Integer = 11 '上の列
@@ -49,49 +49,48 @@ Enum shift_table
 End Enum
 
 
-Public Sub setting_time()
+'Public Sub setting_time()
+Function setting_time(ByVal now_time As Date)
 '現在の時刻がコマごとにした場合いくつになるか入力するプロシージャ
 
-Dim now_time As Date
-
 '違うブックをひらいて作業している場合はメインシートが見つからないためエラーになるので、エラー回避
-On Error GoTo sheet_cal_error
-now_time = Sheets("メイン").Range(time_sheet).Value
-On Error GoTo 0
+'On Error GoTo sheet_cal_error
+'now_time = Sheets("メイン").Range(time_sheet).Value
+'On Error GoTo 0
 
 '現在の時刻（メインシートに入っている時刻）≠PCの設定時刻ではない　の時間帯コードを返す。数字は時刻のシリアル値
 If now_time < 0.375 Then '-9:00
-    on_time = 0
+    setting_time = 0
 ElseIf 0.375 < now_time And now_time < 0.4375 Then '9:00-10:30
-    on_time = 1
+    setting_time = 1
 ElseIf 0.4375 < now_time And now_time <= 0.50694444 Then '10:30-12:10
-    on_time = 2
+    setting_time = 2
 ElseIf 0.5069444 < now_time And now_time <= 0.5416 Then '12:10-13:00
-    on_time = 3
+    setting_time = 3
 ElseIf 0.5416 < now_time And now_time <= 0.60416 Then '13:00-14:30
-    on_time = 4
+    setting_time = 4
 ElseIf 0.60416 < now_time And now_time <= 0.6736 Then '14:30-16:10
-    on_time = 5
+    setting_time = 5
 ElseIf 0.6736 < now_time And now_time <= 0.74305 Then '16:10-17:50
-    on_time = 6
+    setting_time = 6
 ElseIf 0.74305 < now_time And now_time <= 0.79166 Then '17:50-19:00
-    on_time = 7
+    setting_time = 7
 ElseIf 0.79166 < now_time Then '19:00-
-    on_time = 8
+    setting_time = 8
 End If
 
 'Timeを用いればコンピューター時計準拠に､
 '変数now_timeを使えばセルでいじれます
+'
+'Sheets("メイン").Range(on_time_output).Value = on_time
+'Sheets("メイン").Range(time_for_dup_sheet).Value = on_time
 
-Sheets("メイン").Range(on_time_output).Value = on_time
-Sheets("メイン").Range(time_for_dup_sheet).Value = on_time
-
-Exit Sub
+Exit Function
 
 
 sheet_cal_error:
-Exit Sub
-End Sub
+Exit Function
+End Function
 
 Function get_view_string(ByVal time_number As Integer)
 
@@ -125,7 +124,7 @@ Dim 色セルのcolumn As Integer
 色セルのRow = res_table_start_row
 色セルのcolumn = res_table_start_colomn
 
-Call setting_time
+'Call setting_time
 
 
 On Error GoTo diffrent_book
@@ -133,7 +132,7 @@ With Sheets("メイン")
 Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     Do While 色セルのRow < res_table_start_row + res_table_width_row
         On Error GoTo Sheet_protect_error
-        If on_time > 色セルのcolumn - 2 And .Range("K2") = Date Then
+        If Sheets("メイン").Range(on_time_output).Value > 色セルのcolumn - 2 And .Range("K2") = Date Then
             If InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "予約済") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 109, 37) '黄色（影）
             ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用済") > 0 And InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
@@ -374,8 +373,7 @@ Application.Calculate
 'シートの再計算を行う
 Call shift_check
  Application.Calculate
-Call setting_time
-Application.Calculate
+'Call setting_time
 Call sheet_color_check
 Application.Calculate
 
@@ -399,7 +397,7 @@ End If
 End Sub
 
 Function passcord_inputform()
-
+'0 = true 1=false 2="" 3=×
 passcordform.Show
 If passcord_input = passcord Then
     passcord_inputform = 0
@@ -408,17 +406,21 @@ End If
 
 Dim search As Integer
 
-trans_passcord_input = translate_number(passcord_input)
+trans_passcord_input = translate_number(passcord_input, 0)
 On Error GoTo error_nothing
 search = WorksheetFunction.Match(Int(trans_passcord_input), Sheets("passcord").Cells(1, 1).EntireColumn, 1)
 On Error GoTo 0
 
 If Int(trans_passcord_input) = WorksheetFunction.Index(Sheets("passcord").Cells(1, 1).EntireColumn, search) Then
     passcord_inputform = 0
-
 ElseIf passcord_input = "" Then
+    MsgBox ("パスコードを入力してください")
     passcord_inputform = 2
+ElseIf passcord_input = -1 Then
+    passcord_inputform = 3
+    '×ボタンが押された場合
 Else
+    MsgBox ("パスコードが一致しません")
     passcord_inputform = 1
 End If
 

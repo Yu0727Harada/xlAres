@@ -109,25 +109,25 @@ Dim i As Integer
 Dim j As Integer
 
 i = 0
-    While data.Cells(search_up - i, 1) = duplicate.Cells(1, 1).Value
-        j = 0
-        While data.Cells(search_up - i, data_sheet.student_num_start + j).Value <> ""
-            On Error GoTo error_process_2
-            search_target_Row = WorksheetFunction.Match(data.Cells(search_up - i, data_sheet.student_num_start + j), duplicate.Cells(1, duplicate_sheet.student_num).EntireColumn, 1)
-            On Error GoTo 0
-                If data.Cells(search_up - i, data_sheet.student_num_start + j) = duplicate.Cells(search_target_Row, duplicate_sheet.student_num) Then
-                    duplicate.Cells(search_target_Row, duplicate_sheet.reserve_count) = duplicate.Cells(search_target_Row, duplicate_sheet.reserve_count) + 1
-                Else
-                    duplicate.Rows(search_target_Row + 1).Insert
-                    duplicate.Cells(search_target_Row + 1, duplicate_sheet.student_num) = data.Cells(search_up - i, data_sheet.student_num_start + j)
-                    duplicate.Cells(search_target_Row + 1, duplicate_sheet.reserve_count) = duplicate.Cells(search_target_Row + 1, duplicate_sheet.reserve_count) + 1
-                End If
-            j = j + 1
-        Wend
-        
-        i = i + 1
-        
+While data.Cells(search_up - i, 1) = duplicate.Cells(1, 1).Value
+    j = 0
+    While data.Cells(search_up - i, data_sheet.student_num_start + j).Value <> ""
+        On Error GoTo error_process_2
+        search_target_Row = WorksheetFunction.Match(data.Cells(search_up - i, data_sheet.student_num_start + j), duplicate.Cells(1, duplicate_sheet.student_num).EntireColumn, 1)
+        On Error GoTo 0
+            If data.Cells(search_up - i, data_sheet.student_num_start + j) = duplicate.Cells(search_target_Row, duplicate_sheet.student_num) Then
+                duplicate.Cells(search_target_Row, duplicate_sheet.reserve_count) = duplicate.Cells(search_target_Row, duplicate_sheet.reserve_count) + 1
+            Else
+                duplicate.Rows(search_target_Row + 1).Insert
+                duplicate.Cells(search_target_Row + 1, duplicate_sheet.student_num) = data.Cells(search_up - i, data_sheet.student_num_start + j)
+                duplicate.Cells(search_target_Row + 1, duplicate_sheet.reserve_count) = duplicate.Cells(search_target_Row + 1, duplicate_sheet.reserve_count) + 1
+            End If
+        j = j + 1
     Wend
+    
+    i = i + 1
+    
+Wend
 
 Exit Sub
 

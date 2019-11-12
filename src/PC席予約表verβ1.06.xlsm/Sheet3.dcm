@@ -53,7 +53,7 @@ End If
 'past_able変数がfalseで過去の表だった場合は予約フォームが起動しないようになった
 
 If Range(date_sheet).Value = Date Then
-    Call setting_time
+    on_time = setting_time(Sheets("メイン").Range(time_sheet).Value)
     '標準モジュールのsetting_timeに行ってon_time変数に今の時間はどこまで予約できるかを入れに行く
 End If
     
