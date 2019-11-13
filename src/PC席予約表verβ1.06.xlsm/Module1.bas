@@ -96,17 +96,17 @@ End Function
 
 Function get_view_string(ByVal time_number As Integer)
 
-If Range(date_sheet).Value = Date Then
-    If time_number > Sheets("メイン").Range(on_time_output).Value Then
+If range(date_sheet).Value = Date Then
+    If time_number > Sheets("メイン").range(on_time_output).Value Then
         get_view_string = "予約済"
-    ElseIf time_number = Sheets("メイン").Range(on_time_output).Value Then
+    ElseIf time_number = Sheets("メイン").range(on_time_output).Value Then
         get_view_string = "使用中"
     Else
         get_view_string = "使用済"
     End If
-ElseIf Range(date_sheet).Value > Date Then
+ElseIf range(date_sheet).Value > Date Then
     get_view_string = "予約済"
-ElseIf Range(date_sheet).Value < Date Then
+ElseIf range(date_sheet).Value < Date Then
     get_view_string = "使用済"
 End If
 
@@ -134,7 +134,7 @@ With Sheets("メイン")
 Do While 色セルのcolumn < res_table_start_colomn + res_table_width_colomn
     Do While 色セルのRow < res_table_start_row + res_table_width_row
         On Error GoTo Sheet_protect_error
-        If Sheets("メイン").Range(on_time_output).Value > 色セルのcolumn - 2 And .Range("K2") = Date Then
+        If Sheets("メイン").range(on_time_output).Value > 色セルのcolumn - 2 And .range("K2") = Date Then
             If InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "予約済") > 0 Then
                 .Cells(色セルのRow, 色セルのcolumn).Interior.Color = RGB(104, 109, 37) '黄色（影）
             ElseIf InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "使用済") > 0 And InStr(.Cells(色セルのRow, 色セルのcolumn).Text, "貸出中") > 0 Then
@@ -265,13 +265,13 @@ Dim shift_row_list() As Integer
     profile_count = 0
     
     Dim k As Integer
-    Dim l As Integer
+    Dim L As Integer
  
     Dim shift_row As Integer
     
     For k = 0 To shift_profile_count  '表示されているプロフィールを削除
             On Error GoTo object_error
-            Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)), Sheets("メイン"))
+            Call shapes_delete(Sheets("メイン").range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)), Sheets("メイン"), True)
             On Error GoTo 0
     Next k
     
@@ -285,13 +285,13 @@ Dim shift_row_list() As Integer
             End If
     Else
         'Call Quick_sort_single(Shift(), 0, UBound(Shift))
-        For l = 0 To UBound(shift) 'シフト配列の要素数だけ回す
+        For L = 0 To UBound(shift) 'シフト配列の要素数だけ回す
             'If Cells(now_shift_number_row, now_shift_number_column + L).Value <> Shift(L) Then 'シフト番号の変化がないなら以下の操作はしない
-                Cells(now_shift_number_row, now_shift_number_column + l).Value = shift(l)
+                Cells(now_shift_number_row, now_shift_number_column + L).Value = shift(L)
                 
-                If profile_count < shift_profile_count And shift(l) <> 0 Then 'まだプロフィール表示数が設定以下かつシフト番号が０以外なら以下の処理を行う
-                    shift_row = WorksheetFunction.Match(shift(l), Sheets("出力").Cells(1, 1).EntireColumn, 1)
-                    If shift(l) <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
+                If profile_count < shift_profile_count And shift(L) <> 0 Then 'まだプロフィール表示数が設定以下かつシフト番号が０以外なら以下の処理を行う
+                    shift_row = WorksheetFunction.Match(shift(L), Sheets("出力").Cells(1, 1).EntireColumn, 1)
+                    If shift(L) <> WorksheetFunction.Index(Sheets("出力").Cells(1, 1).EntireColumn, shift_row) Then
                         MsgBox ("エラー番号２０２　番号が出力シートに存在しません。このまま処理を実行します")
                     Else
                         Sheets("出力").Cells(shift_row, 2).CopyPicture
@@ -300,7 +300,7 @@ Dim shift_row_list() As Integer
                     End If
                 End If
             'End If
-        Next l
+        Next L
     End If
     
 '            表示したプロフィールの数が足りていないようならすでに表示してあるところを削除
@@ -318,7 +318,7 @@ Do While Cells(now_shift_number_row, now_shift_number_column + m) <> ""
 Loop
 
 
-Sheets("メイン").Range(corsor_move_target).Select
+Sheets("メイン").range(corsor_move_target).Select
 Exit Sub
 
 object_error:
@@ -336,7 +336,7 @@ Dim search As Integer
 Dim end_time As Date
 Dim start_time As Date
 Dim j As Integer
-Dim shift_time_end As Range
+Dim shift_time_end As range
 
 On Error GoTo object_error
 Set shift_time_end = Sheets("シフト表").Columns(shift_table.勤務時間帯終了)
@@ -350,13 +350,13 @@ If Int(now_date) <> Int(WorksheetFunction.Index(shift_time_end, search)) Then 'd
  
 Else '日付が一致した場合、すなわち当日のシフトがにゅうりょくされていたばあい
      j = 0
-     Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search)) '
-         end_time = WorksheetFunction.Index(Sheets("シフト表").Range("B:B"), search) - now_date
-         start_time = WorksheetFunction.Index(Sheets("シフト表").Range("A:A"), search) - now_date
+     Do While now_date = Int(WorksheetFunction.Index(Sheets("シフト表").range("B:B"), search)) '
+         end_time = WorksheetFunction.Index(Sheets("シフト表").range("B:B"), search) - now_date
+         start_time = WorksheetFunction.Index(Sheets("シフト表").range("A:A"), search) - now_date
          If now_time < end_time And now_time > start_time Then
              ReDim Preserve shift(j + 1)
              ReDim Preserve shift_row(j + 1)
-             shift(j) = WorksheetFunction.Index(Sheets("シフト表").Range("C:C"), search)
+             shift(j) = WorksheetFunction.Index(Sheets("シフト表").range("C:C"), search)
              shift_row(j) = search
              j = j + 1
              If j > 5 Then 'シフト人数が５人より多い場合はループを抜ける
@@ -377,17 +377,23 @@ object_error:
 Exit Sub
 End Sub
 
-Function shapes_delete(ByVal delete_area As Range, book_sheet As Object)
+Function shapes_delete(ByVal delete_area As range, book_sheet As Object, range_in As Boolean)
 '対象の範囲にある図形を削除。ただし図形の名前がstateの場合は削除しない
 Dim shp As Shape
-Dim rng As Range
+Dim rng As range
     
 Call book_sheet.Unprotect
 For Each shp In book_sheet.shapes
-    Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
+    Set rng = range(shp.TopLeftCell, shp.BottomRightCell)
     If shp.name <> "state" Then
-        If Not (Intersect(rng, delete_area) Is Nothing) Then
-            shp.Delete
+        If range_in = True Then
+            If Not (Intersect(rng, delete_area) Is Nothing) Then
+                shp.Delete
+            End If
+        Else
+            If Intersect(rng, delete_area) Is Nothing Then
+                shp.Delete
+            End If
         End If
     End If
 Next
@@ -402,7 +408,7 @@ Public Sub recal()
 Application.Calculate
 'シートの再計算を行う
 Call shift_check
- Application.Calculate
+' Application.Calculate
 'Call setting_time
 Call sheet_color_check
 Application.Calculate

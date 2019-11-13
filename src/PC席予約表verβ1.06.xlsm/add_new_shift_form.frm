@@ -35,7 +35,7 @@ Else
 End If
 
 Dim search As Integer
-Dim shift_time_end As Range
+Dim shift_time_end As range
 Set shift_time_end = Worksheets("シフト表").Columns(shift_table.勤務時間帯終了)
 On Error GoTo data_nothing
 search = WorksheetFunction.Match(CDbl(end_time), shift_time_end, 1)

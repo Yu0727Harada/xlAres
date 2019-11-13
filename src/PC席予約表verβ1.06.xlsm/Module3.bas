@@ -254,10 +254,10 @@ Dim i As Integer
 Dim bl_res As String
 Dim limit_res_day As Integer
 
-If IsNumeric(Range(limit_reserve_count).Value) = False Then
+If IsNumeric(range(limit_reserve_count).Value) = False Then
     limit_res_day = 36
 Else
-    limit_res_day = Range(limit_reserve_count).Value
+    limit_res_day = range(limit_reserve_count).Value
 End If
 
 For i = 0 To data_number

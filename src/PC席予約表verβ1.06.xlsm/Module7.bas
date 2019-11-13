@@ -16,12 +16,12 @@ Dim inputpass As Integer
 Do While True
     inputpass = passcord_inputform
     If inputpass = 0 Then
-        If Range(master_on_off).Value = "off" Then
-            Range(master_on_off).Value = "on"
-        ElseIf Range(master_on_off).Value = "on" Then
-            Range(master_on_off).Value = "off"
+        If range(master_on_off).Value = "off" Then
+            range(master_on_off).Value = "on"
+        ElseIf range(master_on_off).Value = "on" Then
+            range(master_on_off).Value = "off"
         Else
-            Range(master_on_off).Value = "off"
+            range(master_on_off).Value = "off"
         End If
         Exit Sub
     ElseIf inputpass = 2 Then
@@ -34,13 +34,13 @@ Loop
 End Sub
 Sub main_sheet_sort()
 '生データをソートするプロシージャ
-Call Worksheets("生データ").Range("A:AA").Sort(key1:=Worksheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("生データ").range("A:AA").Sort(key1:=Worksheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 End Sub
 
 Sub shift_sheet_sort()
 '生データをソートするプロシージャ
-Call Worksheets("シフト表").Range("A:C").Sort(key1:=Worksheets("シフト表").Cells(1, shift_table.勤務時間帯終了).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("シフト表").range("A:C").Sort(key1:=Worksheets("シフト表").Cells(1, shift_table.勤務時間帯終了).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 End Sub
 
@@ -51,12 +51,12 @@ Dim inputpass As String
 Do While True
     inputpass = passcord_inputform
     If inputpass = 0 Then
-        If Range(cell_corsor_move).Value = "off" Then
-            Range(cell_corsor_move).Value = "on"
-        ElseIf Range(cell_corsor_move).Value = "on" Then
-            Range(cell_corsor_move).Value = "off"
+        If range(cell_corsor_move).Value = "off" Then
+            range(cell_corsor_move).Value = "on"
+        ElseIf range(cell_corsor_move).Value = "on" Then
+            range(cell_corsor_move).Value = "off"
         Else
-            Range(cell_corsor_move).Value = "off"
+            range(cell_corsor_move).Value = "off"
         End If
         Exit Sub
     ElseIf inputpass = 2 Then
@@ -94,12 +94,12 @@ Dim inputpass As String
 Do While True
     inputpass = passcord_inputform
     If inputpass = 0 Then
-        If Range(limit_res_on_off).Value = "off" Then
-            Range(limit_res_on_off).Value = "on"
-        ElseIf Range(limit_res_on_off).Value = "on" Then
-            Range(limit_res_on_off).Value = "off"
+        If range(limit_res_on_off).Value = "off" Then
+            range(limit_res_on_off).Value = "on"
+        ElseIf range(limit_res_on_off).Value = "on" Then
+            range(limit_res_on_off).Value = "off"
         Else
-            Range(limit_res_on_off).Value = "off"
+            range(limit_res_on_off).Value = "off"
         End If
         Exit Sub
     ElseIf inputpass = 2 Then
@@ -221,9 +221,9 @@ ElseIf Int(trans_input_new_pass) = -1 Then
 Else
     Dim search As Integer
     On Error GoTo match_error
-    search = WorksheetFunction.Match(Int(trans_input_new_pass), Sheets("passcord").Range("A:A"), 1)
+    search = WorksheetFunction.Match(Int(trans_input_new_pass), Sheets("passcord").range("A:A"), 1)
     On Error GoTo 0
-    If Int(trans_input_new_pass) = WorksheetFunction.Index(Sheets("passcord").Range("A:A"), search) Then
+    If Int(trans_input_new_pass) = WorksheetFunction.Index(Sheets("passcord").range("A:A"), search) Then
         Dim delete_yesno As String
         delete_yesno = MsgBox("この番号はすでに登録されています。この番号を削除しますか？", vbYesNo + vbQuestion, "番号の削除の確認")
         If delete_yesno = vbNo Then
@@ -260,6 +260,11 @@ edit_shift_form.Show
 End Sub
 
 Public Sub update_excel()
+
+If tm <> 0 Then
+Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+End If
+
 '現在のワークブックを設定
 Dim last_wb As Workbook
 Set last_wb = Workbooks(Application.ThisWorkbook.name)
@@ -285,14 +290,20 @@ Set new_wb = Workbooks(new_wb_name)
 '新しいアップデート先にすでに入力されているデータを削除
 Call delete_sheet_data(2, 1, new_wb.Sheets("生データ"))
 Call delete_sheet_data(2, 7, new_wb.Sheets("入力"))
-'Call delete_sheet_data(2, 7, new_wb.Sheets("出力"))
-'Call shapes_delete(Range(Cells(1, 1), Cells(lastrow, 1)), new_wb.Sheets("出力"))
+Call delete_sheet_data(1, 7, new_wb.Sheets("出力"))
+'Call shapes_delete(range(Cells(1, 1), Cells(lastrow, 1)), new_wb.Sheets("出力"))
+Dim shp As Shape
+For Each shp In new_wb.Sheets("出力").shapes
+    shp.Delete
+Next shp
 Call delete_sheet_data(2, 7, new_wb.Sheets("シフト表"))
 Call delete_sheet_data(1, 1, new_wb.Sheets("passcord"))
 
 Call copy_sheet_data(2, 2, last_wb.Sheets("生データ"), new_wb.Sheets("生データ"))
 Call copy_sheet_data(2, 7, last_wb.Sheets("入力"), new_wb.Sheets("入力"))
 Call copy_sheet_data(2, 7, last_wb.Sheets("シフト表"), new_wb.Sheets("シフト表"))
+Call copy_sheet_data(1, 2, last_wb.Sheets("出力"), new_wb.Sheets("出力"))
+Call copy_sheet_shape(last_wb.Sheets("出力"), new_wb.Sheets("出力"))
 Call copy_sheet_data(1, 1, last_wb.Sheets("passcord"), new_wb.Sheets("passcord"))
 
 new_wb.Save
@@ -309,7 +320,7 @@ Dim lastrow As Long
 Dim temp_row As Long
 Dim i As Integer
 
-lastrow = 0
+lastrow = start_row
 For i = 1 To end_column
     temp_row = book_sheet.Cells(Rows.count, i).End(xlUp).Row
     If lastrow < temp_row Then
@@ -317,7 +328,7 @@ For i = 1 To end_column
     End If
 Next i
 book_sheet.Activate
-book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete (xlShiftUp)
+book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete (xlShiftUp)
 
 End Sub
 
@@ -335,8 +346,39 @@ For i = 1 To end_column
     End If
 Next i
 from_book_sheet.Activate
-from_book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Copy
+from_book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Copy
 to_book_sheet.Activate
-to_book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Insert
+to_book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.PasteSpecial Paste:=xlPasteValues
+
+End Sub
+
+Public Sub copy_sheet_shape(ByVal from_book_sheet As Object, to_book_sheet As Object)
+
+Dim shp As Shape
+Dim L As Double
+Dim T As Double
+Dim H As Double
+Dim W As Double
+Dim i As Integer
+i = 0
+
+For Each shp In from_book_sheet.shapes
+    
+    L = shp.Left
+    T = shp.Top
+    H = shp.Height
+    W = shp.Width
+    
+    shp.name = ("Fig" + CStr(i))
+    shp.Copy
+    to_book_sheet.Paste
+    With to_book_sheet.shapes("Fig" + CStr(i))
+        .Left = L
+        .Top = T
+        .Height = H
+        .Width = W
+    End With
+    i = i + 1
+Next shp
 
 End Sub

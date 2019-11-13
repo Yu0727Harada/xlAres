@@ -4,8 +4,8 @@ Option Explicit
 Sub import_Shift()
 'シフトを読み込むプロシージャ
 
-Dim shift_year As Range
-Dim shift_month As Range
+Dim shift_year As range
+Dim shift_month As range
 
 Application.Calculation = xlCalculationManual
 
@@ -32,8 +32,8 @@ If Shift_Filename = Application.ThisWorkbook.name Then
 End If
 
 'With Shift_BookName.Worksheets(1)
-Set shift_year = Shift_BookName.Worksheets(1).Range("C1") '読み込むシフト表の年度が入力されているセルを設定
-Set shift_month = Shift_BookName.Worksheets(1).Range("F1") '月が入力されているセルを設定
+Set shift_year = Shift_BookName.Worksheets(1).range("C1") '読み込むシフト表の年度が入力されているセルを設定
+Set shift_month = Shift_BookName.Worksheets(1).range("F1") '月が入力されているセルを設定
 'End With
 
 Dim i As Integer
@@ -91,7 +91,7 @@ Next k
 
 Call Quick_sort(Shift_data_aray_trans(), 1, 0, UBound(Shift_data_aray_trans, 1))
 
-Dim shift_time_end As Range
+Dim shift_time_end As range
 Set shift_time_end = wb.Worksheets("シフト表").Columns(勤務時間帯終了)
 Dim search_up As Integer
 Dim search_down As Integer
@@ -115,14 +115,14 @@ Dim Okcancel As Integer
         Exit Sub
     Else
         wb.Worksheets("シフト表").Activate
-        wb.Worksheets("シフト表").Range(Cells(search_up, 1), Cells(search_down - 1, 1)).EntireRow.Delete (xlShiftUp)
+        wb.Worksheets("シフト表").range(Cells(search_up, 1), Cells(search_down - 1, 1)).EntireRow.Delete (xlShiftUp)
     End If
 End If
 With wb.Worksheets("シフト表")
     .Activate
-    .Range(Cells(search_up, 1), Cells(search_up + UBound(Shift_data_aray_trans, 1) - 1, 1)).EntireRow.Insert
+    .range(Cells(search_up, 1), Cells(search_up + UBound(Shift_data_aray_trans, 1) - 1, 1)).EntireRow.Insert
     '.Resize(UBound(Shift_data_aray_trans, 1), 3).NumberFormatLocal = "G/標準"
-    .Range("A1").Offset(search_up - 1, 0).Resize(UBound(Shift_data_aray_trans, 1), 3) = Shift_data_aray_trans
+    .range("A1").Offset(search_up - 1, 0).Resize(UBound(Shift_data_aray_trans, 1), 3) = Shift_data_aray_trans
 End With
 
 Application.Calculation = xlCalculationAutomatic

@@ -135,7 +135,7 @@ Dim 予約コード As Long
 Dim add_search As Long
 予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
 
-add_search = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
+add_search = WorksheetFunction.Match(予約コード, Sheets("生データ").range("D:D"), 1)
 '予約コードを生成して、それが何番目にあるのか取得
 
 Call stu_num_list_input_rawsheet(add_search, student_number_list(), data_num)

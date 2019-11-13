@@ -11,15 +11,19 @@ Set outputsheet = Worksheets("出力")
 
 'Worksheets("メイン").EnableCalculation = False
 
-Dim shp As Shape
+If outputsheet.Cells(1, 1) = 0 Then
+    Call shapes_delete(outputsheet.range(Cells(1, 1), Cells(1, 2)), outputsheet, False)
+    Call delete_sheet_data(2, 2, outputsheet)
+Else
+    outputsheet.Cells.Clear
+    Dim shp As Shape
+    For Each shp In outputsheet.shapes
+        shp.Delete
+    Next shp
+    outputsheet.Cells(1, 1) = 0
+End If
 
-For Each shp In outputsheet.shapes
-    shp.Delete
-Next shp
-outputsheet.Cells.Clear
-outputsheet.Cells(1, 1) = 0
-
-Call Worksheets("入力").Range("A:F").Sort(key1:=Worksheets("入力").Cells(1, 1).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("入力").range("A:F").Sort(key1:=Worksheets("入力").Cells(1, 1).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 Dim i As Integer
 
@@ -39,16 +43,16 @@ i = 1
         End With
         
         Dim T As Variant
-        Dim l As Variant
+        Dim L As Variant
         Dim W As Variant
         Dim H As Variant
         
         T = cellT + cellH * 0.02 '名前と所属を表示するテキストボックスの左上の位置のｙ軸方向の位置。cellTは表示するセルの左上の位置。cellHはセルの高さ。かける数字を調整することで位置を調整できる
-        l = cellL + cellW * 0.45 '上記のｘ軸方向の位置。かける数字を調整することで位置を調整できる
+        L = cellL + cellW * 0.45 '上記のｘ軸方向の位置。かける数字を調整することで位置を調整できる
         W = cellW / 2 'テキストボックスの幅の大きさ。
         H = cellH - cellH / 4 'テキストボックスの高さの大きさ
         
-        With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=l, Top:=T, Width:=W, Height:=H)
+        With outputsheet.shapes.AddTextbox(Orientation:=msoTextOrientationHorizontal, Left:=L, Top:=T, Width:=W, Height:=H)
             .TextFrame.Characters.Text = inputsheet.Cells(i + 1, 2) & vbLf & inputsheet.Cells(i + 1, 3) & vbLf & inputsheet.Cells(i + 1, 4)
             .Fill.Visible = False
             .Line.Visible = False
