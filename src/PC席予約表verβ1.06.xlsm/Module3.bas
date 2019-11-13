@@ -31,6 +31,15 @@ Dim subject As Integer
 '    Exit Function
 'End If
 
+If Len(raw_number) = 9 Then
+    If option_number = 1 Then
+        stunum_error.Show
+    End If
+    number_valid = number_valid + 1
+    translate_number = -1
+    Exit Function
+End If
+    
 If Len(raw_number) = 7 Then
 'ŠwĞ”Ô†‚Í‚VŒ…‚È‚Ì‚ÅA‚VŒ…“ü—Í‚³‚ê‚½ê‡‚Í‰º‚Ìˆ—‚ğs‚Á‚Ä•ÏŠ·‚·‚é
 '    enter_year‚Ìˆ—

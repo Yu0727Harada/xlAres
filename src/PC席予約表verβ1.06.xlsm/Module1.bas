@@ -1,4 +1,6 @@
 Attribute VB_Name = "Module1"
+Option Explicit
+
 Public 予約日 As Long
 Public resreve_day As Long
 Public 時間帯 As Integer
@@ -264,13 +266,12 @@ Dim shift_row_list() As Integer
     
     Dim k As Integer
     Dim l As Integer
-    Dim shp As Shape
-    Dim rng As Range
+ 
     Dim shift_row As Integer
     
     For k = 0 To shift_profile_count  '表示されているプロフィールを削除
             On Error GoTo object_error
-            Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)))
+            Call shapes_delete(Sheets("メイン").Range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)), Sheets("メイン"))
             On Error GoTo 0
     Next k
     
@@ -319,9 +320,7 @@ Loop
 
 Sheets("メイン").Range(corsor_move_target).Select
 Exit Sub
-sheet_cal_error:
-search = 2
-Resume Next
+
 object_error:
 Exit Sub
 
@@ -378,11 +377,13 @@ object_error:
 Exit Sub
 End Sub
 
-Function shapes_delete(ByVal delete_area As Range)
+Function shapes_delete(ByVal delete_area As Range, book_sheet As Object)
 '対象の範囲にある図形を削除。ただし図形の名前がstateの場合は削除しない
-
-Call Sheets("メイン").Unprotect
-For Each shp In Sheets("メイン").shapes
+Dim shp As Shape
+Dim rng As Range
+    
+Call book_sheet.Unprotect
+For Each shp In book_sheet.shapes
     Set rng = Range(shp.TopLeftCell, shp.BottomRightCell)
     If shp.name <> "state" Then
         If Not (Intersect(rng, delete_area) Is Nothing) Then
@@ -391,7 +392,7 @@ For Each shp In Sheets("メイン").shapes
     End If
 Next
 
-Call Sheets("メイン").protect(UserInterfaceOnly:=True)
+Call book_sheet.protect(UserInterfaceOnly:=True)
 
 End Function
 
@@ -434,6 +435,7 @@ If passcord_input = passcord Then
 End If
 
 Dim search As Integer
+Dim trans_passcord_input As Variant
 
 trans_passcord_input = translate_number(passcord_input, 0)
 On Error GoTo error_nothing

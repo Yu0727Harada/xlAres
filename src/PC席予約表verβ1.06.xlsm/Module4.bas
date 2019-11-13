@@ -12,19 +12,24 @@ Application.Calculation = xlCalculationManual
 Dim wb As Workbook
 Set wb = Workbooks(Application.ThisWorkbook.name)
 
-Dim Open_Filepath As String
-Open_Filepath = Application.GetOpenFilename
-If Open_Filepath = "False" Then
+Dim open_filepath As String
+open_filepath = Application.GetOpenFilename(filefilter:="microsoft excelbook,*.xlsm", Title:="シフト表のエクセルファイルを選んでください")
+If open_filepath = "False" Then
     Exit Sub
 End If
-Workbooks.Open Open_Filepath
+Workbooks.Open open_filepath
 
 Dim Shift_Filename As String
-Shift_Filename = Dir(Open_Filepath)
+Shift_Filename = Dir(open_filepath)
 
 Dim Shift_BookName As Workbook
 
 Set Shift_BookName = Workbooks(Shift_Filename)
+
+If Shift_Filename = Application.ThisWorkbook.name Then
+    MsgBox ("シフト表のエクセルファイルと、元のエクセルファイルのファイル名が同じです。異なるファイル名に変更してください")
+    Exit Sub
+End If
 
 'With Shift_BookName.Worksheets(1)
 Set shift_year = Shift_BookName.Worksheets(1).Range("C1") '読み込むシフト表の年度が入力されているセルを設定

@@ -80,13 +80,11 @@ i = 1
         
         Dim picfile_path As String
 '        Dim pic As Object
-        picfile_path = ThisWorkbook.Path + inputsheet.Cells(i + 1, 5).Value
-        If picfile_path = "" Then
-            picfile_path = ThisWorkbook.Path
-            picfile_path = picfile_path + "\Noimage.png"
-        
+        If inputsheet.Cells(i + 1, 5).Value = "" Then
+            picfile_path = ThisWorkbook.Path + "\Noimage.png"
+        Else
+            picfile_path = ThisWorkbook.Path + inputsheet.Cells(i + 1, 5).Value
         End If
-        
         
 '            Set pic = LoadPicture(picfile_path)
             Dim pic_W As Variant

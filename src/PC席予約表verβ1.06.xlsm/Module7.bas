@@ -258,3 +258,85 @@ Public Sub edit_shift()
 edit_shift_form.Show
 
 End Sub
+
+Public Sub update_excel()
+'現在のワークブックを設定
+Dim last_wb As Workbook
+Set last_wb = Workbooks(Application.ThisWorkbook.name)
+
+'アップデート先を設定
+Dim open_filepath As String
+open_filepath = Application.GetOpenFilename(filefilter:="microsoft excelbook,*.xlsm", Title:="アップデート先のエクセルファイルを選んでください")
+If open_filepath = "False" Then
+    Exit Sub
+End If
+Workbooks.Open open_filepath
+Dim new_wb_name As String
+new_wb_name = Dir(open_filepath)
+
+If new_wb_name = Application.ThisWorkbook.name Then
+    MsgBox ("アップデート先のエクセルファイルと、元のエクセルファイルのファイル名が同じです。異なるファイル名に変更してください")
+    Exit Sub
+End If
+
+Dim new_wb As Workbook
+Set new_wb = Workbooks(new_wb_name)
+
+'新しいアップデート先にすでに入力されているデータを削除
+Call delete_sheet_data(2, 1, new_wb.Sheets("生データ"))
+Call delete_sheet_data(2, 7, new_wb.Sheets("入力"))
+'Call delete_sheet_data(2, 7, new_wb.Sheets("出力"))
+'Call shapes_delete(Range(Cells(1, 1), Cells(lastrow, 1)), new_wb.Sheets("出力"))
+Call delete_sheet_data(2, 7, new_wb.Sheets("シフト表"))
+Call delete_sheet_data(1, 1, new_wb.Sheets("passcord"))
+
+Call copy_sheet_data(2, 2, last_wb.Sheets("生データ"), new_wb.Sheets("生データ"))
+Call copy_sheet_data(2, 7, last_wb.Sheets("入力"), new_wb.Sheets("入力"))
+Call copy_sheet_data(2, 7, last_wb.Sheets("シフト表"), new_wb.Sheets("シフト表"))
+Call copy_sheet_data(1, 1, last_wb.Sheets("passcord"), new_wb.Sheets("passcord"))
+
+new_wb.Save
+last_wb.Sheets("生データ").Activate
+new_wb.Close
+
+MsgBox ("データの移行が完了しました。このファイルを閉じてアップデート先のエクセルファイルを開いてください。")
+
+End Sub
+
+Public Sub delete_sheet_data(ByVal start_row As Integer, end_column As Integer, book_sheet As Object)
+
+Dim lastrow As Long
+Dim temp_row As Long
+Dim i As Integer
+
+lastrow = 0
+For i = 1 To end_column
+    temp_row = book_sheet.Cells(Rows.count, i).End(xlUp).Row
+    If lastrow < temp_row Then
+        lastrow = temp_row
+    End If
+Next i
+book_sheet.Activate
+book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete (xlShiftUp)
+
+End Sub
+
+Public Sub copy_sheet_data(ByVal start_row As Integer, end_column As Integer, from_book_sheet As Object, to_book_sheet As Object)
+
+Dim lastrow As Long
+Dim temp_row As Long
+Dim i As Integer
+
+lastrow = 0
+For i = 1 To end_column
+    temp_row = from_book_sheet.Cells(Rows.count, i).End(xlUp).Row
+    If lastrow < temp_row Then
+        lastrow = temp_row
+    End If
+Next i
+from_book_sheet.Activate
+from_book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Copy
+to_book_sheet.Activate
+to_book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Insert
+
+End Sub
