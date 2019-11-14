@@ -327,8 +327,9 @@ For i = 1 To end_column
         lastrow = temp_row
     End If
 Next i
-book_sheet.Activate
-book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete (xlShiftUp)
+
+book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete
+book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.RowHeight = 180
 
 End Sub
 

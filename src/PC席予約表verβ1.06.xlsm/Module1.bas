@@ -271,7 +271,9 @@ Dim shift_row_list() As Integer
     
     For k = 0 To shift_profile_count  '表示されているプロフィールを削除
             On Error GoTo object_error
+            Call Sheets("メイン").Unprotect
             Call shapes_delete(Sheets("メイン").range(Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move), Cells(now_shift_menber_profile_output_row + k * now_shift_menber_profile_output_row_move, now_shift_menber_profile_output_column + k * now_shift_menber_profile_output_column_move)), Sheets("メイン"), True)
+            Call Sheets("メイン").protect(UserInterfaceOnly:=True)
             On Error GoTo 0
     Next k
     
@@ -377,12 +379,14 @@ object_error:
 Exit Sub
 End Sub
 
-Function shapes_delete(ByVal delete_area As range, book_sheet As Object, range_in As Boolean)
+Public Sub shapes_delete(ByVal delete_area As range, book_sheet As Object, range_in As Boolean)
 '対象の範囲にある図形を削除。ただし図形の名前がstateの場合は削除しない
+'呼び出しの際に削除対象のシートがアクティブになっていないとエラーがでる。
 Dim shp As Shape
 Dim rng As range
-    
-Call book_sheet.Unprotect
+
+
+
 For Each shp In book_sheet.shapes
     Set rng = range(shp.TopLeftCell, shp.BottomRightCell)
     If shp.name <> "state" Then
@@ -398,9 +402,8 @@ For Each shp In book_sheet.shapes
     End If
 Next
 
-Call book_sheet.protect(UserInterfaceOnly:=True)
 
-End Function
+End Sub
 
 
 Public Sub recal()
