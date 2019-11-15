@@ -1,0 +1,19 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.line{
+	text-decoration: line-through;
+}
+
+.red {
+	color:red;
+}
+
+.index{
+	padding:20 px;
+}
+
+img{
+	width: 100%;
+	padding: 20px;
+}
