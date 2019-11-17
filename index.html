@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="ja">
     <head>
-    <meta charset="UTF-8">
-    <title>index</title>
-    <link rel="stylesheet" type="text/css" href="guide.css">
+        <meta charset="UTF-8">
+        <title>index</title>
+        <link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
         <a href="https://github.com/Yu0727Harada/PC-Reserve_System">githubのURL</a>　
         <h1>PC予約表　使い方</h1>
         <p>マクロ作成者連絡先（バグ報告など）→GitHubを参照してください</p>
-
         <ul>
             <li>7/26 Ver.β1.43に合わせて一部加筆修正</li>
             <li>9/21 大幅に加筆・修正。UIの変更に伴い画像の変更を行った</li>
@@ -377,7 +376,7 @@
                             （開発用　セルの中の式） =IFERROR(IF(INDEX(生データ!$D:$D,MATCH(OFFSET($D$22,$Z4-1,$AA$3-2),生データ!$D:$D,1))=OFFSET($D$22,$Z4-1,$AA$3-2),VLOOKUP(OFFSET($D$22,$Z4-1,$AA$3-1),生データ!$D:$O,COLUMN(C1),TRUE),""),0)<br>
                             メインシートのD22周辺に予約コードを生成して出力しておく場所があります。それをmatch＋index関数で参照しますが、今回は時間帯セルに合わせてD22セルから移動して参照してほしいのでoffset関数を用いて、D22セルから移動させます。<br>
                             Match＋index関数で参照した先が一致した場合（if文Trueの場合）はVLOOKUPの二分探索（True）で生データシートを探索に行きます。この時、列の位置はColumn関数で指定することで右側にコピペしたときに順に参照位置がずれるようにします。一致しなかった場合は“”を吐くように設定。<br>
-                            Iferrorは時間帯セルに８が来たときにN/Aエラーを吐くのでそれを防止するため。(9/29追記ここまで)
+                            Iferrorは時間帯セルに８が来たときにN/Aエラーを吐くのでそれを防止するため。
                         </p>
                     </li>
                     <li class="item">
