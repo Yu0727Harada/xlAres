@@ -12,7 +12,6 @@
 
 - 使い方、マニュアルなど
   
-  githubマスターブランチのdocsフォルダに使い方をhtmlファイルとして記述しています。
   https://yu0727harada.github.io/PC-Reserve_System/
   
 - インストール
