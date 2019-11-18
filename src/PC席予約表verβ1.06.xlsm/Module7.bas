@@ -68,6 +68,17 @@ Do While True
 Loop
 
 End Sub
+Sub if_save()
+
+If range(save_on_off).Value = "off" Then
+    range(save_on_off).Value = "on"
+ElseIf range(save_on_off).Value = "on" Then
+    range(save_on_off).Value = "off"
+Else
+    range(save_on_off).Value = "off"
+End If
+
+End Sub
 
 Sub refresh_diplicate_sheet()
 '重複チェックシートを一度削除してもう一度入れなおすプロシージャ
@@ -327,7 +338,7 @@ For i = 1 To end_column
         lastrow = temp_row
     End If
 Next i
-
+book_sheet.Activate
 book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete
 book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.RowHeight = 180
 
