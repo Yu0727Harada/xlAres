@@ -24,9 +24,17 @@
 	width: auto;
 }
 
+body{
+	font-family: source-han-sans-japanese, sans-serif;
+	font-weight: 300;
+	font-style: normal;
+	font-size:17px;
+	line-height: 1.6;
+}
+
 @media(max-width: 500px){
 	body{
-		font-size:15px;
-		line-height: 1.6;
+		font-size:22px;
+
 	}
 }
