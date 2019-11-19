@@ -22,5 +22,11 @@
 .img_small{
 	height: auto;
 	width: auto;
-	padding:0px ;
+}
+
+@media(max-width: 500px){
+	body{
+		font-size:15px;
+		line-height: 1.6;
+	}
 }
