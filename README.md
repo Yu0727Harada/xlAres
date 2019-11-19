@@ -12,7 +12,7 @@
 
 - 使い方、マニュアルなど
   
-  https://yu0727harada.github.io/PC-Reserve_System/
+  https://yu0727harada.github.io/xlAres/
   
 - インストール
 
