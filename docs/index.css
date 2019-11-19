@@ -35,7 +35,7 @@ body{
 @media(max-width: 500px){
 	body{
 		-webkit-text-size-adjust: 100%;
-		font-size:17px;
+		font-size:22px;
 		line-height: 1.7;
 
 	}
