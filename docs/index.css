@@ -24,20 +24,25 @@
 	width: auto;
 }
 
-body{
-	font-family: source-han-sans-japanese, sans-serif;
-	font-weight: 300;
-	font-style: normal;
-	font-size:17px;
-	line-height: 1.6;
-}
-
 @media screen and (max-width: 500px){
 	body{
 		-webkit-text-size-adjust: 100%;
+		font-family: source-han-sans-japanese, sans-serif;
+		font-weight: 300;
+		font-style: normal;
 		color: aqua;
 		font-size:22px;
 		line-height: 1.7;
 
+	}
+}
+@media screen and(min-width: 501px){
+
+	body{
+		font-family: source-han-sans-japanese, sans-serif;
+		font-weight: 300;
+		font-style: normal;
+		font-size:17px;
+		line-height: 1.6;
 	}
 }
