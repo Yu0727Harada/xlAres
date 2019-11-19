@@ -13,7 +13,14 @@
 	padding:20px;
 }
 
-img{
-	width: 100%;
+.img_max {
+	max-width: 100%;
+	height: auto;
 	padding: 20px;
+}
+
+.img_small{
+	height: auto;
+	width: auto;
+	padding:0px ;
 }

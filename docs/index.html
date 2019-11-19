@@ -156,26 +156,26 @@
                                 <h4>エクセルファイルを開きメインシートを開きます。</h4>
                             </li>
                             <li>
-                                <h4>予約したい時間帯、席番号のセルを選択する(11/8　画像差替)</h4>
-                                <img src="image/1-1.png" alt="予約の仕方">
+                                <h4>予約したい時間帯、席番号のセルを選択する</h4>
+                                <img class="img_max" src="image/1-1.png" alt="予約の仕方">
                             </li>
                             <li>
                                 <h4>予約フォームが表示される。</h4>
                                 <p>
                                     テキストボックス5つのうち１つ以上にに学籍番号7桁(M,D,Sを含む番号も入力可能)か、学生証台帳番号16桁の数字を入力してください。もしくはバーコードをスキャンしてください。<br>
-                                    <img src="image/1-2.png" alt="予約フォーム">
+                                    <img class="img_small" src="image/1-2.png" alt="予約フォーム" >
                                     2コマ使用希望にチェックを入れると2コマ連続で予約を取ることができます。HDMIケーブルなどを貸し出し希望にチェックを入れると予約ステータスが変化します。（後述）<br>
                                 </p>
                                 <p>
                                     必要事項を入力したら、下の登録ボタンをクリックします。<br>
                                     この時、予約が1日の中で一定数以上に達している場合、予約を取るかどうかの確認ダイアログが出ます。（一日に取れるコマの設定の仕方は<a href="#control_panel/bottom/restrict/limit_a_day">LAコントロールパネルの一日の上限数参照</a>
-                                    <img src="image/1-3.png" alt="予約制限オーバーの時">
+                                    <img class="img_small" src="image/1-3.png" alt="予約制限オーバーの時">
                                 </p>
                                 <p>
                                     いいえをクリックすると予約画面に移動します。<br>
                                     はいをクリックすると、LAを呼んでパスコードを入力するように促されます。（<a href="#control_panel/bottom/develop/passcord">LAコントロールパネル―パスコードの設定</a>、<a href="#system/const_passcord">システムのカスタマイズ、パスコードの設定参照</a><br>
                                     パスコードの入力が正しければ予約され、間違っていれば予約画面に移動します。
-                                    <img src="image/passcord.png" alt="パスコードを要求される"><br>
+                                    <img class="img_small" src="image/passcord.png" alt="パスコードを要求される"><br>
                                 </p>
                             </li>
                             <li>
@@ -191,24 +191,24 @@
                         <h3>既存予約の変更</h3>
                         <p>
                             予約済か、使用中と表示されているセルをクリックすると予約の変更などフォームが表示されます。マスターモードの場合は使用済のセルをクリックしても表示されます。（<a href="#control_panel/bottom/switch_mode/master">マスターモードについて参照する</a>）<br>
-                            <img src="image/vary_resrve.png" alt="予約変更フォーム"><br>
+                            <img class="img_small" src="image/vary_resrve.png" alt="予約変更フォーム"><br>
                         </p>
                             <ul>
                                 <li>
                                     利用者の追加をクリックすると利用者の追加フォームが表示され、新規予約同様に番号を入力することで、予約者の追加を行うことが出来ます。
-                                    <img src="image/add_user.png" alt="利用者の追加"><br>
+                                    <img class="img_small" src="image/add_user.png" alt="利用者の追加"><br>
                                 </li>
                                 <li>
                                     延長をクリックすると、1コマ分延長することが出来ます。<br>
                                 </li>
                                 <li>
                                     予約の取り消しを押すと取り消しフォームが出ます。
-                                    <img src="image/delete_resrve.png" alt="予約の取り消し">
+                                    <img class="img_small" src="image/delete_resrve.png" alt="予約の取り消し">
                                     <p>
                                         LAのパスコードを入力するか、取り消したい予約を行なった人、誰か一人の学籍番号か台帳番号を入力することで予約を取り消すことが出来ます。（<a href="#control_panel/bottom/develop/passcord">LAコントロールパネル―パスコードの設定</a>、<a href="#system/const_passcord">システムのカスタマイズ、パスコードの設定参照</a>）<br>
                                         <span class="red">この時、正しく入力していても取り消せない場合があります。</span>これは学籍番号を台帳番号に変換する際に不具合があるからです。具体的には下の画像の黄色の学科の台帳番号は実際にそうであるか不明で仮での変換です。そのため、変換がうまくいかず、取り消しの認証がされません。もしそのような人がいた場合はパスコードを入力して対処してください。<br>
                                         また、できれば正確な台帳番号が手に入れば更新してください。（更新の仕方→<a href="#implementation/outline">GitHubで報告していただければ対応します</a>）<br>
-                                        <img src="image/student_number_list.png" alt="変換表">
+                                        <img class="img_small" src="image/student_number_list.png" alt="変換表">
                                     </p>
                                 </li>
                                 <li>
@@ -219,7 +219,7 @@
 
                     <li class="item" id="primary/change_date">
                         <h3>メインページの表示する日付の変更</h3>
-                        <img src="image/vary_time.png" alt="日付の変更">
+                        <img class="img_small" src="image/vary_time.png" alt="日付の変更">
                         <p>	表示されている予約表はK2セルに入力されている日付に従って表示しています。通常はセルの中身は「=today()」としていますが「=today()-1」とすることで昨日の予約表を表示したり、「8/1」などと入力することで、過去や未来の日付の予約表を表示し、その日付の予約をすることが出来ます。<br>
                         過去の日付を表示した場合は予約はできませんが、未来の日付を表示した場合は全ての時間帯で予約できます。<a href="#control_panel/bottom/switch_mode/master">LAコントロールパネル-マスターモード</a>を用いることで過去の予約の編集も可能となります<br>
                         日付を変更した場合、すぐに予約表が更新されないので<a href="#control_panel/bottom/execute/repeat_execute">LAコントロールパネルの定期再計算再実行ボタン</a>を2回ほど実行してください。</p>
@@ -232,14 +232,14 @@
                     <li class="item" id="administer/edit_raw_data">
                         <h3>生データを編集する</h3>
                         <p>予約をした際に、データは全て生データシートに格納されます。</p>
-                        <img src="image/raw_data.png" alt="生データ">
+                        <img class="img_small" src="image/raw_data.png" alt="生データ">
                         <p>
                             A列の予約日はyyyymmdd形式で予約した日付、B列の予約時間帯は予約したコマが入力されます。（1→1限目、2→2限目、3→昼休み、4→3限目、5→4限目というように対応しています）<br>
                             C列の席番号は予約したPC席の番号、D列の予約コードは日付と予約時間帯、席番号を合わせた、データ処理用のコード番号を、E列はケーブルを貸し出しているかどうか、1は貸し出し中、0は貸し出していない場合を表示します。F列からは入力された台帳番号を省略した<span class="red">独自の番号</span>を表示しています。（フォームから学籍番号を入力すると自動的に変換されます）<br>
                             直接ここに入力することで予約を編集することも可能です。<br>
                             また学籍番号を入力するセルに文字列を入力するとその入力した文字列が表示されます。機材の不調や貸切など、特殊なステータスが必要な場合に利用することが出来ます。（表からの予約も不可になります）<span class="red">逆に言うとここにMとかDを含む学籍番号を入れるとそれがそのまま表示されてしまうので入力する場合は台帳番号を入力するか、他の数字に置き換えて入力してください。メインシートの右のほうには変換表もあるので参照してください</span>
-                            <img src="image/paticular_resrve.png" alt="特殊ステータス表示">
-                            <img src="image/paticular_status_data.png" alt="特殊ステータス表示生データ"><br>
+                            <img class="img_small" src="image/paticular_resrve.png" alt="特殊ステータス表示">
+                            <img class="img_small" src="image/paticular_status_data.png" alt="特殊ステータス表示生データ"><br>
                             <span class="red">直接入力した場合は<a href="#control_panel/bottom/execute/data_sort">シートソートボタン</a>をクリックするか、予約コードをキーとして昇順で並び替えを行ってください。（match関数の近似値一致で検索するため。軽量化のために行ったため、今後変更の予定は現状ありません）</span>
                         </p>
                     </li>
@@ -248,7 +248,7 @@
                         <h3>現在の予約状況を確認（各予約の人数を確認する）</h3>
                         <p>
                             予約の人数を確認するために、LAコントロールパネルの右側に予約している学生の台帳番号（短縮版）がすべて表示される表をつくりました。<br>
-                            <img src="image/observe_resrve.png" alt="予約状況の確認">
+                            <img class="img_small" src="image/observe_resrve.png" alt="予約状況の確認">
                             現在表示している時間帯コードの右のセルにマクロで現在の時刻を表す数値が入ります。（マクロではpublic変数のon_timeのことです）１は１限目、で一つコマが進むごとにずれていき（時刻とともに自動で更新されます）、８は閉室後以降（表外）を表します。この表はこのセルに入っている時刻での予約状況を示しています。表示している時間帯のセルを直接編集することで自由に時間帯の予約状況を確認することもできます。<br>
                             （開発用　セルの中の式） =IFERROR(IF(INDEX(生データ!$D:$D,MATCH(OFFSET($D$22,$Z4-1,$AA$3-2),生データ!$D:$D,1))=OFFSET($D$22,$Z4-1,$AA$3-2),VLOOKUP(OFFSET($D$22,$Z4-1,$AA$3-1),生データ!$D:$O,COLUMN(C1),TRUE),""),0)<br>
                             メインシートのD22周辺に予約コードを生成して出力しておく場所があります。それをmatch＋index関数で参照しますが、今回は時間帯セルに合わせてD22セルから移動して参照してほしいのでoffset関数を用いて、D22セルから移動させます。<br>
@@ -260,22 +260,22 @@
                         <h3>LAのプロフィールを設定する</h3>
 
                             メインシートの右側に表示しているLAのプロフィールを変更したい時は入力シートに入力して出力ボタンを押すことで新しくプロフィールを出力出来ます。<br>
-                            <img src="image/input_profile.png" alt="入力シート">
+                            <img class="img_small" src="image/input_profile.png" alt="入力シート">
                             入力シートA列に入力した番号が出力シートのA列に入力されます。なお、ボタンを押して出力すると自動的にA列でソートされます。このA列に入力した番号とシフト表の番号に対応させてメインシートに出力するため、個人の番号を一致させるようにしてください。この番号は0以上の整数にしてください。また0については特殊な動作をします。後述の<a href="#administer/set_profile">番号が0のプロフィールについての特殊動作</a>について参照してください。<br>
                             B列、C列、D列に書いた内容は１つのテキストボックスでまとめて出力されます。<br>
                             E列を選択するとファイル選択ダイアログが出てくるので、表示させたい画像を選択してください。この時、このプロフィール画像はPC予約表エクセルファイルと同一か、それ以下のフォルダに置くようにしてください。また、E列に何も入力せず出力ボタンを押した場合、PC予約表エクセルファイルと同一フォルダに置かれている"Noimage.png"ファイルの画像が出力されるようになっています。<br>
-                            <img src="image/folder-note.jpg" alt="フォルダ階層模式図">
+                            <img class="img_small" src="image/folder-note.jpg" alt="フォルダ階層模式図">
                             出力ボタンを押すと自動でトリミングなど行います。この時の設定は<a href="#system/set_profile">システムのカスタマイズ</a>から行えます。<br>
                             F列に入力された文字はプロフィール下部に表示されます<br>
-                            <img src="image/profile.png" alt="プロフィール出力">
+                            <img class="img_small" src="image/profile.png" alt="プロフィール出力">
                             出力シートを見るとこのように出力されます。出力シートの枠線を表示するとメインシートに出力した時にも枠線が見えるようになります。出力シートを直接編集してもメインシートでの表示に反映されます。出力ボタンを押した時の出力の位置を変えたい場合には<a href="#system/set_profile">プロフィールのテキストボックスなどのカスタマイズをする</a>を参照してください。
 
                             <h4>番号が0のプロフィールについての特殊動作</h4>
                             番号が０のプロフィールは特殊な扱いを受けます。例えば、シフト表に０の番号が入力されていた場合はそのプロフィールの表示をスキップします。つまり、シフト表に0番号があってもプロフィールの表示はされません。<br>
                             では、いつ表示されるかというと番号が０のプロフィールが表示されるのは現在の時間帯に勤務している人が誰もいない時です。（≒シフト表に現在の時間帯の入力がない場合）誰も勤務している人がいないときに表示させたいメッセージなどを設定したりすることが可能です。<br>
                             番号0のプロフィールは入力シートで入力した時にも特別な動作をします。0の番号のプロフィールを入力した時には出力シートの0プロフィールを削除し、新たに入力されたプロフィールを出力します。一方、0プロフィールを入力しなかった時は出力シートの0プロフィールは削除されず、他のプロフィールのみ削除し出力シートを更新します。<br>
-                            <img src="image/zero_profile_1.png" alt="プロフィール番号0-1">
-                            <img src="image/zero_profile_2.png" alt="プロフィール番号0-2">
+                            <img class="img_small" src="image/zero_profile_1.png" alt="プロフィール番号0-1">
+                            <img class="img_small" src="image/zero_profile_2.png" alt="プロフィール番号0-2">
                             LAが勤務していない時に表示させておきたい文言などを登録しておくと便利だと思います。（出力シートは直接編集することも出来ますので自由に出力することが出来ます。<br>
 
                     </li>
@@ -286,19 +286,19 @@
                             <ol>
                                 <li>
                                     シフト表シートを選択します。<br>
-                                    <img src="image/shift_1.png" alt="シフト読み込み1"><br>
+                                    <img class="img_small" src="image/shift_1.png" alt="シフト読み込み1"><br>
                                 </li>
                                 <li>
                                     A列には勤務時間の開始時刻、B列には終了時刻、C列にはシフト表の入力時の番号が入力されています。<br>
-                                    <img src="image/shift_2.png" alt="シフト読み込み2">
+                                    <img class="img_small" src="image/shift_2.png" alt="シフト読み込み2">
                                 </li>
                                 <li>
                                     シフト読み込みボタンを押すとファイル選択ダイアログが出ます。読み込みたいシフト表のファイルを選択します。<br>
-                                    <img src="image/shift_3.png" alt="シフト読み込み3">
+                                    <img class="img_small" src="image/shift_3.png" alt="シフト読み込み3">
                                 </li>
                                 <li>
                                     この時、すでに読み込んだ期間のシフトの場合は読み込むかどうかの許可を求めるダイアログが出ます。キャンセルを押すと処理を終わります。OKを押すとすでに入力されている日のシフトを上書きしてシフトを読み込みます。<br>
-                                    <img src="image/shift_4.png" alt="シフト読み込み4">
+                                    <img class="img_small" src="image/shift_4.png" alt="シフト読み込み4">
                                 </li>
                                 <li>
                                     シフトの読み込みは勤務時間終了時間をキーに昇順並び替えで読み込んでいます。手で訂正した場合は並び替えを行なってください。<br>
@@ -316,9 +316,9 @@
                         <p>
                             メインシートの右側にLAコントロールパネルがあります。これを操作するためにはスクロールバーが必要です。<br>
                             スクロールバーが表示されていない場合は予約表の右下にある歯車ボタンをクリックするとパスコードを要求されます。<br>
-                            <img src="image/geer.png" alt="歯車ボタン">
+                            <img class="img_small" src="image/geer.png" alt="歯車ボタン">
                             パスコードの入力が完了するとスクロールバーが表示されます。（既に表示されていた場合には非表示になるます。）スクロールバーを操作して予約表の右側のコントロールパネルを表示させます。<br>
-                            <img src="image/compane_outline.png" alt="コントロールパネル">
+                            <img class="img_small" src="image/compane_outline.png" alt="コントロールパネル">
                         </p>
                     </li>
                     <li id="control_panel/bottom" class="item">
@@ -394,7 +394,7 @@
                                         <h5 >シフト追加</h5>
                                         <p>
                                             新しく現在の時刻から勤務する人を追加することができます。
-                                            <img src="image/add_shift.png" alt="シフトの追加">
+                                            <img class="img_small" src="image/add_shift.png" alt="シフトの追加">
                                             勤務する人、勤務する時間を選択し登録ボタンを押すと、現在の時刻から選択した時間までのシフトが追加されます。この時、時間の選択は任意です。選択しなかった場合自動的に2時間となります。<br>
                                             登録したあとすぐにシフト番号が表に表示されないことがあります。その時は<a href="#control_panel/bottom/execute/repeat_execute">マクロ再実行ボタン</a>を押してください。
                                         </p>
@@ -457,18 +457,18 @@
                                             <li>
                                                 githubURL<a href="https://github.com/Yu0727Harada/xlAres">https://github.com/Yu0727Harada/xlAres</a>にアクセスします。<br>
                                                 赤丸で記した緑色のclone or downloadを押します。
-                                                <img src="image/github.png" alt="githubの画面">
+                                                <img class="img_small" src="image/github.png" alt="githubの画面">
                                             </li>
                                             <li>
                                                 downloadするためのボタンが出てくるのでdownload Zipをクリックします。<br>
-                                                <img src="image/github_download.png" alt="githubのdownload">
+                                                <img class="img_small" src="image/github_download.png" alt="githubのdownload">
                                                 ダウンロードが始めるので好きな所に保存します。
                                             </li>
                                             <li>
                                                 保存した所に移動してダウンロードしたファイルを選択し、右クリックから全てを展開を選択します。
-                                                <img src="image/zip_file.png" alt="ZIPファイルを展開">
+                                                <img class="img_small" src="image/zip_file.png" alt="ZIPファイルを展開">
                                                 好きな所に展開をします。
-                                                <img src="image/zip_dialog.png" alt="ZIPファイルを展開-2">
+                                                <img class="img_small" src="image/zip_dialog.png" alt="ZIPファイルを展開-2">
                                                 展開したフォルダの中にbinという名前のフォルダがあります。色々ファイルが入っていますが、大事なのはこの中に入っているPC席予約表のエクセルファイルとせいぜいnoimage.pngファイルです。noimage.pngファイルについては<a href="#administer/set_profile">LAのプロフィールを設定する</a>を参照してください。<br>
                                                 PC席予約表のエクセルファイルを好きな場所に移動します。
                                             </li>
@@ -476,7 +476,7 @@
                                                 移行元の予約表エクセルファイルを用意します。この時、移行元と移行先のエクセルファイルの名前は異なるものにしてください。以降元のエクセルファイルを開きます。<br>
                                                 <a href="#control_panel/view">LAコントロールパネルを表示</a>し、エクセルファイルのアップデートボタンを押します。ファイルダイアログが出るので先ほどダウンロードしたエクセルファイルを選びます。<br>
                                                 選ぶと画面がカチカチしたりしますが、この間にデータの移行を行なっています。データの移行が終わるとダイアログが出ます。<br>
-                                                <img src="image/excel_update.png" alt="完了ダイアログ">
+                                                <img class="img_small" src="image/excel_update.png" alt="完了ダイアログ">
                                                 これでデータの移行は完了です。
                                             </li>
                                         </ol>
@@ -506,15 +506,15 @@
                             <li>
                                 <p>
                                     <a href="#control_panel/bottom/develop/open_editor">VisualBasicEditor</a>を開き、標準モジュールフォルダのModule1を選択します。<br>
-                                    <img src="image/passcord_1.png" alt="パスコード設定1"><br>
+                                    <img class="img_small" src="image/passcord_1.png" alt="パスコード設定1"><br>
                                     このウィンドウがない場合は表示→プロジェクトエクスプローラーを選択することで表示されます.<br>
-                                    <img src="image/passcord_2.png" alt="パスコード設定2">
+                                    <img class="img_small" src="image/passcord_2.png" alt="パスコード設定2">
                                 </p>
                             </li>
                             <li>
                                 <p>
                                     module1が表示されます。<br>
-                                    <img src="image/passcord_3.png" alt="パスコード設定3">
+                                    <img class="img_small" src="image/passcord_3.png" alt="パスコード設定3">
                                     「Public const passcord as string = 」というのがあります。この＝の次の数字がパスコードです。この数字を変えることでパスコードを変更することができます。<br>
                                 </p>
                             </li>
@@ -524,43 +524,43 @@
                         <h3 >メインシートの各セルの位置を変更する</h3>
                         <p>
                             パスコードと、モジュールを開くとこまでは同じです。パスコードの下に書いてある文字を変更することで位置を変更することができます。<br>
-                            <img src="image/design_1.png" alt="位置変更1">
+                            <img class="img_small" src="image/design_1.png" alt="位置変更1">
                             各変数の表しているセルの位置を図にしめしてあります。Columnの綴りが間違っている箇所がありますので、誰か直してください。他にもタイポしてたりするのですみません。メインシートのデザインを変更した際などに数字を調整してください。<br>
-                            <img src="image/design_2.png" alt="位置変更2">
+                            <img class="img_small" src="image/design_2.png" alt="位置変更2">
                         </p>
                     </li>
                     <li class="item" id="system/set_shift">
                         <h3 >シフト表の各セルの位置を変更する</h3>
                         <p>
                             別ファイルのシフト表作成ファイルのセルの位置を変更した場合などは3.システムのカスタマイズ-メインシートの各セルの位置を変更するを参照して、以下の数字変更してください。各変数の表すセルの位置は図に示しました。<br>
-                            <img src="image/design_shift_1.png" alt="シフト位置変更1">
-                            <img src="image/design_shift_2.png" alt="シフト位置変更2">
+                            <img class="img_small" src="image/design_shift_1.png" alt="シフト位置変更1">
+                            <img class="img_small" src="image/design_shift_2.png" alt="シフト位置変更2">
                         </p>
                     </li>
                     <li class="item" id="system/set_profile">
                         <h3 >プロフィールのテキストボックスなどのカスタマイズをする</h3>
                         <p>
                             <a href="#control_panel/bottom/develop/open_editor">VisualBasicの開き方を</a>参照してvisualBasicを開きます。Module2を開きます
-                            <img src="image/design_profile_1.png" alt="プロフィール位置調整1">
-                            <img src="image/design_profile_2.png" alt="プロフィール位置調整2"><br>
+                            <img class="img_small" src="image/design_profile_1.png" alt="プロフィール位置調整1">
+                            <img class="img_small" src="image/design_profile_2.png" alt="プロフィール位置調整2"><br>
                             Module2の中にテキストボックスを出力するコードがあります。一番上の方にあるT,L,W,Hと書かれているところが名前と所属をテキストボックスの出力をコントロールする部分です。<br>
-                            <img src="image/design_profile_3.png" alt="プロフィール位置調整3">
+                            <img class="img_small" src="image/design_profile_3.png" alt="プロフィール位置調整3">
                             少し下の行に書かれているT2、L2、W2、H2という変数を先ほどの要領で調整することで、コメント部分の出力位置を変更できます。<br>
-                            <img src="image/design_profile_4.png" alt="プロフィール位置調整4">
+                            <img class="img_small" src="image/design_profile_4.png" alt="プロフィール位置調整4">
                             さらに下の行には画像の出力位置を調整する変数があります。先ほどの要領でslection.top,selection.left,selection.widthを変更することで出力位置を変更できます。<br>
-                            <img src="image/design_profile_5.png" alt="プロフィール位置調整5">
+                            <img class="img_small" src="image/design_profile_5.png" alt="プロフィール位置調整5">
                             msoshapeOvalは楕円を指定しています.他の形にも出来ます（ググって）<br>
-                            <img src="image/design_profile_6.png" alt="プロフィール位置調整6">
+                            <img class="img_small" src="image/design_profile_6.png" alt="プロフィール位置調整6">
                         </p>
                     </li>
                     <li class="item" id="system/set_profile_details">
                         <h3 >LAプロフィールユーザーフォームの設定</h3>
 
                             LAの詳しいプロフィールを閲覧できるユーザーフォームを設定することができます。<a href="#control_panel/bottom/develop/open_editor">VisualBasicを開き</a>、フォームフォルダのProfileをクリックします。
-                            <img src="image/design_prfile_tab.png" alt="プロフィールタブ設定">
+                            <img class="img_small" src="image/design_prfile_tab.png" alt="プロフィールタブ設定">
                             プロフィール画面が表示され、編集することができます。ツールボックスを使用することで画像やテキストを配置することができます。<br>
-                            <img src="image/design_profile_tab_2.png" alt="プロフィールタブ設定">
-                            <img src="image/design_profile_tab_3.png" alt="プロフィールタブ設定">
+                            <img class="img_small" src="image/design_profile_tab_2.png" alt="プロフィールタブ設定">
+                            <img class="img_small" src="image/design_profile_tab_3.png" alt="プロフィールタブ設定">
 
                                 ツールボックスの説明です。（使いそうなものの最低限しかしませんので、あとはGoogle先生に聞いてください）<br>
                             <ul>
@@ -571,10 +571,10 @@
                             </ul>
 
                             上記の通りでラベルエリアや画像エリアを作った後はプロパティウィンドウでフォントやテキスト、画像の貼り付けを行います。プロパティウィンドウは通常プロジェクトウィンドウの下に表示されています。<br>
-                            <img src="image/proprety_window.png" alt="プロパティウィンドウ"><br>
+                            <img class="img_small" src="image/proprety_window.png" alt="プロパティウィンドウ"><br>
                             表示されていない場合はメニューバーの表示→プロパティウィンドウで表示できます。<br>
-                            <img src="image/property_window_2.png" alt="プロパティウィンドウ2"><br>
-                            <img src="image/property_window_3.png" alt="プロパティウィンドウ3"><br>
+                            <img class="img_small" src="image/property_window_2.png" alt="プロパティウィンドウ2"><br>
+                            <img class="img_small" src="image/property_window_3.png" alt="プロパティウィンドウ3"><br>
                             選択ツールでオブジェクトを選択、プロパティを編集することで色々いじれます。1から10まで解説するのはしませんがある程度直感でいじれます。ある程度書いておきます。<br>
                             <ul>
                                 <li>BackColor オブジェクトの背景色を設定します</li>
@@ -602,7 +602,7 @@
                     <li class="item"  id="make_shift/input_date">
                         <h3>日付の入力</h3>
                         <p>作成するシフトの期間を入力します。</p>
-                        <img src="image/make_shift_1.png" alt="シフト表日付の入力">
+                        <img class="img_small" src="image/make_shift_1.png" alt="シフト表日付の入力">
                         <p>シフト表の下には様々な操作を行うボタンが用意されています。</p>
                     </li>
                     <li class="item" id="make_shift/reset">
@@ -612,7 +612,7 @@
                     <li class="item" id="make_shift/get_time">
                         <h3>シフト時間帯取得</h3>
                         <p>入力されているシフトの勤務の要素をB21セル以下に抽出します。すでにB21以下セルに入力されている場合は上書きせず、無かった場合は要素を追加します。</p>
-                        <img src="image/make_shift_2.png" alt="シフト表取得">
+                        <img class="img_small" src="image/make_shift_2.png" alt="シフト表取得">
                     </li>
                     <li class="item" id="make_shift/color">
                         <h3>セルの色設定</h3>
@@ -641,11 +641,11 @@
                                     <p>
                                         予約表ファイルはマクロで自動的に保護されるようになっています。それによりセルの背景色を変更する際に、変更できずにエラーが出ることがあります。特に初めてのPCで開いた際に起こりますが一度設定すると発生しなくなります。<br>
                                         解決策　校閲のシートの保護の解除をクリック。校閲がない場合（リボンが表示されていない時）には<a href="#control_panel/bottom/view_option">コントロールパネルの表示/非表示設定からリボンを表示</a>を押します。<br>
-                                        <img src="image/error_1.png" alt="エラー002＿1"><br>
+                                        <img class="img_small" src="image/error_1.png" alt="エラー002＿1"><br>
                                         シートの保護に変わるのでもう一度クリック<br>
-                                        <img src="image/error_2.png" alt="エラー002＿2"><br>
+                                        <img class="img_small" src="image/error_2.png" alt="エラー002＿2"><br>
                                         セルの書式設定のチェックボックスにチェックを入れてOKボタンを押します。<br>
-                                        <img src="image/error_3.png" alt="エラー002＿3"><br>
+                                        <img class="img_small" src="image/error_3.png" alt="エラー002＿3"><br>
                                     </p>
                                 </li>
                                 <li>
@@ -670,7 +670,7 @@
                                     <h4>：エラー番号２０１</h4>
                                     <p>
                                         シフト表に読み込まれている番号が出力シートのプロフィールシートに存在しない場合のエラーです。エラーが出た場合はその番号のプロフィール表示をスキップし、モジュール１のshift_profile_countで指定した数までプロフィールの表示を続けます。<br>
-                                        <img src="image/error_4.png" alt="エラー201_1"><br>
+                                        <img class="img_small" src="image/error_4.png" alt="エラー201_1"><br>
                                         例）その時のシフトが３、１０、１５番号で１０番のプロフィールがなかった場合、３と１５番のプロフィールを表示します。<br>
                                         また、更新のたびにエラーを吐きますので、プロフィール番号が間違えた場合などはそこを修正。そもそもプロフィールを用意していない場合などはシフト表の番号を０に設定しましょう。０はエラーなしで表示をスキップします。<br>
                                         例）シフトを３、０、１５に設定するとエラーなしで３と１５番のプロフィールを表示します。</p>
@@ -682,7 +682,7 @@
                         <h3>VBAエラー</h3>
                         <p>
                             作成者が予期していない、あるいは予期していても防ぐことが難しい場合は発生します。こんな感じのが出てきます。<br>
-                            <img src="image/vbaerror.png" alt="VBAエラー"><br>
+                            <img class="img_small" src="image/vbaerror.png" alt="VBAエラー"><br>
                             終了を押して大概問題ありませんが、出来ればデバックボタンを押して、どの行でエラーが出たかスクショして報告してくれると開発に役立ちます。
                         </p>
                     </li>
@@ -697,7 +697,7 @@
                         <p>
                             マクロが無効になっているかもしれません。グーグル先生に「マクロ　有効にする」でググりましょう。<br>
                             デバックモードになっている可能性があります。<a href="#control_panel/bottom/develop/open_editor">VisualBasicEditorを開きます。</a>中断と出ている場合でバックモードです。三角ボタンを押すとマクロが起動するようになります。<br>
-                            <img src="image/not_up_macro.png" alt="マクロが起動しない"><br>
+                            <img class="img_small" src="image/not_up_macro.png" alt="マクロが起動しない"><br>
                             途中でデバックモードを挟むと再計算が定期的に実行されなくなる場合があります。表に色がつかないなどの不具合があった場合はLAコントロールパネルの定期再計算再実行ボタンを押してください。
                         </p>
                     </li>
@@ -713,7 +713,7 @@
                 <ul>
                     <li class="item" id="implementation/outline">
                         <h3>全体の概要</h3>
-                            <img src="image/entire_gragh.png" alt="全体の概要">
+                            <img class="img_small" src="image/entire_gragh.png" alt="全体の概要">
                     </li>
                     <li class="item" id="implementation/cell_formula">
                         <h3>メインシートの表のセル内の式</h3>
@@ -736,5 +736,27 @@
                 </ul>
             </li>
         </ol>
+    <script type="text/javascript">
+        window.onload = function(){
+
+            let ele = document.getElementsByClassName('img_small');
+
+            for(let i=0;i<ele.length;i++){
+                console.log(ele[i].naturalWidth);
+                console.log(document.body.offsetWidth);
+                console.log(ele[i].naturalWidth +'px');
+                if(ele[i].naturalWidth >= document.body.offsetWidth){
+                    ele[i].style.width = '90%';
+                }else{
+                    ele[i].style.width = '${ele[i].naturalWidth}px';
+                }
+                ele[i].style.height = 'auto';
+                ele[i].style.padding = '20px';
+            }
+        };
+
+    </script>
+
+
     </body>
 </html>
