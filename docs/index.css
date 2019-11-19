@@ -34,7 +34,8 @@ body{
 
 @media(max-width: 500px){
 	body{
-		font-size:22px;
+		font-size:30px;
+		line-height: 2.0;
 
 	}
 }
