@@ -27,18 +27,18 @@ End If
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal Target As range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
 If Target.count > 1 Then
-    If range(cell_corsor_move).Value = "on" Then
-        range(corsor_move_target).Select
+    If Range(cell_corsor_move).Value = "on" Then
+        Range(corsor_move_target).Select
     End If
     End
 End If
 
 If Not (Target.Row >= res_table_start_row And Target.Row < res_table_start_row + res_table_width_row And Target.Column >= res_table_start_colomn And Target.Column < res_table_start_colomn + res_table_width_colomn) Then
-    If range(cell_corsor_move).Value = "on" Then
-        range(corsor_move_target).Select
+    If Range(cell_corsor_move).Value = "on" Then
+        Range(corsor_move_target).Select
     End If
     End '予約表の範囲以外なら終了･
 End If
@@ -47,17 +47,17 @@ End If
 'Set 今日 = Range(" K2")
 '今日という変数を宣言して日付の入ってるk2を選択する
 
-If range(master_on_off) = "off" Then
-    If range(date_sheet).Value < Date Then End
+If Range(master_on_off) = "off" Then
+    If Range(date_sheet).Value < Date Then End
 End If
 'past_able変数がfalseで過去の表だった場合は予約フォームが起動しないようになった
 
-If range(date_sheet).Value = Date Then
-    on_time = setting_time(Sheets("メイン").range(time_sheet).Value)
+If Range(date_sheet).Value = Date Then
+    on_time = setting_time(Sheets("メイン").Range(time_sheet).Value)
     '標準モジュールのsetting_timeに行ってon_time変数に今の時間はどこまで予約できるかを入れに行く
 End If
     
-resreve_day = Format(range(date_sheet).Value, "yyyymmdd")
+resreve_day = Format(Range(date_sheet).Value, "yyyymmdd")
     
 時間帯 = Target.Column - (res_table_start_colomn - 1)
 席番号 = Target.Row - (res_table_start_row - 1)
@@ -72,21 +72,21 @@ If 時間帯 = 7 Then
 End If
 '予約フォームでの処理のために連続可能かという変数に次の時間が予約済みかと、閉室後でないかどうかでTRUEかFALSEかを入れておく
 
-If range(date_sheet).Value = Date And range(master_on_off).Value = "off" Then
+If Range(date_sheet).Value = Date And Range(master_on_off).Value = "off" Then
     If (InStr(Target.Text, "予約済") > 0 Or InStr(Target.Text, "使用中") > 0) And Target.Column - 2 >= on_time Then
         予約変更フォーム.Show
     '    予約済のセルの場合は予約変更フォームを開く
-    ElseIf Target.Text = "" And Target.Column - 2 = on_time And range(limit_res_on_off).Value = "on" Then
+    ElseIf Target.Text = "" And Target.Column - 2 = on_time And Range(limit_res_on_off).Value = "on" Then
           予約フォーム.Show
-    ElseIf Target.Text = "" And Target.Column - 2 >= on_time And range(limit_res_on_off) = "off" Then
+    ElseIf Target.Text = "" And Target.Column - 2 >= on_time And Range(limit_res_on_off) = "off" Then
           予約フォーム.Show
         'セルが空白だった場合は予約フォームを開く
-    ElseIf Target.Text = "" And Target.Column - 2 > on_time And range(limit_res_on_off).Value = "on" Then
+    ElseIf Target.Text = "" And Target.Column - 2 > on_time And Range(limit_res_on_off).Value = "on" Then
             limit_res_inform.Show
     ElseIf InStr(Target.Text, "貸出中") > 0 And Target.Column - 2 < on_time Then
         Call cable
     End If
-ElseIf range(date_sheet).Value > Date Then
+ElseIf Range(date_sheet).Value > Date Then
     If InStr(Target.Text, "予約済") > 0 Then
         予約変更フォーム.Show
     '    予約済のセルの場合は予約変更フォームを開く
@@ -94,7 +94,7 @@ ElseIf range(date_sheet).Value > Date Then
           予約フォーム.Show
         'セルが空白だった場合は予約フォームを開く
     End If
-ElseIf range(master_on_off).Value = "on" Then
+ElseIf Range(master_on_off).Value = "on" Then
     If InStr(Target.Text, "使用済") > 0 Or InStr(Target.Text, "予約済") > 0 Or InStr(Target.Text, "使用中") > 0 Then
         予約変更フォーム.Show
     '    予約済のセルの場合は予約変更フォームを開く
@@ -107,8 +107,8 @@ End If
 Application.Calculate
 Call sheet_color_check
 
-If range(cell_corsor_move).Value = "on" Then
-    range(corsor_move_target).Select
+If Range(cell_corsor_move).Value = "on" Then
+    Range(corsor_move_target).Select
 End If
 
 End Sub

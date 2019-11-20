@@ -156,7 +156,7 @@ If extend_check = True Then
         Else
             extend_check = False
         End If
-    ElseIf Worksheets("メイン").range(limit_res_on_off).Value = "on" Then
+    ElseIf Worksheets("メイン").Range(limit_res_on_off).Value = "on" Then
             extend_bl = MsgBox("現在、混雑のため予約の制限をしています。１コマだけ予約しますか？", vbYesNo + vbQuestion, "予約の確認")
         If extend_bl = vbNo Then
             MsgBox ("予約画面に移動します。")

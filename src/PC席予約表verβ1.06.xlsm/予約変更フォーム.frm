@@ -29,7 +29,7 @@ If 連続可能か = False Then
     post_confirm.Show
     Unload 予約変更フォーム
     Exit Sub
-ElseIf Sheets("メイン").range(limit_res_on_off).Value = "on" Then
+ElseIf Sheets("メイン").Range(limit_res_on_off).Value = "on" Then
     limit_res_inform.Show
     Unload 予約変更フォーム
     Exit Sub
@@ -37,7 +37,7 @@ Else
     Dim 予約コード As Long
     Dim 現在の位置 As Long
     予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
-    現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").range("D:D"), 1)
+    現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
     Dim 予約確認 As Integer
     Dim CNT(10) As Integer
     Dim student_number_list(10) As Variant

@@ -9,7 +9,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Option Explicit
 
-Private Sub Worksheet_SelectionChange(ByVal Target As range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
 Dim image_filepath As String
 If Target.Column = 5 And Target.Row > 1 Then

@@ -17,6 +17,10 @@ Option Explicit
 Dim shift() As Integer
 Dim shift_row() As Integer
 
+Private Sub ComboBox2_Change()
+
+End Sub
+
 Private Sub CommandButton1_Click()
 
 If ComboBox2.ListIndex = -1 Or ComboBox1.ListIndex = -1 Then
@@ -38,6 +42,10 @@ Unload edit_shift_form
 
 End Sub
 
+Private Sub Label1_Click()
+
+End Sub
+
 Private Sub UserForm_Initialize()
 
 CommandButton1.SetFocus
@@ -55,10 +63,10 @@ Dim name As String
 
 For i = 0 To UBound(shift_row) - 1
     On Error GoTo data_nothing
-    name_row = WorksheetFunction.Match(shift(i), Sheets("“ü—Í").range("A:A"), 1)
+    name_row = WorksheetFunction.Match(shift(i), Sheets("“ü—Í").Range("A:A"), 1)
     On Error GoTo 0
-    If WorksheetFunction.Index(Sheets("“ü—Í").range("A:A"), name_row) = shift(i) Then
-        name = WorksheetFunction.Index(Sheets("“ü—Í").range("D:D"), name_row)
+    If WorksheetFunction.Index(Sheets("“ü—Í").Range("A:A"), name_row) = shift(i) Then
+        name = WorksheetFunction.Index(Sheets("“ü—Í").Range("D:D"), name_row)
     Else
         name = "No." + CStr(shift(i))
     End If
