@@ -19,3 +19,7 @@ Private Sub CommandButton1_Click()
 
 Unload adduser
 End Sub
+
+Private Sub Label1_Click()
+
+End Sub

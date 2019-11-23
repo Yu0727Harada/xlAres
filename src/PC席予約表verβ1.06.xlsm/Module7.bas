@@ -16,12 +16,12 @@ Dim inputpass As Integer
 Do While True
     inputpass = passcord_inputform
     If inputpass = 0 Then
-        If range(master_on_off).Value = "off" Then
-            range(master_on_off).Value = "on"
-        ElseIf range(master_on_off).Value = "on" Then
-            range(master_on_off).Value = "off"
+        If Range(master_on_off).Value = "off" Then
+            Range(master_on_off).Value = "on"
+        ElseIf Range(master_on_off).Value = "on" Then
+            Range(master_on_off).Value = "off"
         Else
-            range(master_on_off).Value = "off"
+            Range(master_on_off).Value = "off"
         End If
         Exit Sub
     ElseIf inputpass = 2 Then
@@ -34,13 +34,13 @@ Loop
 End Sub
 Sub main_sheet_sort()
 '生データをソートするプロシージャ
-Call Worksheets("生データ").range("A:AA").Sort(key1:=Worksheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("生データ").Range("A:AA").Sort(key1:=Worksheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 End Sub
 
 Sub shift_sheet_sort()
 '生データをソートするプロシージャ
-Call Worksheets("シフト表").range("A:C").Sort(key1:=Worksheets("シフト表").Cells(1, shift_table.勤務時間帯終了).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("シフト表").Range("A:C").Sort(key1:=Worksheets("シフト表").Cells(1, shift_table.勤務時間帯終了).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 End Sub
 
@@ -51,12 +51,12 @@ Dim inputpass As String
 Do While True
     inputpass = passcord_inputform
     If inputpass = 0 Then
-        If range(cell_corsor_move).Value = "off" Then
-            range(cell_corsor_move).Value = "on"
-        ElseIf range(cell_corsor_move).Value = "on" Then
-            range(cell_corsor_move).Value = "off"
+        If Range(cell_corsor_move).Value = "off" Then
+            Range(cell_corsor_move).Value = "on"
+        ElseIf Range(cell_corsor_move).Value = "on" Then
+            Range(cell_corsor_move).Value = "off"
         Else
-            range(cell_corsor_move).Value = "off"
+            Range(cell_corsor_move).Value = "off"
         End If
         Exit Sub
     ElseIf inputpass = 2 Then
@@ -70,12 +70,12 @@ Loop
 End Sub
 Sub if_save()
 
-If range(save_on_off).Value = "off" Then
-    range(save_on_off).Value = "on"
-ElseIf range(save_on_off).Value = "on" Then
-    range(save_on_off).Value = "off"
+If Range(save_on_off).Value = "off" Then
+    Range(save_on_off).Value = "on"
+ElseIf Range(save_on_off).Value = "on" Then
+    Range(save_on_off).Value = "off"
 Else
-    range(save_on_off).Value = "off"
+    Range(save_on_off).Value = "off"
 End If
 
 End Sub
@@ -105,12 +105,12 @@ Dim inputpass As String
 Do While True
     inputpass = passcord_inputform
     If inputpass = 0 Then
-        If range(limit_res_on_off).Value = "off" Then
-            range(limit_res_on_off).Value = "on"
-        ElseIf range(limit_res_on_off).Value = "on" Then
-            range(limit_res_on_off).Value = "off"
+        If Range(limit_res_on_off).Value = "off" Then
+            Range(limit_res_on_off).Value = "on"
+        ElseIf Range(limit_res_on_off).Value = "on" Then
+            Range(limit_res_on_off).Value = "off"
         Else
-            range(limit_res_on_off).Value = "off"
+            Range(limit_res_on_off).Value = "off"
         End If
         Exit Sub
     ElseIf inputpass = 2 Then
@@ -232,9 +232,9 @@ ElseIf Int(trans_input_new_pass) = -1 Then
 Else
     Dim search As Integer
     On Error GoTo match_error
-    search = WorksheetFunction.Match(Int(trans_input_new_pass), Sheets("passcord").range("A:A"), 1)
+    search = WorksheetFunction.Match(Int(trans_input_new_pass), Sheets("passcord").Range("A:A"), 1)
     On Error GoTo 0
-    If Int(trans_input_new_pass) = WorksheetFunction.Index(Sheets("passcord").range("A:A"), search) Then
+    If Int(trans_input_new_pass) = WorksheetFunction.Index(Sheets("passcord").Range("A:A"), search) Then
         Dim delete_yesno As String
         delete_yesno = MsgBox("この番号はすでに登録されています。この番号を削除しますか？", vbYesNo + vbQuestion, "番号の削除の確認")
         If delete_yesno = vbNo Then
@@ -339,8 +339,8 @@ For i = 1 To end_column
     End If
 Next i
 book_sheet.Activate
-book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete
-book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.RowHeight = 180
+book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete
+book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.RowHeight = 180
 
 End Sub
 
@@ -358,9 +358,9 @@ For i = 1 To end_column
     End If
 Next i
 from_book_sheet.Activate
-from_book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Copy
+from_book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Copy
 to_book_sheet.Activate
-to_book_sheet.range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.PasteSpecial Paste:=xlPasteValues
+to_book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.PasteSpecial Paste:=xlPasteValues
 
 End Sub
 

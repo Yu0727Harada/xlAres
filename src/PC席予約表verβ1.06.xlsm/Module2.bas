@@ -24,7 +24,7 @@ Set outputsheet = ThisWorkbook.Worksheets("出力")
 '    outputsheet.Cells(1, 1) = 0
 'End If
 
-Call Worksheets("入力").range("A:F").Sort(key1:=Worksheets("入力").Cells(1, 1).EntireColumn, order1:=xlAscending, Header:=xlYes)
+Call Worksheets("入力").Range("A:F").Sort(key1:=Worksheets("入力").Cells(1, 1).EntireColumn, order1:=xlAscending, Header:=xlYes)
 
 Dim i As Integer
 Dim j As Integer
@@ -34,7 +34,7 @@ Do While inputsheet.Cells(j, 1) <> ""
     If i = 1 Then
         If outputsheet.Cells(i, 1).Value = 0 And inputsheet.Cells(j, 1) <> 0 Then
             outputsheet.Activate
-            Call shapes_delete(outputsheet.range(Cells(1, 1), Cells(1, 2)), outputsheet, False)
+            Call shapes_delete(outputsheet.Range(Cells(1, 1), Cells(1, 2)), outputsheet, False)
             Call delete_sheet_data(2, 2, outputsheet)
             GoTo skip_insert_0_profile
         Else
@@ -45,6 +45,8 @@ Do While inputsheet.Cells(j, 1) <> ""
             Next shp
         End If
     End If
+    
+    outputsheet.Range(Cells(i, 1), Cells(i, 2)).EntireRow.RowHeight = profile_height
     
     outputsheet.Cells(i, 1).Value = inputsheet.Cells(j, 1).Value
     Dim cellT As Variant
@@ -100,13 +102,15 @@ Do While inputsheet.Cells(j, 1) <> ""
     End With
     
     Dim picfile_path As String
+    
 '        Dim pic As Object
     If inputsheet.Cells(j, 5).Value = "" Then
-        picfile_path = ThisWorkbook.Path + "\Noimage.png"
+        inputsheet.Cells(j, 5).Value = "\Noimage.png"
+        'picfile_path = "C:\Users\haradayuii\Documents\GitHub\PCresrveSystem\bin\Noimage.png"
     Else
-        picfile_path = ThisWorkbook.Path + inputsheet.Cells(j, 5).Value
+
     End If
-    
+        picfile_path = ThisWorkbook.Path + inputsheet.Cells(j, 5).Value
 '            Set pic = LoadPicture(picfile_path)
         Dim pic_W As Variant
         Dim pic_H As Variant
@@ -167,7 +171,7 @@ Loop
 
 If i = 1 Then '何もデータがなかった場合の処理
     outputsheet.Activate
-    Call shapes_delete(outputsheet.range(Cells(1, 1), Cells(1, 2)), outputsheet, False)
+    Call shapes_delete(outputsheet.Range(Cells(1, 1), Cells(1, 2)), outputsheet, False)
     Call delete_sheet_data(2, 2, outputsheet)
 End If
 

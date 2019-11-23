@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} limit_res_inform
    ClientHeight    =   3101
    ClientLeft      =   91
    ClientTop       =   406
-   ClientWidth     =   6496
+   ClientWidth     =   6608
    OleObjectBlob   =   "limit_res_inform.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -17,5 +17,9 @@ Option Explicit
 
 Private Sub CommandButton1_Click()
 Unload limit_res_inform
+
+End Sub
+
+Private Sub Label1_Click()
 
 End Sub

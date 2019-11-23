@@ -22,6 +22,10 @@ Unload delete_confirm
 
 End Sub
 
+Private Sub Label1_Click()
+
+End Sub
+
 Private Sub Label2_Click()
 
 End Sub

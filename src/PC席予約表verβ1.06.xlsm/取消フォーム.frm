@@ -24,8 +24,8 @@ Dim i As Integer
 Dim target_stu_list(10) As Variant
 
 予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
-現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").range("D:D"), 1)
-If 予約コード = WorksheetFunction.Index(Sheets("生データ").range("D:D"), 現在の位置) Then
+現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
+If 予約コード = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), 現在の位置) Then
     
     For i = 0 To 10
         If Sheets("生データ").Cells(現在の位置, i + 6).Value = "" Then

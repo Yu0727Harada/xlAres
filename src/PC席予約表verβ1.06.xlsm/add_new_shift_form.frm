@@ -17,6 +17,10 @@ Option Explicit
 
 
 
+Private Sub ComboBox2_Change()
+
+End Sub
+
 Private Sub CommandButton1_Click()
 
 If ComboBox2.ListIndex = -1 Then
@@ -35,7 +39,7 @@ Else
 End If
 
 Dim search As Integer
-Dim shift_time_end As range
+Dim shift_time_end As Range
 Set shift_time_end = Worksheets("シフト表").Columns(shift_table.勤務時間帯終了)
 On Error GoTo data_nothing
 search = WorksheetFunction.Match(CDbl(end_time), shift_time_end, 1)
