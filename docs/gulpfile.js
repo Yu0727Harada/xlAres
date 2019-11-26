@@ -10,7 +10,7 @@ gulp.task("ejs",function () {
             ["page/**/*.ejs","!page/partical/**/*.ejs"])
         .pipe(ejs())
         .pipe(rename({extname:".html"}))
-        .pipe(gulp.dest("document"))
+        .pipe(gulp.dest("./"))
     );
 
 });
@@ -20,7 +20,7 @@ gulp.task("sass",function () {
     gulp
             .src(["page/*.scss"])
             .pipe(sass())
-            .pipe(gulp.dest("document"))
+            .pipe(gulp.dest("./"))
     );
 
 });

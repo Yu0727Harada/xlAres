@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" >
+    <title>既存予約の変更/予約を取るための基本的な使い方 - xlAres</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script type="text/javascript" src="fit_image.js"></script>
+    <script>
+        (function(d) {
+            var config = {
+                    kitId: 'uda0ekj',
+                    scriptTimeout: 3000,
+                    async: true
+                },
+                h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+        })(document);
+    </script>
+</head>
+
+<body>
+<div class="container">
+
+    <input id="index_checked" class="index_check" type="checkbox">
+<label class="hum_icon" for="index_checked">
+    <span class="hum_icon-parts"></span>
+</label>
+<label class="index_overlay" for="index_checked"></label>
+
+<header class="header">
+    <div class="items">
+        <a class="logo" href="index.html">xlAres</a>
+        <a class="github" href="https://github.com/Yu0727Harada/xlAres">github</a>
+    </div>
+</header>
+    <aside class="aside">
+    <div class="side_bor"><p class="index_title">INDEX</p>
+        <a class="label" href="initialize.html">使用する前にすること</a>
+        <input id="primary_checked" class="check" type="checkbox">
+        <label class="label" for="primary_checked">予約を取るための基本的な使い方</label>
+        <div class="content">
+            <a href="primary_new_reserve.html">新規予約</a>
+            <a href="primary_change_reserve.html">既存予約の変更</a>
+            <a href="primary_change_date.html">メインページの表示する日付の変更</a>
+        </div>
+
+        <input id="administer_checked" class="check" type="checkbox">
+        <label class="label" for="administer_checked">LAとしての運営のための基本的な使い方</label>
+        <div class="content">
+            <a href="administer_edit_raw_data.html">生データを編集する</a>
+            <a href="administer_confirm_status.html">現在の予約状況を確認（各予約の人数を確認する）</a>
+            <a href="administer_set_profile.html">LAのプロフィールを設定する</a>
+            <a href="administer_import_shift.html">シフトを読み込む</a>
+        </div>
+
+        <input id="control_panel_checked" class="check" type="checkbox">
+        <label class="label" for="control_panel_checked">LAコントロールパネル</label>
+        <div class="content">
+            <a href="control_panel_view.html">LAコントロールパネルの表示の仕方</a>
+            <a href="control_panel_view_option.html">表示／非表示オプション</a>
+            <a href="control_panel_execute.html">マクロ実行ボタン</a>
+            <a href="control_panel_switch_mode.html">入力モード切り替え</a>
+            <a href="control_panel_shift_number.html">勤務中のシフト番号</a>
+            <a href="control_panel_restrict.html">予約制限</a>
+            <a href="control_panel_develop.html">開発</a>
+        </div>
+
+        <input id="system_checked" class="check" type="checkbox" >
+        <label class="label" for="system_checked">システムのカスタマイズ</label>
+        <div class="content">
+            <a href="system_const_passcord.html">パスコードの設定</a>
+            <a href="system_set_main.html">メインシートの各セルの位置を変更する</a>
+            <a href="system_set_shift.html">シフト表の各セルの位置を変更する</a>
+            <a href="system_set_profile.html">プロフィールのテキストボックスなどのカスタマイズをする</a>
+            <a href="system_set_profile_details.html">LAプロフィールユーザーフォームの設定</a>
+        </div>
+
+        <input id="make_shift_checked" class="check" type="checkbox" >
+        <label class="label" for="make_shift_checked">シフトの作成</label>
+        <div class="content">
+            <a href="make_shift.html#input_date">日付の入力</a>
+            <a href="make_shift.html#reset">シフト表リセットボタン</a>
+            <a href="make_shift.html#get_time">シフト時間帯取得</a>
+            <a href="make_shift.html#color">セルの色設定</a>
+        </div>
+
+        <input id="error_checked" class="check" type="checkbox" >
+        <label class="label" for="error_checked">エラー処理＆困った時の処理リスト</label>
+        <div class="content">
+            <a href="error_outline.html">バグの報告</a>
+            <a href="error_known.html">予約表固有エラー</a>
+            <a href="error_unknown.html">VBAエラー</a>
+            <a href="error_work.html">予約表に予約済と表示されない,予約表の背景色が設定されない,時計が更新されない</a>
+        </div>
+
+        <input id="implementation_checked" class="check" type="checkbox" >
+        <label class="label" for="implementation_checked">開発を進める上での基本的な仕様</label>
+        <div class="content">
+            <a href="implementation.html#outline">全体の概要</a>
+            <a href="implementation.html#cell_formula">メインシートの表のセル内の式</a>
+            <a href="implementation.html#export_macro">vbac.wsfファイルの使い方</a>
+        </div>
+
+    </div>
+</aside>
+
+    <main class="main">
+        <div class="main_content">
+            <h3>既存予約の変更</h3>
+            <p>
+                予約済か、使用中と表示されているセルをクリックすると予約の変更などフォームが表示されます。マスターモードの場合は使用済のセルをクリックしても表示されます。（<a href="control_panel_switch_mode.html#master">マスターモードについて参照する</a>）<br>
+                <img class="img_small" src="image/vary_resrve.png" alt="予約変更フォーム"><br>
+            </p>
+            <ul>
+                <li>
+                    利用者の追加をクリックすると利用者の追加フォームが表示され、新規予約同様に番号を入力することで、予約者の追加を行うことが出来ます。<br>
+                    <img class="img_small" src="image/add_user.png" alt="利用者の追加"><br>
+                </li>
+                <li>
+                    延長をクリックすると、1コマ分延長することが出来ます。<br>
+                </li>
+                <li>
+                    予約の取り消しを押すと取り消しフォームが出ます。<br>
+                    <img class="img_small" src="image/delete_resrve.png" alt="予約の取り消し">
+                    <p>
+                        LAのパスコードを入力するか、取り消したい予約を行なった人、誰か一人の学籍番号か台帳番号を入力することで予約を取り消すことが出来ます。（<a href="control_panel_develop.html#passcord">LAコントロールパネル―パスコードの設定</a>、<a href="system_const_passcord.html">システムのカスタマイズ、パスコードの設定参照</a>）<br>
+                        <span class="red">この時、正しく入力していても取り消せない場合があります。</span>これは学籍番号を台帳番号に変換する際に不具合があるからです。具体的には下の画像の黄色の学科の台帳番号は実際にそうであるか不明で仮での変換です。そのため、変換がうまくいかず、取り消しの認証がされません。もしそのような人がいた場合はパスコードを入力して対処してください。<br>
+                        また、できれば正確な台帳番号が手に入れば更新してください。（更新の仕方→<a href="implementation.html#outline">GitHubで報告していただければ対応します</a>）<br>
+                        <img class="img_small" src="image/student_number_list.png" alt="変換表">
+                    </p>
+                </li>
+                <li>
+                    ケーブル貸し出しボタンをクリックすると、貸し出しのステータスが変化します。
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>
