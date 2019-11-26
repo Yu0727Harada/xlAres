@@ -61,20 +61,22 @@
 }
 
 @mixin logo{
-  font-size: 40px;
   color:$header_font_color;
-  margin:0 55px;
+  font-size: 25px;
+  padding-left: 20px;
 }
 @mixin github{
-  font-size: 30px;
+  font-size: 20px;
   color:$header_font_color;
-  margin:0 55px;
+  left: 50%;
 }
 
 @mixin main{
   grid-row: 2 / 3;
   padding: 15px;
   z-index: 1;
+
+
 
   .main_content{
     background-color: $main_color;
@@ -102,6 +104,12 @@ body{
   font-style: normal;
   background-color: $back_color;
   line-height: 2;
+  -ms-overflow-style: none;
+  scrollbar-width:none;
+
+  &::-webkit-scrollbar{
+    display: none;
+  }
   li{
     margin: 0;
   }
@@ -207,7 +215,10 @@ body{
         top: 0;
       }
       .index_check:checked ~ .aside {
+        bottom: 0;
         left: 0;
+        top: 60px;
+        overflow-y: auto;
         transition: all 0.7s;
       }
 
@@ -240,6 +251,7 @@ body{
 
     }
     .aside {
+      grid-row: 2/3;
       max-width: 100%;
       width: 250px;
       -webkit-overflow-scrolling: touch;
@@ -247,6 +259,13 @@ body{
       top: 60px;
       left: -250px;
       z-index: 3;
+      -ms-overflow-style: none;
+      scrollbar-width:none;
+
+      &::-webkit-scrollbar{
+        display: none;
+      }
+
       .side_bor{
         @include side_bor(False);
       }
@@ -297,6 +316,13 @@ body{
       grid-column: 2 / 3;
       grid-row: 2 / 3;
       padding: 10px;
+      -ms-overflow-style: none;
+      scrollbar-width:none;
+
+      &::-webkit-scrollbar{
+        display: none;
+      }
+
       .side_bor{
         @include side_bor(True);
 

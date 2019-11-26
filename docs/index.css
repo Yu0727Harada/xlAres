@@ -11,7 +11,11 @@ body {
   font-weight: 300;
   font-style: normal;
   background-color: #EDEDED;
-  line-height: 2; }
+  line-height: 2;
+  -ms-overflow-style: none;
+  scrollbar-width: none; }
+  body::-webkit-scrollbar {
+    display: none; }
   body li {
     margin: 0; }
   body ol {
@@ -87,7 +91,10 @@ body {
       transform: rotate(45deg);
       top: 0; }
     .container .index_check:checked ~ .aside {
+      bottom: 0;
       left: 0;
+      top: 60px;
+      overflow-y: auto;
       transition: all 0.7s; }
     .container .header {
       grid-row: 1 / 2;
@@ -105,21 +112,26 @@ body {
         left: 60px;
         position: relative; }
         .container .header .items .logo {
-          font-size: 40px;
           color: #FFFFFF;
-          margin: 0 55px; }
+          font-size: 25px;
+          padding-left: 20px; }
         .container .header .items .github {
-          font-size: 30px;
+          font-size: 20px;
           color: #FFFFFF;
-          margin: 0 55px; }
+          left: 50%; }
   .aside {
+    grid-row: 2/3;
     max-width: 100%;
     width: 250px;
     -webkit-overflow-scrolling: touch;
     position: fixed;
     top: 60px;
     left: -250px;
-    z-index: 3; }
+    z-index: 3;
+    -ms-overflow-style: none;
+    scrollbar-width: none; }
+    .aside::-webkit-scrollbar {
+      display: none; }
     .aside .side_bor {
       background-color: #FFFFFF;
       color: #707070;
@@ -200,17 +212,21 @@ body {
         .container .header .items .index_icon {
           display: none; }
         .container .header .items .logo {
-          font-size: 40px;
           color: #FFFFFF;
-          margin: 0 55px; }
+          font-size: 25px;
+          padding-left: 20px; }
         .container .header .items .github {
-          font-size: 30px;
+          font-size: 20px;
           color: #FFFFFF;
-          margin: 0 55px; }
+          left: 50%; }
     .container .aside {
       grid-column: 2 / 3;
       grid-row: 2 / 3;
-      padding: 10px; }
+      padding: 10px;
+      -ms-overflow-style: none;
+      scrollbar-width: none; }
+      .container .aside::-webkit-scrollbar {
+        display: none; }
       .container .aside .side_bor {
         background-color: #FFFFFF;
         box-shadow: 1px 1px 5px 5px #e0e0e0;
