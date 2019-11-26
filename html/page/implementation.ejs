@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h2>開発を進める上での基本的な仕様</h2>
+            <p>
+                このエクセルマクロ作った人間は今までプログラミングのプの字もやったことなかった人間が手探りで作ったものです。そのため、変数は全然リーダブルじゃないし、全体的に処理が冗長です。お願いなのでスマートな処理に直してください。<br>
+                開発自体は途中からGitHubをつかってやってるので、GitHubのほうから編集していただくとスマートかと思います。<br>
+                オープンレポジトリにしたので自由に更新できます。URL　<a href="https://github.com/Yu0727Harada/xlAres">https://github.com/Yu0727Harada/xlAres</a></p>
+            <ul>
+                <li class="item" id="outline">
+                    <h3>全体の概要</h3>
+                    <img class="img_small" src="image/entire_gragh.png" alt="全体の概要">
+                </li>
+                <li class="item" id="cell_formula">
+                    <h3>メインシートの表のセル内の式</h3>
+                    <p>
+                        =IF(ISNUMBER(IF(INDEX(生データ!$D:$D,MATCH(D22,生データ!$D:$D,1))=D22,VLOOKUP(D22,生データ!$D:$F,3,TRUE),)),get_view_string(COLUMN(C4)-2)&IF(VLOOKUP(D22,生データ!$D:$F,2,TRUE)=1,CHAR(10)&"(貸出中)",""),IF(INDEX(生データ!$D:$D,MATCH(D22,生データ!$D:$D,1))=D22,VLOOKUP(D22,生データ!$D:$F,3,TRUE),""))<br>
+                        Vlookupは重くなるのでindex&matchの二分探索に切り替えました。CHAR(10)は改行。基本構造は上と同じです。<br>
+                        D22セル周辺には予約コードが非表示で置いてあります。<br>
+                        前から三つ目のif文の説明です。Index＋match関数で一致する予約コードがあるか確認します。Trueの場合はVLOOKUP関数のTrueで二分探索を行います。Falseの場合の処理はなし。<br>
+                        上のif文の結果、IsNumber関数にはVLOOKUPした学籍番号が入ります。そのため、If文のTrueの場合（IsNumberがTrueの時＝きちんと学籍番号が入っていた場合）予約済と表示し、かつ（＆で文字列の連結）VLOOKUPでケーブルの貸し出しの有無を探索して、１だったら改行コードCHAR(10)を挟んで貸し出し中と表示、１でないなら何もなし。<br>
+                        If文がFalseの場合（学籍番号ではなく文字列が入っていた場合）もう一度Index＋Matchで探索し（なぜか必要）、一致したらVLOOKUPの出てきた値をそのまま表示、一致しなかった場合は“”を出力。（この処理は文字列を生データに入力するとその文字列が表に表示されるという使用を実装するために入れています）（9/29追記ここまで）<br>
+                        マクロに記述してある、時間帯に応じて文字列を返すGet_view_string関数を用いることで時間帯に応じて「予約済」、「使用中」、「使用済」を表示することができます。<br>
+                    </p>
+                </li>
+                <li class="item" id="export_macro">
+                    <h3>vbac.wsfファイルの使い方</h3>
+                    <p>
+                        <a href="http://igeta-diary.blogspot.com/2014/03/what-is-vbac.html">http://igeta-diary.blogspot.com/2014/03/what-is-vbac.html</a>を参考にしてください。コマンドプロンプトでエクセルファイルのある親フォルダに移動してcscript vbac.wsf decombine　をするとエクセルのマクロをテキスト化してくれます。
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

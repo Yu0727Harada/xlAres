@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3 >開発</h3>
+            <ul>
+                <li id="open_editor">
+                    <h4 >VBEを開く</h4>
+                    <p>
+                        マクロの編集を直接できるVisualBasicEditorを開くことができます。システムのカスタマイズで<a href="system_const_passcord.html">パスコードを設定</a>したり、<a href="system_set_profile.html">プロフィールのデザインを設定</a>したりできます。
+                    </p>
+                </li>
+                <li id="passcord">
+                    <h4 >パスコードの追加/削除</h4>
+                    現在PC予約表でパスコードには2種類あります。１つ目は<a href="system_const_passcord.html">VBE上の標準モジュールにて"passcord"という定数として設定</a>されているもの。便宜上、これを定数パスコードと名付けます。２つ目は登録した人の学籍番号、あるいは学生証に表記されている台帳番号をパスコードとして利用できます。このボタンからその登録を行うことができます。学籍番号と台帳番号は共通の独自の番号に変換されるので、どちらかを登録すると入力画面では両方の入力に対応します。<br>
+                    <ol>
+                        <li>
+                            ボタンを押すとパスコードを要求されます。これは第三者から自由にパスコードを追加されたりしないようにするためです。定数パスコードかすでに登録した人の学籍番号などを入力してください。
+                        </li>
+                        <li>
+                            登録する人の学籍番号か台帳番号を入力し、OKボタンを押すと、新規のパスコードを登録することができます。<br>
+                            すでに登録した人の学籍番号か台帳番号を入力すると、その番号を削除することができます。
+                        </li>
+                    </ol>
+                    パスコードとして登録した番号のリストは直接見ることは出来ません。個人情報保護の観点から誰でも閲覧できるのはまずいかと思ったので隠しています。
+                </li>
+                <li id="update">
+                    <h4 >エクセルファイルのアップデート</h4>
+
+                    PC予約表のマクロはオンラインストレージであるgithub上で更新されています。githubでの操作を含めてアップデートの仕方を説明します。
+                    <ol>
+                        <li>
+                            githubURL<a href="https://github.com/Yu0727Harada/xlAres">https://github.com/Yu0727Harada/xlAres</a>にアクセスします。<br>
+                            赤丸で記した緑色のclone or downloadを押します。<br>
+                            <img class="img_small" src="image/github.png" alt="githubの画面">
+                        </li>
+                        <li>
+                            downloadするためのボタンが出てくるのでdownload Zipをクリックします。<br>
+                            <img class="img_small" src="image/github_download.png" alt="githubのdownload"><br>
+                            ダウンロードが始めるので好きな所に保存します。
+                        </li>
+                        <li>
+                            保存した所に移動してダウンロードしたファイルを選択し、右クリックから全てを展開を選択します。<br>
+                            <img class="img_small" src="image/zip_file.png" alt="ZIPファイルを展開"><br>
+                            好きな所に展開をします<br>
+                            <img class="img_small" src="image/zip_dialog.png" alt="ZIPファイルを展開-2"><br>
+                            展開したフォルダの中にbinという名前のフォルダがあります。色々ファイルが入っていますが、大事なのはこの中に入っているPC席予約表のエクセルファイルとせいぜいnoimage.pngファイルです。noimage.pngファイルについては<a href="administer_set_profile.html">LAのプロフィールを設定する</a>を参照してください。<br>
+                            PC席予約表のエクセルファイルを好きな場所に移動します。
+                        </li>
+                        <li>
+                            移行元の予約表エクセルファイルを用意します。この時、移行元と移行先のエクセルファイルの名前は異なるものにしてください。以降元のエクセルファイルを開きます。<br>
+                            <a href="control_panel_view.html">LAコントロールパネルを表示</a>し、エクセルファイルのアップデートボタンを押します。ファイルダイアログが出るので先ほどダウンロードしたエクセルファイルを選びます。<br>
+                            選ぶと画面がカチカチしたりしますが、この間にデータの移行を行なっています。データの移行が終わるとダイアログが出ます。<br>
+                            <img class="img_small" src="image/excel_update.png" alt="完了ダイアログ"><br>
+                            これでデータの移行は完了です。
+                        </li>
+                    </ol>
+                    このデータの移行で移行できるデータは<a href="primary_new_reserve.html">生データシートに保存された予約のデータ</a>、<a href="administer_set_profile.html">入力シートに入力したデータ、出力シートのオブジェクト</a>、<a href="administer_import_shift.html">シフト表シートに保存されたデータ</a>、<a href="control_panel_develop.html">パスコードの追加</a>から追加したパスコードです。<br>
+                    このパスコードには定数パスコードは含まれません。定数パスコートを引き継ぐには<a href="system_const_passcord.html">VBEエディター</a>から定数パスコードを設定し、<a href="implementation_outline.html">github上のデータをアップデート</a>する必要があります。
+
+                </li>
+                <li id="save">
+                    <h4>定期保存のON/OFF</h4>
+                    エクセルのファイルは1分ごとに保存されています。しかし、編集を行なっている時などは保存が入ると重くなってしまいます。そのため、定期的に保存するかどうかをこのボタンで選択することが出来ます。<br>
+                </li>
+            </ul>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

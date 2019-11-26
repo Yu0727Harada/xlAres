@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "使用する前にすること - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h2>使用する前にすること</h2>
+            <p>このエクセルファイルを運用する前に、準備することがあります。この準備の目的は第三者にこのエクセルファイルを操作させた際に、アクセスされたくないデータにアクセスされたり、内容を改ざんされることを防ぐ目的と、見た目をよくする目的があります。</p>
+            <ol>
+                <li>
+                    <a href="control_panel_execute.html#repat_execute">LAコントロールパネルのマクロ再実行</a>を押します。これはなぜかエクセルファイルを開いた直後にはマクロが実行されないからです。もしそれでもなお動かない場合はシートを数回切り替えてください。<br>
+                </li>
+                <li>
+                    必要であれば表示倍率を調節してください。
+                </li>
+                <li>
+                    <a href="control_panel_view_option.html">LAコントロールパネルの表示/非表示オプション</a>から、数式バー、行列番号、ステータスバー、シートタブ、リボンを非表示にします。
+                </li>
+                <li>
+                    <a href="control_panel_view_option.html">LAコントロールパネルの表示/非表示オプション</a>から、シートの保護を行います。(一般に、すでに保護されているはずですが一応）
+                </li>
+                <li>
+                    <a href="control_panel_switch_mode.html#master">LAコントロールパネルのマスター入力モード</a>をoffに、<a href="control_panel_switch_mode.html#cursor">選択カーソル強制移動</a>をOnにします。
+                </li>
+                <li>
+                    どこかのセルをクリックするか、スクロールバーを使用してPC席予約表が画面に映るようにします。
+                </li>
+                <li>
+                    <a href="control_panel_view.html">メインシート左下の歯車をクリック</a>してスクロールバーを消します。<br>
+                    これで準備は完了です。
+                </li>
+            </ol>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

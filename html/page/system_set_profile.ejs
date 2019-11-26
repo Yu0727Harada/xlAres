@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3 >プロフィールのテキストボックスなどのカスタマイズをする</h3>
+            <p>
+                <a href="control_panel_develop.html">VisualBasicの開き方を</a>参照してvisualBasicを開きます。Module2を開きます<br>
+                <img class="img_small" src="image/design_profile_1.png" alt="プロフィール位置調整1">
+                <img class="img_small" src="image/design_profile_2.png" alt="プロフィール位置調整2"><br>
+                Module2の中にテキストボックスを出力するコードがあります。一番上の方にあるT,L,W,Hと書かれているところが名前と所属をテキストボックスの出力をコントロールする部分です。<br>
+                <img class="img_small" src="image/design_profile_3.png" alt="プロフィール位置調整3"><br>
+                少し下の行に書かれているT2、L2、W2、H2という変数を先ほどの要領で調整することで、コメント部分の出力位置を変更できます。<br>
+                <img class="img_small" src="image/design_profile_4.png" alt="プロフィール位置調整4"><br>
+                さらに下の行には画像の出力位置を調整する変数があります。先ほどの要領でslection.top,selection.left,selection.widthを変更することで出力位置を変更できます。<br>
+                <img class="img_small" src="image/design_profile_5.png" alt="プロフィール位置調整5"><br>
+                msoshapeOvalは楕円を指定しています.他の形にも出来ます（ググって）<br>
+                <img class="img_small" src="image/design_profile_6.png" alt="プロフィール位置調整6">
+            </p>
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

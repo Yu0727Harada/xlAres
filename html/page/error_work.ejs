@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <li class="item" id="error/work">
+                <h3>予約表に予約済と表示されない,予約表の背景色が設定されない,時計が更新されない,VBAエラーが表示されてしまう</h3>
+                <p>
+                    <a href="control_panel_execute.html">LAコントロールパネル</a>をガチャ押しで対処できます。あるいはエクセルファイルを立ち上げなおしてください。それでも解決しない場合は新しいファイルを作成してください。この時、エラーの原因が生データやシフト表などのデータの可能性が高いため、<a
+                            href="control_panel_develop.html#update">データは引き継がず</a>削除してください。
+                </p>
+
+                <h3>マクロが起動しない</h3>
+                <p>
+                    マクロが無効になっているかもしれません。グーグル先生に「マクロ　有効にする」でググりましょう。<br>
+                    デバックモードになっている可能性があります。<a href="control_panel_develop.html#open_editor">VisualBasicEditorを開きます。</a>中断と出ている場合でバックモードです。三角ボタンを押すとマクロが起動するようになります。<br>
+                    <img class="img_small" src="image/not_up_macro.png" alt="マクロが起動しない"><br>
+                    途中でデバックモードを挟むと再計算が定期的に実行されなくなる場合があります。表に色がつかないなどの不具合があった場合はLAコントロールパネルの定期再計算再実行ボタンを押してください。
+                </p>
+
+            </li>
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

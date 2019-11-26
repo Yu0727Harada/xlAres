@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3 >LAプロフィールユーザーフォームの設定</h3>
+
+            LAの詳しいプロフィールを閲覧できるユーザーフォームを設定することができます。<a href="control_panel_develop.html">VisualBasicを開き</a>、フォームフォルダのProfileをクリックします。
+            <img class="img_small" src="image/design_prfile_tab.png" alt="プロフィールタブ設定"><br>
+            プロフィール画面が表示され、編集することができます。ツールボックスを使用することで画像やテキストを配置することができます。<br>
+            <img class="img_small" src="image/design_profile_tab_2.png" alt="プロフィールタブ設定"><br>
+            <img class="img_small" src="image/design_profile_tab_3.png" alt="プロフィールタブ設定"><br>
+
+            ツールボックスの説明です。（使いそうなものの最低限しかしませんので、あとはGoogle先生に聞いてください）<br>
+            <ul>
+                <li>矢印は選択ツールで、オブジェクト（画像とかテキストとか）を選択しプロパティウィンドウ（後述）でオブジェクトのプロパティ（表示するテキストとか、フォントとか画像パスとか）を編集することができます。</li>
+                <li>Aのアイコンは選択するとラベル（ワード的に言えばテキストボックス）をユーザーフォーム上でドラックすることで作成できます。</li>
+                <li>真ん中の行のルーズリーフのインデックスのようなアイコンをクリックしてドラッグすると、タブで選択できるエリアを作成することができます。</li>
+                <li>右下の青い波立ってる的な画像アイコンを選択すると画像エリアをユーザーフォーム上でドラッグすることで作成できます。</li>
+            </ul>
+
+            上記の通りでラベルエリアや画像エリアを作った後はプロパティウィンドウでフォントやテキスト、画像の貼り付けを行います。プロパティウィンドウは通常プロジェクトウィンドウの下に表示されています。<br>
+            <img class="img_small" src="image/proprety_window.png" alt="プロパティウィンドウ"><br>
+            表示されていない場合はメニューバーの表示→プロパティウィンドウで表示できます。<br>
+            <img class="img_small" src="image/property_window_2.png" alt="プロパティウィンドウ2"><br>
+            <img class="img_small" src="image/property_window_3.png" alt="プロパティウィンドウ3"><br>
+            選択ツールでオブジェクトを選択、プロパティを編集することで色々いじれます。1から10まで解説するのはしませんがある程度直感でいじれます。ある程度書いておきます。<br>
+            <ul>
+                <li>BackColor オブジェクトの背景色を設定します</li>
+                <li>BackStyle 背景の有無の選択。0(transparent)→透明　1(opaque)→BackColorで選択した色を表示</li>
+                <li>BorderColor  オブジェクトの境界線（輪郭線）の色を設定します。</li>
+                <li>BorderStyle 境界線の有無の設定</li>
+                <li>Caption ラベルに表示するテキストの設定します</li>
+                <li>Enabled オブジェクトが実際にエクセルのデータで表示されるかを設定します</li>
+                <li>Font フォントの設定</li>
+                <li>ForeColor 文字の色</li>
+                <li>Height オブジェクトの高さ</li>
+                <li>Left オブジェクトの横の長さ</li>
+                <li>Specialeffect オブジェクトを立体的に見せたりできる</li>
+                <li>TextAlign テキストの中央揃え、左揃えなどの設定</li>
+                <li>Picture 表示する画像をファイルダイアログから選べます</li>
+            </ul>
+
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

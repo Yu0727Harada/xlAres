@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <li class="item"  id="input_date">
+                <p>別ファイルのシフト表作成ファイルを用いることでシフトを作成することができます。</p>
+                <h3>日付の入力</h3>
+                <p>作成するシフトの期間を入力します。</p>
+                <img class="img_small" src="image/make_shift_1.png" alt="シフト表日付の入力">
+                <p>シフト表の下には様々な操作を行うボタンが用意されています。</p>
+            </li>
+            <li class="item" id="reset">
+                <h3>シフト表リセットボタン</h3>
+                <p>シフト表の勤務日時が入力されているエリアの文字と背景色をリセットします。リセットする前には確認ダイアログが出ます。</p>
+            </li>
+            <li class="item" id="get_time">
+                <h3>シフト時間帯取得</h3>
+                <p>入力されているシフトの勤務の要素をB21セル以下に抽出します。すでにB21以下セルに入力されている場合は上書きせず、無かった場合は要素を追加します。</p>
+                <img class="img_small" src="image/make_shift_2.png" alt="シフト表取得">
+            </li>
+            <li class="item" id="color">
+                <h3>セルの色設定</h3>
+                <p>B21セル以下に入力された時間帯の右のセル背景色をシフト表に反映します。B21セル以下の色設定は以前のシフト表ファイルからコピペして貼った場合もきちんと反映されます。</p>
+            </li>
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

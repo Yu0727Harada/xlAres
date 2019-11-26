@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" >
+    <title>TOP - xlAres</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script type="text/javascript" src="fit_image.js"></script>
+    <script>
+        (function(d) {
+            var config = {
+                    kitId: 'uda0ekj',
+                    scriptTimeout: 3000,
+                    async: true
+                },
+                h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+        })(document);
+    </script>
+</head>
+
+<body>
+<div class="container">
+
+    <input id="index_checked" class="index_check" type="checkbox">
+<label class="hum_icon" for="index_checked">
+    <span class="hum_icon-parts"></span>
+</label>
+<label class="index_overlay" for="index_checked"></label>
+
+<header class="header">
+    <div class="items">
+        <a class="logo" href="index.html">xlAres</a>
+        <a class="github" href="https://github.com/Yu0727Harada/xlAres">github</a>
+    </div>
+</header>
+    <aside class="aside">
+    <div class="side_bor"><p class="index_title">INDEX</p>
+        <a class="label" href="initialize.html">使用する前にすること</a>
+        <input id="primary_checked" class="check" type="checkbox">
+        <label class="label" for="primary_checked">予約を取るための基本的な使い方</label>
+        <div class="content">
+            <a href="primary_new_reserve.html">新規予約</a>
+            <a href="primary_change_reserve.html">既存予約の変更</a>
+            <a href="primary_change_date.html">メインページの表示する日付の変更</a>
+        </div>
+
+        <input id="administer_checked" class="check" type="checkbox">
+        <label class="label" for="administer_checked">LAとしての運営のための基本的な使い方</label>
+        <div class="content">
+            <a href="administer_edit_raw_data.html">生データを編集する</a>
+            <a href="administer_confirm_status.html">現在の予約状況を確認（各予約の人数を確認する）</a>
+            <a href="administer_set_profile.html">LAのプロフィールを設定する</a>
+            <a href="administer_import_shift.html">シフトを読み込む</a>
+        </div>
+
+        <input id="control_panel_checked" class="check" type="checkbox">
+        <label class="label" for="control_panel_checked">LAコントロールパネル</label>
+        <div class="content">
+            <a href="control_panel_view.html">LAコントロールパネルの表示の仕方</a>
+            <a href="control_panel_view_option.html">表示／非表示オプション</a>
+            <a href="control_panel_execute.html">マクロ実行ボタン</a>
+            <a href="control_panel_switch_mode.html">入力モード切り替え</a>
+            <a href="control_panel_shift_number.html">勤務中のシフト番号</a>
+            <a href="control_panel_restrict.html">予約制限</a>
+            <a href="control_panel_develop.html">開発</a>
+        </div>
+
+        <input id="system_checked" class="check" type="checkbox" >
+        <label class="label" for="system_checked">システムのカスタマイズ</label>
+        <div class="content">
+            <a href="system_const_passcord.html">パスコードの設定</a>
+            <a href="system_set_main.html">メインシートの各セルの位置を変更する</a>
+            <a href="system_set_shift.html">シフト表の各セルの位置を変更する</a>
+            <a href="system_set_profile.html">プロフィールのテキストボックスなどのカスタマイズをする</a>
+            <a href="system_set_profile_details.html">LAプロフィールユーザーフォームの設定</a>
+        </div>
+
+        <input id="make_shift_checked" class="check" type="checkbox" >
+        <label class="label" for="make_shift_checked">シフトの作成</label>
+        <div class="content">
+            <a href="make_shift.html#input_date">日付の入力</a>
+            <a href="make_shift.html#reset">シフト表リセットボタン</a>
+            <a href="make_shift.html#get_time">シフト時間帯取得</a>
+            <a href="make_shift.html#color">セルの色設定</a>
+        </div>
+
+        <input id="error_checked" class="check" type="checkbox" >
+        <label class="label" for="error_checked">エラー処理＆困った時の処理リスト</label>
+        <div class="content">
+            <a href="error_outline.html">バグの報告</a>
+            <a href="error_known.html">予約表固有エラー</a>
+            <a href="error_unknown.html">VBAエラー</a>
+            <a href="error_work.html">予約表に予約済と表示されない,予約表の背景色が設定されない,時計が更新されない</a>
+        </div>
+
+        <input id="implementation_checked" class="check" type="checkbox" >
+        <label class="label" for="implementation_checked">開発を進める上での基本的な仕様</label>
+        <div class="content">
+            <a href="implementation.html#outline">全体の概要</a>
+            <a href="implementation.html#cell_formula">メインシートの表のセル内の式</a>
+            <a href="implementation.html#export_macro">vbac.wsfファイルの使い方</a>
+        </div>
+
+    </div>
+</aside>
+
+    <main class="main">
+        <div class="main_content">
+            <h2>xlAres</h2>
+            <h3>概要</h3>
+            <p>
+                ・このプロジェクトの目的<br>
+                このプロジェクトの目的は大学自習室にあるPC席の予約管理をエクセルマクロファイルで管理することです。<br>
+                ・通常のプログラム言語ではなくエクセルマクロを使用する理由<br>
+                新たなソフトをインストールすることが限られている環境でも、エクセルが使用できる環境であればデジタルなデータとして予約情報を管理することが出来ます。<br>
+                開発をする上でも環境構築などをする必要がなく、プログラム経験者のいない環境でも開発することが可能です。<br>
+                ・使い方、マニュアルなど<br>
+                https://yu0727harada.github.io/xlAres/<br>
+                ・インストール<Br>
+                特別にインストールする必要はありません。binフォルダに入っているエクセルファイルを開けば使用可能です。<br>
+                ・フォルダの構成<br>
+                binフォルダ　エクセルファイルが入っています。<br>
+                srcフォルダ　エクセルマクロを出力したデータが入っています。<br>
+                docsフォルダ 使い方について記述したhtmlファイルが入っています。<br>
+            </p>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3>現在の予約状況を確認（各予約の人数を確認する）</h3>
+            <p>
+                予約の人数を確認するために、LAコントロールパネルの右側に予約している学生の台帳番号を元にした独自番号がすべて表示される表をつくりました。<br>
+                <img class="img_small" src="image/observe_resrve.png" alt="予約状況の確認"><br>
+                現在表示している時間帯コードの右のセルにマクロで現在の時刻を表す数値が入ります。（マクロではpublic変数のon_timeのことです）１は１限目、で一つコマが進むごとにずれていき（時刻とともに自動で更新されます）、８は閉室後以降（表外）を表します。この表はこのセルに入っている時刻での予約状況を示しています。表示している時間帯のセルを直接編集することで自由に時間帯の予約状況を確認することもできます。<br>
+                （開発用　セルの中の式） =IFERROR(IF(INDEX(生データ!$D:$D,MATCH(OFFSET($D$22,$Z4-1,$AA$3-2),生データ!$D:$D,1))=OFFSET($D$22,$Z4-1,$AA$3-2),VLOOKUP(OFFSET($D$22,$Z4-1,$AA$3-1),生データ!$D:$O,COLUMN(C1),TRUE),""),0)<br>
+                メインシートのD22周辺に予約コードを生成して出力しておく場所があります。それをmatch＋index関数で参照しますが、今回は時間帯セルに合わせてD22セルから移動して参照してほしいのでoffset関数を用いて、D22セルから移動させます。<br>
+                Match＋index関数で参照した先が一致した場合（if文Trueの場合）はVLOOKUPの二分探索（True）で生データシートを探索に行きます。この時、列の位置はColumn関数で指定することで右側にコピペしたときに順に参照位置がずれるようにします。一致しなかった場合は“”を吐くように設定。<br>
+                Iferrorは時間帯セルに８が来たときにN/Aエラーを吐くのでそれを防止するため。
+            </p>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

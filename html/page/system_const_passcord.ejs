@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3 >定数パスコードの設定</h3>
+            <p>予約表の操作には利用者に操作されては困りそうな操作にはパスコードの入力を求めるようにしています。パスコードについては<a href="control_panel_develop.html">パスコードの追加／削除</a>も参考にしてください。定数パスコードはマクロを変更することでいつでも変更ができます。</p>
+            <ol>
+                <li>
+                    <p>
+                        <a href="control_panel_develop.html">VisualBasicEditor</a>を開き、標準モジュールフォルダのModule1を選択します。<br>
+                        <img class="img_small" src="image/passcord_1.png" alt="パスコード設定1"><br>
+                        このウィンドウがない場合は表示→プロジェクトエクスプローラーを選択することで表示されます.<br>
+                        <img class="img_small" src="image/passcord_2.png" alt="パスコード設定2">
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        module1が表示されます。<br>
+                        <img class="img_small" src="image/passcord_3.png" alt="パスコード設定3"><br>
+                        「Public const passcord as string = 」というのがあります。この＝の次の数字がパスコードです。この数字を変えることでパスコードを変更することができます。<br>
+                    </p>
+                </li>
+            </ol>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

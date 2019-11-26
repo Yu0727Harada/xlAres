@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "メインページの表示する日付の変更/予約を取るための基本的な使い方 - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3>メインページの表示する日付の変更</h3>
+            <img class="img_small" src="image/vary_time.png" alt="日付の変更">
+            <p>	表示されている予約表はK2セルに入力されている日付に従って表示しています。通常はセルの中身は「=today()」としていますが「=today()-1」とすることで昨日の予約表を表示したり、「8/1」などと入力することで、過去や未来の日付の予約表を表示し、その日付の予約をすることが出来ます。<br>
+            過去の日付を表示した場合は予約はできませんが、未来の日付を表示した場合は全ての時間帯で予約できます。<a href="control_panel_switch_mode.html#master">LAコントロールパネル-マスターモード</a>を用いることで過去の予約の編集も可能となります<br>
+            日付を変更した場合、すぐに予約表が更新されないので<a href="control_panel_execute.html#repeat_execute">LAコントロールパネルの定期再計算再実行ボタン</a>を2回ほど実行してください。
+        </p>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

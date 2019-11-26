@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3>シフトを読み込む</h3>
+
+            別ファイルで作成したシフト表を読み込むことで、メインシートにプロフィールを表示することができます。<br>
+            <ol>
+                <li>
+                    シフト表シートを選択します。<br>
+                    <img class="img_small" src="image/shift_1.png" alt="シフト読み込み1"><br>
+                </li>
+                <li>
+                    A列には勤務時間の開始時刻、B列には終了時刻、C列にはシフト表の入力時の番号が入力されています。<br>
+                    <img class="img_small" src="image/shift_2.png" alt="シフト読み込み2">
+                </li>
+                <li>
+                    シフト読み込みボタンを押すとファイル選択ダイアログが出ます。読み込みたいシフト表のファイルを選択します。<br>
+                    <img class="img_small" src="image/shift_3.png" alt="シフト読み込み3">
+                </li>
+                <li>
+                    この時、すでに読み込んだ期間のシフトの場合は読み込むかどうかの許可を求めるダイアログが出ます。キャンセルを押すと処理を終わります。OKを押すとすでに入力されている日のシフトを上書きしてシフトを読み込みます。<br>
+                    <img class="img_small" src="image/shift_4.png" alt="シフト読み込み4">
+                </li>
+                <li>
+                    シフトの読み込みは勤務時間終了時間をキーに昇順並び替えで読み込んでいます。手で訂正した場合は並び替えを行なってください。<br>
+                </li>
+            </ol>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h3 >勤務中のシフト番号</h3>
+            <p>
+                勤務中のLAの番号を表示します。この番号を参照してプロフィールを表示しています。<br>
+                基本的にここに表示される番号は５つまでです。表示するプロフィールの数は別途設定できます。<a href="system_set_profile.html">３．システムのカスタマイズのメインシートの各セルの位置を変更するを参照</a>してください。<Br>
+                プロフィール表示の細かい仕様は<a href="administer_set_profile.html">プロフィール表示設定</a>を参照してください。
+            </p>
+            <ul>
+                <li id="control_panel/bottom/shift_number/add">
+                    <h4 >シフト追加</h4>
+                    <p>
+                        新しく現在の時刻から勤務する人を追加することができます。<br>
+                        <img class="img_small" src="image/add_shift.png" alt="シフトの追加"><br>
+                        勤務する人、勤務する時間を選択し登録ボタンを押すと、現在の時刻から選択した時間までのシフトが追加されます。この時、時間の選択は任意です。選択しなかった場合自動的に2時間となります。<br>
+                        登録したあとすぐにシフト番号が表に表示されないことがあります。その時は<a href="control_panel_execute.html">マクロ再実行ボタン</a>を押してください。
+                    </p>
+                </li>
+                <li id="control_panel/bottom/shift_number/edit">
+                    <h4 >シフト編集</h4>
+                    <p>
+                        現在勤務しているシフトを削除、勤務終了時刻を現在の時刻に設定することができます。
+                    </p>
+                </li>
+            </ul>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "新規予約/予約を取るための基本的な使い方 - xlAres" %>
+<% include partical/_head %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header %>
+    <% include partical/_aside %>
+
+    <main class="main">
+        <div class="main_content">
+
+            <h2>予約を取るための基本的な使い方</h2>
+            <h3>新規予約</h3>
+            <ol>
+                <li>
+                    <h4>エクセルファイルを開きメインシートを開きます。</h4>
+                </li>
+                <li>
+                    <h4>予約したい時間帯、席番号のセルを選択する</h4>
+                    <img class="img_small" src="image/1-1.png" alt="予約の仕方">
+                </li>
+                <li>
+                    <h4>予約フォームが表示される。</h4>
+                    <p>
+                        テキストボックス5つのうち１つ以上にに学籍番号7桁(M,D,Sを含む番号も入力可能)か、学生証台帳番号16桁の数字を入力してください。もしくはバーコードをスキャンしてください。<br>
+                        <img class="img_small" src="image/1-2.png" alt="予約フォーム" ><br>
+                        2コマ使用希望にチェックを入れると2コマ連続で予約を取ることができます。HDMIケーブルなどを貸し出し希望にチェックを入れると予約ステータスが変化します。（後述）<br>
+                    </p>
+                    <p>
+                        必要事項を入力したら、下の登録ボタンをクリックします。<br>
+                        この時、予約が1日の中で一定数以上に達している場合、予約を取るかどうかの確認ダイアログが出ます。（一日に取れるコマの設定の仕方は<a href="control_panel_restrict.html#limit_a_day">LAコントロールパネルの一日の上限数参照</a><br>
+                        <img class="img_small" src="image/1-3.png" alt="予約制限オーバーの時">
+                    </p>
+                    <p>
+                        いいえをクリックすると予約画面に移動します。<br>
+                        はいをクリックすると、LAを呼んでパスコードを入力するように促されます。（<a href="control_panel_develop.html#passcord">LAコントロールパネル―パスコードの設定</a>、<a href="system/const_passcord.html">システムのカスタマイズ、パスコードの設定参照</a><br>
+                        パスコードの入力が正しければ予約され、間違っていれば予約画面に移動します。<br>
+                        <img class="img_small" src="image/passcord.png" alt="パスコードを要求される"><br>
+                    </p>
+                </li>
+                <li>
+                    <h4>メインシートで選択した日時、席番号箇所が予約済と表示されます。</h4>
+                    <p>
+                        現在の時間帯の場合は使用中、現在以降の時間帯の場合には予約済、マスタモード（<a href="control_panel_switch_mode.html#master">LAコントロールパネル-マスターモード参照</a>）などで入力した場合などは使用済と表示されます。ケーブル貸し出しにチェックを入れた場合は予約済(貸出中)と表示されます。（11/8　追記ここまで）
+                    </p>
+                </li>
+            </ol>
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

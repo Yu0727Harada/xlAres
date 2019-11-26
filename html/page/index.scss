@@ -1,0 +1,312 @@
+@import "variable";
+
+@mixin side_bor($is_shadow){
+  background-color: $main_color;
+  @if $is_shadow == True{
+    box-shadow:1px 1px 5px 5px darken($back_color,5%) ;
+  }
+  color:$main_font_color;
+  font-size: 18px;
+  padding:10px;
+
+  p {
+    text-align: center;
+  }
+  input{
+    display: none;
+  }
+  .check:checked + .label + .content{
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+  }
+  .check:checked + .label{
+    background-color:$back_color;
+  }
+  .content{
+    max-height: 0;
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+  }
+  .label{
+    cursor: pointer;
+    background-color: $main_color;
+    color:$main_font_color;
+    font-size:18px;
+    text-align: center;
+    display: block;
+    margin:auto;
+    padding: 10px;
+    transition: 0.1s;
+    &:hover{
+      background-color:$back_color;
+    }
+
+  }
+  a {
+    display: block;
+    margin:auto 0;
+    font-size: 15px;
+    text-align: center;
+    color:$main_font_color;
+    padding: 5px;
+    text-decoration: none;
+    transition: 0.1s;
+    &:hover{
+      background-color: $back_color;
+    }
+  }
+}
+
+@mixin logo{
+  font-size: 40px;
+  color:$header_font_color;
+  margin:0 55px;
+}
+@mixin github{
+  font-size: 30px;
+  color:$header_font_color;
+  margin:0 55px;
+}
+
+@mixin main{
+  grid-row: 2 / 3;
+  padding: 15px;
+  z-index: 1;
+
+  .main_content{
+    background-color: $main_color;
+    box-shadow:1px 1px 5px 5px darken($back_color,5%) ;
+    padding: 15px;
+    color:$main_font_color;
+    font-size: 15px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+}
+
+body{
+  margin:0;
+
+  -webkit-text-size-adjust: 100%;
+  font-family: source-han-sans-japanese, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  background-color: $back_color;
+  line-height: 2;
+  li{
+    margin: 0;
+  }
+  ol{
+    margin:0;
+  }
+  .line{
+    text-decoration: line-through;
+  }
+
+  .red {
+    color:red;
+  }
+
+}
+
+@media (max-width: 1280px) {
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    position: relative;
+
+      .index_check {
+        display: none;
+        z-index: 10;
+      }
+
+      .hum_icon {
+        cursor: pointer;
+        display: block;
+        width: 60px;
+        height: 60px;
+        padding: 5px;
+        position: fixed;
+        left: 0;
+        z-index: 10;
+
+        .hum_icon-parts,
+        .hum_icon-parts:before,
+        .hum_icon-parts:after {
+          background-color: $header_font_color;
+          width: 40px;
+          height: 3px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          margin: auto;
+          -webkit-transition: all 0.7s;
+          transition: all 0.7s;
+        }
+
+        .hum_icon-parts:before,
+        .hum_icon-parts:after {
+          content: " ";
+        }
+
+        .hum_icon-parts:before {
+          top: 20px;
+        }
+
+        .hum_icon-parts:after {
+          top: -20px;
+        }
+      }
+
+      .index_overlay {
+        background: #000;
+        opacity: 0;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        -webkit-transition: all 0.7s;
+        transition: all 0.7s;
+
+      }
+
+      .index_check:checked ~ .index_overlay {
+        opacity: 0.3;
+        pointer-events: auto;
+      }
+
+      .index_check:checked ~ .hum_icon .hum_icon-parts {
+        background: transparent;
+      }
+
+      .index_check:checked ~ .hum_icon .hum_icon-parts:before {
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        top: 0;
+      }
+
+      .index_check:checked ~ .hum_icon .hum_icon-parts:after {
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 0;
+      }
+      .index_check:checked ~ .aside {
+        left: 0;
+        transition: all 0.7s;
+      }
+
+
+    .header {
+      grid-row: 1 / 2;
+      background-color: $header_color;
+      width: 100%;
+      height: 60px;
+      position: fixed;
+      top: 0;
+      z-index: 9;
+
+      .items {
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        left: 60px;
+        position: relative;
+
+        .logo{
+          @include logo;
+        }
+        .github{
+          @include github;
+        }
+        }
+      }
+
+    }
+    .aside {
+      max-width: 100%;
+      width: 250px;
+      -webkit-overflow-scrolling: touch;
+      position: fixed;
+      top: 60px;
+      left: -250px;
+      z-index: 3;
+      .side_bor{
+        @include side_bor(False);
+      }
+    }
+
+    .main{
+      width:100vw ;
+      @include main;
+    }
+  }
+
+
+@media (min-width: 1280px ){
+  .container{
+    max-width: 100%;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:0.5fr 250px 1030px 0.5fr;
+    grid-template-rows: 60px 1fr;
+
+    .header{
+      grid-column: 1 / 5;
+      grid-row: 1 / 2;
+      background-color: $header_color;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+      .items{
+        width:1280px;
+        margin:0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      .index_icon{
+        display: none;
+      }
+
+        .logo{
+          @include logo;
+        }
+        .github{
+          @include  github;
+        }
+      }
+    }
+    .aside{
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      padding: 10px;
+      .side_bor{
+        @include side_bor(True);
+
+      }
+    }
+    .main{
+        grid-column: 3 / 4;
+      @include main;
+
+    }
+  }
+
+}

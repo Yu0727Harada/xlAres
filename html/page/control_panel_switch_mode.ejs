@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h4 >入力モード切り替え</h4>
+            <ul>
+                <li id="master">
+                    <h5 >マスター入力モード</h5>
+                    <p>当日の過ぎた時間帯でも予約・予約の変更取り消しなどができるようになります。パスコードの入力が必要です<br>
+                        こんな時に→入力データを修正したい、過去のデータを入力したい</p>
+                </li>
+                <li id="cursor">
+                    <h5 >選択カーソル強制移動</h5>
+                    <p>選択カーソルを強制的に移動するように設定できます。運用の際にはonにすることで、繰り返し同じセルをクリックすることが可能になります。パスコードの入力が必要です。編集作業などをする際には邪魔になるのでオフにすると便利です。</p>
+                </li>
+            </ul>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html>

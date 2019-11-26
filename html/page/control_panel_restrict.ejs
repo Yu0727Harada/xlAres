@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<% let title = "TOP - xlAres" %>
+<% include partical/_head.ejs %>
+
+<body>
+<div class="container">
+
+    <% include partical/_header.ejs %>
+    <% include partical/_aside.ejs %>
+
+    <main class="main">
+        <div class="main_content">
+            <h4 >予約制限</h4>
+            <ul>
+                <li id="limit_a_day">
+                    <h5 >一日の上限数</h5>
+                    <p>
+                        左のセルの数字を変更することで一日の予約可能数を変更することができます。文字列を入力すると36と認識され、「予約制限はありません」と表示されます。
+                    </p>
+                </li>
+                <li id="restrict_reserve">
+                    <h5 >予約制限</h5>
+                    <p>
+                        左のオンオフの切り替えを行うことで予約の制限を行うことができます。オンにすると現在のコマのみ予約可能となり、先のコマの予約ができなくなります。（すでに予約されているコマは編集可能）<br>
+                        またオンにすると予約の仕方に予約制限中である旨が表示されます<br>
+                        オンにしてるときに先のコマを予約しようとすると、予約制限中であることを知らせるウィンドウを出すようにしました。また、延長、２コマ連続予約にも制限がかかるようにしました。
+                    </p>
+                </li>
+            </ul>
+
+        </div>
+    </main>
+</div>
+</body>
+
+
+</html >

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" >
+    <title>TOP - xlAres</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script type="text/javascript" src="fit_image.js"></script>
+    <script>
+        (function(d) {
+            var config = {
+                    kitId: 'uda0ekj',
+                    scriptTimeout: 3000,
+                    async: true
+                },
+                h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+        })(document);
+    </script>
+</head>
+
+<body>
+<div class="container">
+
+    <input id="index_checked" class="index_check" type="checkbox">
+<label class="hum_icon" for="index_checked">
+    <span class="hum_icon-parts"></span>
+</label>
+<label class="index_overlay" for="index_checked"></label>
+
+<header class="header">
+    <div class="items">
+        <a class="logo" href="index.html">xlAres</a>
+        <a class="github" href="https://github.com/Yu0727Harada/xlAres">github</a>
+    </div>
+</header>
+    <aside class="aside">
+    <div class="side_bor"><p class="index_title">INDEX</p>
+        <a class="label" href="initialize.html">使用する前にすること</a>
+        <input id="primary_checked" class="check" type="checkbox">
+        <label class="label" for="primary_checked">予約を取るための基本的な使い方</label>
+        <div class="content">
+            <a href="primary_new_reserve.html">新規予約</a>
+            <a href="primary_change_reserve.html">既存予約の変更</a>
+            <a href="primary_change_date.html">メインページの表示する日付の変更</a>
+        </div>
+
+        <input id="administer_checked" class="check" type="checkbox">
+        <label class="label" for="administer_checked">LAとしての運営のための基本的な使い方</label>
+        <div class="content">
+            <a href="administer_edit_raw_data.html">生データを編集する</a>
+            <a href="administer_confirm_status.html">現在の予約状況を確認（各予約の人数を確認する）</a>
+            <a href="administer_set_profile.html">LAのプロフィールを設定する</a>
+            <a href="administer_import_shift.html">シフトを読み込む</a>
+        </div>
+
+        <input id="control_panel_checked" class="check" type="checkbox">
+        <label class="label" for="control_panel_checked">LAコントロールパネル</label>
+        <div class="content">
+            <a href="control_panel_view.html">LAコントロールパネルの表示の仕方</a>
+            <a href="control_panel_view_option.html">表示／非表示オプション</a>
+            <a href="control_panel_execute.html">マクロ実行ボタン</a>
+            <a href="control_panel_switch_mode.html">入力モード切り替え</a>
+            <a href="control_panel_shift_number.html">勤務中のシフト番号</a>
+            <a href="control_panel_restrict.html">予約制限</a>
+            <a href="control_panel_develop.html">開発</a>
+        </div>
+
+        <input id="system_checked" class="check" type="checkbox" >
+        <label class="label" for="system_checked">システムのカスタマイズ</label>
+        <div class="content">
+            <a href="system_const_passcord.html">パスコードの設定</a>
+            <a href="system_set_main.html">メインシートの各セルの位置を変更する</a>
+            <a href="system_set_shift.html">シフト表の各セルの位置を変更する</a>
+            <a href="system_set_profile.html">プロフィールのテキストボックスなどのカスタマイズをする</a>
+            <a href="system_set_profile_details.html">LAプロフィールユーザーフォームの設定</a>
+        </div>
+
+        <input id="make_shift_checked" class="check" type="checkbox" >
+        <label class="label" for="make_shift_checked">シフトの作成</label>
+        <div class="content">
+            <a href="make_shift.html#input_date">日付の入力</a>
+            <a href="make_shift.html#reset">シフト表リセットボタン</a>
+            <a href="make_shift.html#get_time">シフト時間帯取得</a>
+            <a href="make_shift.html#color">セルの色設定</a>
+        </div>
+
+        <input id="error_checked" class="check" type="checkbox" >
+        <label class="label" for="error_checked">エラー処理＆困った時の処理リスト</label>
+        <div class="content">
+            <a href="error_outline.html">バグの報告</a>
+            <a href="error_known.html">予約表固有エラー</a>
+            <a href="error_unknown.html">VBAエラー</a>
+            <a href="error_work.html">予約表に予約済と表示されない,予約表の背景色が設定されない,時計が更新されない</a>
+        </div>
+
+        <input id="implementation_checked" class="check" type="checkbox" >
+        <label class="label" for="implementation_checked">開発を進める上での基本的な仕様</label>
+        <div class="content">
+            <a href="implementation.html#outline">全体の概要</a>
+            <a href="implementation.html#cell_formula">メインシートの表のセル内の式</a>
+            <a href="implementation.html#export_macro">vbac.wsfファイルの使い方</a>
+        </div>
+
+    </div>
+</aside>
+
+    <main class="main">
+        <div class="main_content">
+                <h3>予約表固有エラー</h3>
+                マクロ作成者がすでにエラーを認識、原因を解明しているため、エラーが発生した際にメッセージボックスにエラー番号が記載されています。以下に各エラー番号ごとの対処法がありますで、これを参考に対処してください。
+                <ul>
+                    <li>
+                        <h4>:エラー002</h4>
+                        <p>
+                            予約表ファイルはマクロで自動的に保護されるようになっています。それによりセルの背景色を変更する際に、変更できずにエラーが出ることがあります。特に初めてのPCで開いた際に起こりますが一度設定すると発生しなくなります。<br>
+                            解決策　校閲のシートの保護の解除をクリック。校閲がない場合（リボンが表示されていない時）には<a href="control_panel_view_option.html">コントロールパネルの表示/非表示設定からリボンを表示</a>を押します。<br>
+                            <img class="img_small" src="image/error_1.png" alt="エラー002＿1"><br>
+                            シートの保護に変わるのでもう一度クリック<br>
+                            <img class="img_small" src="image/error_2.png" alt="エラー002＿2"><br>
+                            セルの書式設定のチェックボックスにチェックを入れてOKボタンを押します。<br>
+                            <img class="img_small" src="image/error_3.png" alt="エラー002＿3"><br>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>:エラー番号101</h4>
+                        <p>
+                            通常起こりえないエラーです。原因としてはきちんと生データがソートされていない、ソートされていない状態で予約などを行なったために予約データが重複していると考えられます。まずは<a href="control_panel_execute.html#data_sort">LAコントロールパネルで生データをソート</a>してください。それでもエラーが出る場合は、生データシートを直接見て、同じ時間帯、席番号が被っているデータを削除してください。
+                        </p>
+                    </li>
+                    <li>
+                        <h4>：エラー番号102</h4>
+                        <p>
+                            予約を削除する際にその人の1日の予約数を減少させようとしたら、その人の学籍番号が見つからなかった場合のエラーです。原因としては重複チェックシートや<a href="administer/edit_raw_data.html">生データを直接編集</a>した際に起こると思います。特に影響はないですが、LAコントロールパネルで<a href="control_panel_execute.html#refresh_duplicate">重複チェックシートリフレッシュ</a>を行うとよいと思います。
+                        </p>
+                    </li>
+                    <li>
+                        <h4>：エラー番号103</h4>
+                        <p>
+                            予約を削除する際に生データを検索したら予約が見つからなかった場合です。通常ありえません。生データシートの予約コードが何らかの要因で直接編集された、あるいは予約表の数式が変更されたことも考えられます。バックアップの予約表の数式をコピーして貼り付けるなどしてください。
+                        </p>
+                    </li>
+                    <li>
+                        <h4>：エラー番号２０１</h4>
+                        <p>
+                            シフト表に読み込まれている番号が出力シートのプロフィールシートに存在しない場合のエラーです。エラーが出た場合はその番号のプロフィール表示をスキップし、モジュール１のshift_profile_countで指定した数までプロフィールの表示を続けます。<br>
+                            <img class="img_small" src="image/error_4.png" alt="エラー201_1"><br>
+                            例）その時のシフトが３、１０、１５番号で１０番のプロフィールがなかった場合、３と１５番のプロフィー
+                            ルを表示します。<br>
+                            また、更新のたびにエラーを吐きますので、プロフィール番号が間違えた場合などはそこを修正。そもそもプロフィールを用意していない場合などはシフト表の番号を０に設定しましょう。０はエラーなしで表示をスキップします。<br>
+                            例）シフトを３、０、１５に設定するとエラーなしで３と１５番のプロフィールを表示します。</p>
+                    </li>
+                </ul>
+
+            </div>
+    </main>
+</div>
+</body>
+
+
+</html>
