@@ -9,8 +9,8 @@ gulp.task("ejs",function () {
         .src(
             ["page/**/*.ejs","!page/partical/**/*.ejs"])
         .pipe(ejs())
-        .pipe(rename({extname:".docs"}))
-        .pipe(gulp.dest("docs"))
+        .pipe(rename({extname:".html"}))
+        .pipe(gulp.dest("document"))
     );
 
 });
@@ -20,7 +20,7 @@ gulp.task("sass",function () {
     gulp
             .src(["page/*.scss"])
             .pipe(sass())
-            .pipe(gulp.dest("docs"))
+            .pipe(gulp.dest("document"))
     );
 
 });
