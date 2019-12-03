@@ -309,13 +309,30 @@ For Each shp In new_wb.Sheets("出力").shapes
 Next shp
 Call delete_sheet_data(2, 7, new_wb.Sheets("シフト表"))
 Call delete_sheet_data(1, 1, new_wb.Sheets("passcord"))
+With new_wb.VBProject.VBComponents("Module1").CodeModule
+    Dim declaration_lines As Integer
+    declaration_lines = .CountOfDeclarationLines
+    .DeleteLines 1, declaration_lines
+End With
 
+
+
+'データをコピー
 Call copy_sheet_data(2, 2, last_wb.Sheets("生データ"), new_wb.Sheets("生データ"))
 Call copy_sheet_data(2, 7, last_wb.Sheets("入力"), new_wb.Sheets("入力"))
 Call copy_sheet_data(2, 7, last_wb.Sheets("シフト表"), new_wb.Sheets("シフト表"))
 Call copy_sheet_data(1, 2, last_wb.Sheets("出力"), new_wb.Sheets("出力"))
 Call copy_sheet_shape(last_wb.Sheets("出力"), new_wb.Sheets("出力"))
 Call copy_sheet_data(1, 1, last_wb.Sheets("passcord"), new_wb.Sheets("passcord"))
+With last_wb.VBProject.VBComponents("Module1").CodeModule
+    Dim last_declaration_lines As Integer
+    last_declaration_lines = .CountOfDeclarationLines
+    Dim declaration_code As String
+    declaration_code = .Lines(1, last_declaration_lines)
+End With
+With new_wb.VBProject.VBComponents("Module1").CodeModule
+    .AddFromString declaration_code
+End With
 
 new_wb.Save
 last_wb.Sheets("生データ").Activate
@@ -394,3 +411,4 @@ For Each shp In from_book_sheet.shapes
 Next shp
 
 End Sub
+

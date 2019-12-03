@@ -44,7 +44,6 @@ Public Const shift_table_time_start_row As Integer = 4 '１３－１４などのシフトを
 Public Const shift_table_time_start_colomn As Integer = 3
 Public Const shift_table_date_start_row As Integer = 2 '日付を入力している位置。これが空白になるまでシフトの読み込みを続ける
 
-
 Enum shift_table
 '読み込んだシフト表の列の位置を上から昇順で振り分け
 勤務時間帯開始 = 1
