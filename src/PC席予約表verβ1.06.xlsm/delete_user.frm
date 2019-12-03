@@ -145,14 +145,16 @@ If reserve_cord = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), now_p
     Next j
     
     If Sheets("生データ").Cells(now_position, data_sheet.student_num_start).Value = "" Then
-        MsgBox ("利用者がいないため、この予約は削除します")
+        MsgBox ("利用者がいなくなっため、この予約は削除します")
         Call Sheets("生データ").Cells(now_position, 1).EntireRow.Delete(xlShiftUp)
     End If
     If k <> 0 Then
         Call delete_res_num(target_stu_list, k - 1)
+        MsgBox ("利用者を削除しました")
+    Else
+        MsgBox ("入力された番号に一致する利用者がいませんでした。")
     End If
     
-    MsgBox ("利用者を削除しました")
     Unload delete_user
 Else
     MsgBox ("エラー")
