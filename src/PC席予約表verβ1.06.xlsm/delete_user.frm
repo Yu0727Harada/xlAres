@@ -1,19 +1,19 @@
 VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 利用者追加フォーム 
-   Caption         =   "利用者の追加"
-   ClientHeight    =   6587
-   ClientLeft      =   105
-   ClientTop       =   448
-   ClientWidth     =   6482
-   OleObjectBlob   =   "利用者追加フォーム.frx":0000
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} delete_user 
+   Caption         =   "利用者の削除"
+   ClientHeight    =   6783
+   ClientLeft      =   91
+   ClientTop       =   406
+   ClientWidth     =   6524
+   OleObjectBlob   =   "delete_user.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
-Attribute VB_Name = "利用者追加フォーム"
+Attribute VB_Name = "delete_user"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+Option Explicit
 Private Sub UserForm_Initialize()
 number_valid = 0
 学籍番号テキストボックス6.SetFocus
@@ -45,11 +45,7 @@ Call keypressrestrict(KeyAscii)
 
 End Sub
 
-Private Sub 追加登録ボタン_Click()
-
-'Worksheets("メイン").EnableCalculation = False
-'生データにデータを入れるたびにメインシート再計算が起こると処理が重くなるので再計算を停止する
-
+Private Sub delete_confirm_Click()
 Dim student_number_6 As Variant
 Dim student_number_7 As Variant
 Dim student_number_8 As Variant
@@ -83,9 +79,6 @@ If number_valid <> 0 Then
     Exit Sub
 End If
 
-'Dim 複数人表示参照 As Worksheet
-Dim CNT(5) As Integer
-'Dim 予約確認 As Integer
 Dim student_number_list(5) As Variant
 Dim data_num As Integer
 data_num = -1
@@ -116,40 +109,53 @@ If data_num = -1 Then
     Exit Sub
 End If
 
-Call check_res_day
-Call check_res_num(student_number_list(), data_num, CNT())
+Dim reserve_cord As Long
+Dim now_position As Long
+Dim target_stu_list(10) As Variant
 
-Dim bl_res_dup_check As Boolean
-bl_res_dup_check = res_duplicate_check(data_num, 0, CNT())
-If bl_res_dup_check = False Then
-    Worksheets("メイン").EnableCalculation = True
-    Unload 予約フォーム
-    Exit Sub
-End If
-
+reserve_cord = resreve_day * 100 + 時間帯 * 10 + 席番号
+now_position = WorksheetFunction.Match(reserve_cord, Sheets("生データ").Range("D:D"), 1)
+If reserve_cord = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), now_position) Then
+    Dim i As Integer
+    Dim j As Integer
+    Dim k As Integer
+    Dim is_delete As Boolean
+    k = 0
     
-Dim 予約コード As Long
-Dim add_search As Long
-予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
-
-add_search = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
-'予約コードを生成して、それが何番目にあるのか取得
-
-Call stu_num_list_input_rawsheet(add_search, student_number_list(), data_num)
-
-Worksheets("メイン").EnableCalculation = True
-
-
-adduser.Show
-
-Unload 利用者追加フォーム
-Application.Calculate
-
-End Sub
-
-Private Sub キャンセル追加ボタン_Click()
-
-Unload 利用者追加フォーム
-
-
+    For j = 0 To data_num
+    
+    is_delete = False
+        For i = 0 To 10
+            If Sheets("生データ").Cells(now_position, i + data_sheet.student_num_start).Value = "" Then
+                Exit For
+            End If
+            If Sheets("生データ").Cells(now_position, i + data_sheet.student_num_start).Value = Int(student_number_list(j)) Then
+                Sheets("生データ").Cells(now_position, i + data_sheet.student_num_start).Delete (xlShiftToLeft)
+                target_stu_list(k) = student_number_list(j)
+                k = k + 1
+                i = i - 1
+                is_delete = True
+            End If
+        Next i
+        If is_delete = False Then
+            MsgBox ("予約していない番号が含まれています。処理を続行します")
+        End If
+        is_delete = False
+        
+    Next j
+    
+    If Sheets("生データ").Cells(now_position, data_sheet.student_num_start).Value = "" Then
+        MsgBox ("利用者がいないため、この予約は削除します")
+        Call Sheets("生データ").Cells(now_position, 1).EntireRow.Delete(xlShiftUp)
+    End If
+    If k <> 0 Then
+        Call delete_res_num(target_stu_list, k - 1)
+    End If
+    
+    MsgBox ("利用者を削除しました")
+    Unload delete_user
+Else
+    MsgBox ("エラー")
+End If
+    
 End Sub

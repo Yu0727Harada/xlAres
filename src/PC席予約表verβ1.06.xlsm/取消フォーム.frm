@@ -28,10 +28,10 @@ Dim target_stu_list(10) As Variant
 If 予約コード = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), 現在の位置) Then
     
     For i = 0 To 10
-        If Sheets("生データ").Cells(現在の位置, i + 6).Value = "" Then
+        If Sheets("生データ").Cells(現在の位置, i + data_sheet.student_num_start).Value = "" Then
             Exit For
         End If
-        target_stu_list(i) = Sheets("生データ").Cells(現在の位置, i + 6).Value
+        target_stu_list(i) = Sheets("生データ").Cells(現在の位置, i + data_sheet.student_num_start).Value
     Next i
     If TextBox1 = passcord Then
         Call Sheets("生データ").Cells(現在の位置, 1).EntireRow.Delete(xlShiftUp)
@@ -110,17 +110,10 @@ Resume Next
 End Sub
 
 
-Private Sub Label2_Click()
-
-End Sub
 
 Private Sub TextBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
 
 Call keypressrestrict(KeyAscii)
-
-End Sub
-
-Private Sub UserForm_Click()
 
 End Sub
 
