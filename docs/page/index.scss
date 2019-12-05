@@ -220,8 +220,10 @@ body{
         top: 60px;
         overflow-y: auto;
         transition: all 0.7s;
-      }
+        -webkit-transition: all 0.7s;
 
+      }
+      
 
     .header {
       grid-row: 1 / 2;

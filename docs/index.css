@@ -95,7 +95,11 @@ body {
       left: 0;
       top: 60px;
       overflow-y: auto;
-      transition: all 0.7s; }
+      transition: all 0.7s;
+      -webkit-transition: all 0.7s; }
+    .container .index_check:checked + .aside > .side_bor {
+      transition: all 0.7s;
+      -webkit-transition: all 0.7s; }
     .container .header {
       grid-row: 1 / 2;
       background-color: #FFC472;

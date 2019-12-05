@@ -61,11 +61,16 @@
                             <a href="control_panel_view.html">LAコントロールパネルを表示</a>し、エクセルファイルのアップデートボタンを押します。ファイルダイアログが出るので先ほどダウンロードしたエクセルファイルを選びます。<br>
                             選ぶと画面がカチカチしたりしますが、この間にデータの移行を行なっています。データの移行が終わるとダイアログが出ます。<br>
                             <img class="img_small" src="image/excel_update.png" alt="完了ダイアログ"><br>
-                            これでデータの移行は完了です。
+                            これでデータの移行は完了です。<br>
+                            この時、移行先のデータはまだ保存されていません。（保存すると何か挙動が怪しかったので、保存しないようにした）移行先のデータを保存してください。<br>
+                        </li>
+                        <li>
+                            移行した後、片方のファイルを閉じ、どちらかのファイルをそのまま操作していると閉じたはずのファイルがいつの間にか開いていることがあります。これは定期的に計算させるマクロが起動しているせいです。今開いているエクセルファイルを全て閉じて開き直すことで、問題は解決します。<br>
                         </li>
                     </ol>
-                    このデータの移行で移行できるデータは<a href="primary_new_reserve.html">生データシートに保存された予約のデータ</a>、<a href="administer_set_profile.html">入力シートに入力したデータ、出力シートのオブジェクト</a>、<a href="administer_import_shift.html">シフト表シートに保存されたデータ</a>、<a href="control_panel_develop.html">パスコードの追加</a>から追加したパスコードです。<br>
-                    このパスコードには定数パスコードは含まれません。定数パスコートを引き継ぐには<a href="system_const_passcord.html">VBEエディター</a>から定数パスコードを設定し、<a href="implementation_outline.html">github上のデータをアップデート</a>する必要があります。
+                    このデータの移行で移行できるデータは<a href="primary_new_reserve.html">生データシートに保存された予約のデータ</a>、<a href="administer_set_profile.html">入力シートに入力したデータ、出力シートのオブジェクト</a>、<a href="administer_import_shift.html">シフト表シートに保存されたデータ</a>、<a href="control_panel_develop.html">パスコードの追加</a>から追加したパスコード、<a href="system_const_passcord.html">VBEエディター</a>から定数設定した定数パスコードや<a href="system_set_main.ejs">メインシートの各セルの位置を変更する</a>で設定したメインシートなどのセルの位置、<a href="system_set_shift.ejs">シフト表の各セルの位置を変更する</a>で設定したシフト表のセルの位置（正確にはModule1の宣言セクション)です。<br>
+                    近い将来的には、カスタマイズ出来る部分は全て移行できるようにする予定です。<br>
+
 
                 </li>
                 <li id="save">
