@@ -1,0 +1,20 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "ThisWorkbook"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Private Sub Workbook_BeforeClose(cancel As Boolean)
+If tm <> 0 Then
+    Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+    tm = 0
+End If
+
+End Sub
+
+Private Sub Workbook_Open()
+
+End Sub
