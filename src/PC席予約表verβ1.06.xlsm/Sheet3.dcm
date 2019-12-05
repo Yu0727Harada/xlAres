@@ -21,7 +21,8 @@ End Sub
 Private Sub Worksheet_Deactivate()
 
 If tm <> 0 Then
-Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+    Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+    tm = 0
 End If
 'tm変数に何か入っていた場合のみ、recalプロシージャが一分ごとに起動するのを止める
 

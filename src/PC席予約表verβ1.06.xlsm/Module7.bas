@@ -273,7 +273,8 @@ End Sub
 Public Sub update_excel()
 
 If tm <> 0 Then
-Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+    Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=False
+    tm = 0
 End If
 
 '現在のワークブックを設定
@@ -334,11 +335,11 @@ With new_wb.VBProject.VBComponents("Module1").CodeModule
     .AddFromString declaration_code
 End With
 
-new_wb.Save
+'new_wb.Save
 last_wb.Sheets("生データ").Activate
-new_wb.Close
+'new_wb.Close
 
-MsgBox ("データの移行が完了しました。このファイルを閉じてアップデート先のエクセルファイルを開いてください。")
+MsgBox ("データの移行が完了しました。移行先のデータを保存してください。※保存後すべてのエクセルファイルを閉じることを推奨します（マニュアル参照）")
 
 End Sub
 
@@ -357,7 +358,7 @@ For i = 1 To end_column
 Next i
 book_sheet.Activate
 book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.Delete
-book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.RowHeight = 180
+'book_sheet.Range(Cells(start_row, 1), Cells(lastrow, 1)).EntireRow.RowHeight = 180
 
 End Sub
 
