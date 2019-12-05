@@ -63,11 +63,12 @@
 @mixin logo{
   color:$header_font_color;
   font-size: 25px;
-  padding-left: 20px;
+  padding:0 20px;
 }
 @mixin github{
   font-size: 20px;
   color:$header_font_color;
+  padding:0 10px;
   left: 50%;
 }
 
@@ -110,11 +111,29 @@ body{
   &::-webkit-scrollbar{
     display: none;
   }
+
+  h2{
+    font-weight: normal;
+    font-size: 25px;
+  }
+  h3{
+    font-weight: normal;
+    font-size: 23px;
+  }
+  h4{
+    font-weight: normal;
+    font-size:20px;
+  }
+
   li{
     margin: 0;
+    font-size: 15px;
+
   }
+
   ol{
     margin:0;
+
   }
   .line{
     text-decoration: line-through;
@@ -292,6 +311,7 @@ body{
       grid-column: 1 / 5;
       grid-row: 1 / 2;
       background-color: $header_color;
+      height: 60px;
       width: 100%;
       position: fixed;
       top: 0;

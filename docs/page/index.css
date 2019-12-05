@@ -16,8 +16,18 @@ body {
   scrollbar-width: none; }
   body::-webkit-scrollbar {
     display: none; }
+  body h2 {
+    font-weight: normal;
+    font-size: 25px; }
+  body h3 {
+    font-weight: normal;
+    font-size: 23px; }
+  body h4 {
+    font-weight: normal;
+    font-size: 20px; }
   body li {
-    margin: 0; }
+    margin: 0;
+    font-size: 15px; }
   body ol {
     margin: 0; }
   body .line {
@@ -115,10 +125,11 @@ body {
         .container .header .items .logo {
           color: #FFFFFF;
           font-size: 25px;
-          padding-left: 20px; }
+          padding: 0 20px; }
         .container .header .items .github {
           font-size: 20px;
           color: #FFFFFF;
+          padding: 0 10px;
           left: 50%; }
 
   .aside {
@@ -201,6 +212,7 @@ body {
       grid-column: 1 / 5;
       grid-row: 1 / 2;
       background-color: #FFC472;
+      height: 60px;
       width: 100%;
       position: fixed;
       top: 0;
@@ -216,10 +228,11 @@ body {
         .container .header .items .logo {
           color: #FFFFFF;
           font-size: 25px;
-          padding-left: 20px; }
+          padding: 0 20px; }
         .container .header .items .github {
           font-size: 20px;
           color: #FFFFFF;
+          padding: 0 10px;
           left: 50%; }
     .container .aside {
       grid-column: 2 / 3;
