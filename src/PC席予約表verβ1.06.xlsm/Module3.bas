@@ -217,6 +217,61 @@ If raw_number <> "" Then
 End If
 
 End Function
+Function decord_number(ByVal encorded_number As Long)
+'変換された番号を、学籍番号に変換しなおすプロシージャー
+Dim enter_year As Integer
+Dim subject As Integer
+Dim student_number As String
+Dim de_subject As String
+
+enter_year = 2000 + Mid(encorded_number, 1, 2)
+subject = Mid(encorded_number, 3, 4)
+student_number = Mid(encorded_number, 7, 3)
+
+If Mid(subject, 1, 2) = 25 Then
+    If Mid(subject, 3, 2) < 10 Then
+        de_subject = Mid(subject, 3, 2)
+    ElseIf Mid(subject, 3, 2) = 10 Then
+        de_subject = Mid(subject, 3, 2)
+    ElseIf Mid(subject, 3, 2) = 21 Then
+        de_subject = "11"
+    ElseIf Mid(subject, 3, 2) = 99 Then
+        de_subject = "99"
+    Else
+        de_subject = "5" + Mid(subject, 4, 1)
+    End If
+    decord_number = de_subject + Mid(enter_year, 3, 2) + student_number
+ElseIf Mid(subject, 1, 2) = 20 Then
+    If Mid(subject, 3, 1) = 0 Then
+        de_subject = Mid(subject, 3, 2)
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "M" + Mid(student_number, 2, 2)
+    ElseIf Mid(subject, 3, 1) = 1 Then
+        de_subject = "0" + Mid(subject, 3, 2)
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "D" + Mid(student_number, 2, 2)
+    ElseIf Mid(subject, 3, 2) = 99 Then
+        de_subject = 99
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "M" + Mid(student_number, 2, 2)
+    End If
+ElseIf Mid(subject, 1, 2) = 21 Then
+    If Mid(subject, 3, 1) = 0 Then
+        de_subject = "51"
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "M" + Mid(student_number, 2, 2)
+    ElseIf Mid(subject, 3, 1) = 1 Then
+        de_subject = "51"
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "D" + Mid(student_number, 2, 2)
+    End If
+ElseIf Mid(subject, 1, 2) = 22 Then
+    If Mid(subject, 3, 1) = 0 Then
+        de_subject = "6" + Mid(subject, 4, 1)
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "M" + Mid(student_number, 2, 2)
+    ElseIf Mid(subject, 3, 1) = 1 Then
+        de_subject = "6" + Mid(subject, 4, 1)
+        decord_number = de_subject + Mid(enter_year, 3, 2) + "D" + Mid(student_number, 2, 2)
+    End If
+End If
+
+End Function
+
 Public Sub keypressrestrict(ByVal KeyAscii As MSForms.ReturnInteger)
 'キー入力でM、D、Sと数字以外が入力できないようにしてる
 If Chr(KeyAscii) < "0" Or Chr(KeyAscii) > "9" And Chr(KeyAscii) <> "M" And Chr(KeyAscii) <> "D" And Chr(KeyAscii) <> "m" And Chr(KeyAscii) <> "d" And Chr(KeyAscii) <> "s" And Chr(KeyAscii) <> "S" Then
