@@ -408,25 +408,30 @@ End Sub
 
 
 Public Sub recal()
-If Range(save_on_off).Value = "on" Then
-    Application.ThisWorkbook.Save
+
+If ThisWorkbook.name = ActiveWorkbook.name Then
+
+    If Range(save_on_off).Value = "on" Then
+        Application.ThisWorkbook.Save
+    End If
+    
+    '定期的にシートの再計算を行うためのプロシージャ
+    Application.Calculate
+    'シートの再計算を行う
+    Call shift_check
+    ' Application.Calculate
+    'Call setting_time
+    Call sheet_color_check
+    Application.Calculate
+    
+    
+    tm = now() + TimeValue("00:01:00")
+    Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
+    'tm変数に一分後をセット
+    'ontime関数で一分後にまたrecalプロシージャを実行
+    'なぜかシートモジュールにrecalプロシージャを書くとうまくいかない
+
 End If
-
-'定期的にシートの再計算を行うためのプロシージャ
-Application.Calculate
-'シートの再計算を行う
-Call shift_check
-' Application.Calculate
-'Call setting_time
-Call sheet_color_check
-Application.Calculate
-
-
-tm = now() + TimeValue("00:01:00")
-Application.OnTime EarliestTime:=tm, Procedure:="recal", Schedule:=True
-'tm変数に一分後をセット
-'ontime関数で一分後にまたrecalプロシージャを実行
-'なぜかシートモジュールにrecalプロシージャを書くとうまくいかない
 
 End Sub
  
