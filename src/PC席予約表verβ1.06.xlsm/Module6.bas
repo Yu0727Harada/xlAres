@@ -16,6 +16,17 @@ search_start_date = InputBox("データをエクスポートの日付の範囲の始点をyyyymmdd形
 Dim search_end_date As String
 search_end_date = InputBox("データをエクスポートの日付の範囲の終点をyyyymmdd形式で入力してください。例）２０２０年１月７日→20200107")
 
+If Len(search_start_date) <> 8 Or Len(search_end_date) <> 8 Then
+    MsgBox ("入力が有効ではありません")
+    Exit Sub
+End If
+
+On Error GoTo invalid_input
+    Dim test As Long
+    test = CLng(search_start_date)
+    test = CLng(search_end_date)
+On Error GoTo 0
+
 Dim start_row As Integer
 Dim end_row As Integer
 
@@ -49,7 +60,7 @@ Dim subjuct_row As String
 i = 1
 j = 2
 
-Do While export_data.Sheets(1).Cells(i, data_sheet.student_num_start).Value <> ""
+Do While export_data.Sheets("Sheet1").Cells(i, data_sheet.student_num_start).Value <> ""
     k = 0
     Do While export_data.Sheets("Sheet1").Cells(i, data_sheet.student_num_start + k).Value <> ""
         export_data.Sheets("Sheet2").Cells(j, data_sheet.day_code).Value = export_data.Sheets("Sheet1").Cells(i, data_sheet.day_code)
@@ -72,7 +83,51 @@ Do While export_data.Sheets(1).Cells(i, data_sheet.student_num_start).Value <> "
     i = i + 1
 Loop
 
+export_data.Sheets("Sheet1").name = "生データ"
+export_data.Sheets("Sheet2").name = "データ"
 
+export_data.Sheets.Add
+export_data.ActiveSheet.name = "データ抽出"
+
+export_data.Sheets("データ抽出").Cells(1, 1) = "予約日"
+
+Dim subjuct_num
+subjuct_num = 2
+While law_data.Sheets("学科コード表").Cells(subjuct_num, 1) <> ""
+    export_data.Sheets("データ抽出").Cells(1, subjuct_num).Value = law_data.Sheets("学科コード表").Cells(subjuct_num, 2).Value
+   subjuct_num = subjuct_num + 1
+Wend
+
+Dim date_check As Long
+Dim date_check2 As Long
+date_check2 = export_data.Sheets("データ").Cells(2, 1)
+export_data.Sheets("データ抽出").Cells(2, 1).Value = date_check2
+
+i = 3
+j = 3
+
+
+While export_data.Sheets("データ").Cells(i, 1) <> ""
+    date_check = export_data.Sheets("データ").Cells(i, 1).Value
+    If date_check <> date_check2 Then
+        export_data.Sheets("データ抽出").Cells(j, 1).Value = date_check
+        j = j + 1
+    End If
+    date_check2 = date_check
+    i = i + 1
+Wend
+
+export_data.Sheets("データ抽出").Cells(2, 2).Formula = "=COUNTIFS(データ!$A:$A,データ抽出!$A2,データ!$G:$G,データ抽出!B$1)"
+export_data.Sheets("データ抽出").Range("B2").Copy export_data.Sheets("データ抽出").Range("B2").Resize(j - 2, subjuct_num - 2)
+
+
+MsgBox ("データのエクスポートが完了しました。新しくできたブックを保存してください。")
+
+Exit Sub
+invalid_input:
+
+MsgBox ("入力が有効でありません")
+Exit Sub
 End Sub
 
 Function enter_year(ByVal student_number As Long, ByVal date_code As Long)
