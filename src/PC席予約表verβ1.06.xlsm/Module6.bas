@@ -117,11 +117,13 @@ While export_data.Sheets("データ").Cells(i, 1) <> ""
     i = i + 1
 Wend
 
-export_data.Sheets("データ抽出").Cells(2, 2).Formula = "=COUNTIFS(データ!$A:$A,データ抽出!$A2,データ!$G:$G,データ抽出!B$1)"
+export_data.Sheets("データ抽出").Cells(2, 2).FormulaR1C1 = "=COUNTIFS(データ!C1:C1,データ抽出!RC1,データ!C7:C7,データ抽出!R1C)"
 export_data.Sheets("データ抽出").Range("B2").Copy export_data.Sheets("データ抽出").Range("B2").Resize(j - 2, subjuct_num - 2)
 
 
+
 MsgBox ("データのエクスポートが完了しました。新しくできたブックを保存してください。")
+
 
 Exit Sub
 invalid_input:
