@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} limit_res_inform 
    Caption         =   "予約制限中"
-   ClientHeight    =   3101
-   ClientLeft      =   91
-   ClientTop       =   406
-   ClientWidth     =   6608
+   ClientHeight    =   3105
+   ClientLeft      =   90
+   ClientTop       =   405
+   ClientWidth     =   6615
    OleObjectBlob   =   "limit_res_inform.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End

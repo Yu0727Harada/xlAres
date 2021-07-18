@@ -1,85 +1,28 @@
 VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約変更フォーム 
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} last_form 
    Caption         =   "予約の変更など"
-   ClientHeight    =   8504.001
-   ClientLeft      =   105
-   ClientTop       =   450
-   ClientWidth     =   5175
-   OleObjectBlob   =   "予約変更フォーム.frx":0000
+   ClientHeight    =   3480
+   ClientLeft      =   90
+   ClientTop       =   420
+   ClientWidth     =   5760
+   OleObjectBlob   =   "last_form.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
-Attribute VB_Name = "予約変更フォーム"
+Attribute VB_Name = "last_form"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
-Private Sub delete_use_button_Click()
-
-Unload 予約変更フォーム
-delete_user.Show
-
-End Sub
-
-
-
-
-Private Sub UserForm_Initialize()
-
-Dim targt_time_text As String
-
-If (時間帯 = 1) Then
-    target_time_text = "1時限目"
-ElseIf (時間帯 = 2) Then
-    target_time_text = "2時限目"
-ElseIf (時間帯 = 3) Then
-    target_time_text = "昼休み"
-ElseIf (時間帯 = 4) Then
-    target_time_text = "3時限目"
-ElseIf (時間帯 = 5) Then
-    target_time_text = "4時限目"
-ElseIf (時間帯 = 6) Then
-    target_time_text = "5時限目"
-ElseIf (時間帯 = 7) Then
-    target_time_text = "閉室まで"
-End If
-
-Dim target_pc_text As String
-
-If (席番号 = 1) Then
-    target_pc_text = "１番のPC席"
-ElseIf (席番号 = 2) Then
-    target_pc_text = "2番のPC席"
-ElseIf (席番号 = 3) Then
-    target_pc_text = "3番のPC席"
-ElseIf (席番号 = 4) Then
-    target_pc_text = "4番のPC席"
-ElseIf (席番号 = 5) Then
-    target_pc_text = "5番のPC席"
-End If
-
-
-Label2 = target_time_text + "の" + target_pc_text + "の" + vbCrLf + "予約変更"
-
-
-
-追加ボタン.SetFocus
-
-
-End Sub
-
 Private Sub 延長ボタン_Click()
-
 If 連続可能か = False Then
 
 '    MsgBox ("延長できません")
     post_confirm.Show
-    Unload 予約変更フォーム
+    Unload last_form
     Exit Sub
 ElseIf Sheets("メイン").Range(limit_res_on_off).Value = "on" Then
     limit_res_inform.Show
-    Unload 予約変更フォーム
+    Unload last_form
     Exit Sub
 Else
     Dim 予約コード As Long
@@ -114,37 +57,21 @@ End If
     Dim bl_res_dup_check As Boolean
     bl_res_dup_check = res_duplicate_check(j - 1, 0, CNT())
     If bl_res_dup_check = False Then
-        Unload 予約変更フォーム
+        Unload last_form
         Exit Sub
     End If
 
     Dim bl_res_input As Boolean
     bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, student_number_list(), j - 1)
     
-    Unload 予約変更フォーム
-
-End If
-
-End Sub
-
-Private Sub 取消ボタン_Click()
-
-Unload 予約変更フォーム
-取消フォーム.Show
-            
-
+    Unload last_form
+    
+    End If
 End Sub
 
 Private Sub 貸出ボタン_Click()
 
 Call cable
-Unload 予約変更フォーム
-
-End Sub
-
-Private Sub 追加ボタン_Click()
-
-Unload 予約変更フォーム
-利用者追加フォーム.Show
+Unload last_form
 
 End Sub

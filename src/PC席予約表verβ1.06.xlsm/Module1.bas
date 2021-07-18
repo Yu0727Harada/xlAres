@@ -12,7 +12,7 @@ Public tm As Double
 Public on_time As Integer
 Public passcord_input As Variant
 
-Public Const passcord As String = 1907
+Public Const passcord As String = "1111"
 
 Public Const time_sheet As String = "L2" '時刻セルの位置
 Public Const date_sheet As String = "K2" '日付セルの位置

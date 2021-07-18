@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} delete_user 
    Caption         =   "利用者の削除"
-   ClientHeight    =   6783
-   ClientLeft      =   91
-   ClientTop       =   406
-   ClientWidth     =   6524
+   ClientHeight    =   6780
+   ClientLeft      =   90
+   ClientTop       =   405
+   ClientWidth     =   6525
    OleObjectBlob   =   "delete_user.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -14,6 +14,11 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private Sub cancel_Click()
+Unload delete_user
+End Sub
+
 Private Sub UserForm_Initialize()
 number_valid = 0
 学籍番号テキストボックス6.SetFocus

@@ -1,14 +1,14 @@
 VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約変更フォーム 
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} vary_form 
    Caption         =   "予約の変更など"
-   ClientHeight    =   8504.001
-   ClientLeft      =   105
-   ClientTop       =   450
-   ClientWidth     =   5175
-   OleObjectBlob   =   "予約変更フォーム.frx":0000
+   ClientHeight    =   8352.001
+   ClientLeft      =   90
+   ClientTop       =   420
+   ClientWidth     =   5160
+   OleObjectBlob   =   "vary_form.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
-Attribute VB_Name = "予約変更フォーム"
+Attribute VB_Name = "vary_form"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -17,12 +17,10 @@ Attribute VB_Exposed = False
 
 Private Sub delete_use_button_Click()
 
-Unload 予約変更フォーム
+Unload vary_form
 delete_user.Show
 
 End Sub
-
-
 
 
 Private Sub UserForm_Initialize()
@@ -60,7 +58,7 @@ ElseIf (席番号 = 5) Then
 End If
 
 
-Label2 = target_time_text + "の" + target_pc_text + "の" + vbCrLf + "予約変更"
+Label3 = target_time_text + "の" + target_pc_text + "の" + vbCrLf + "予約変更"
 
 
 
@@ -75,11 +73,11 @@ If 連続可能か = False Then
 
 '    MsgBox ("延長できません")
     post_confirm.Show
-    Unload 予約変更フォーム
+    Unload vary_form
     Exit Sub
 ElseIf Sheets("メイン").Range(limit_res_on_off).Value = "on" Then
     limit_res_inform.Show
-    Unload 予約変更フォーム
+    Unload vary_form
     Exit Sub
 Else
     Dim 予約コード As Long
@@ -114,23 +112,23 @@ End If
     Dim bl_res_dup_check As Boolean
     bl_res_dup_check = res_duplicate_check(j - 1, 0, CNT())
     If bl_res_dup_check = False Then
-        Unload 予約変更フォーム
+        Unload vary_form
         Exit Sub
     End If
 
     Dim bl_res_input As Boolean
     bl_res_input = res_input_rawsheet(resreve_day, 時間帯 + 1, 席番号, cable_check, student_number_list(), j - 1)
     
-    Unload 予約変更フォーム
+    Unload vary_form
 
 End If
 
 End Sub
 
-Private Sub 取消ボタン_Click()
+Private Sub 退席ボタン_Click()
 
-Unload 予約変更フォーム
-取消フォーム.Show
+Unload vary_form
+Call leave
             
 
 End Sub
@@ -138,13 +136,14 @@ End Sub
 Private Sub 貸出ボタン_Click()
 
 Call cable
-Unload 予約変更フォーム
+Unload vary_form
 
 End Sub
 
 Private Sub 追加ボタン_Click()
 
-Unload 予約変更フォーム
+Unload vary_form
 利用者追加フォーム.Show
 
 End Sub
+

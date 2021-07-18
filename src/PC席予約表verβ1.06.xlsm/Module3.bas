@@ -355,8 +355,9 @@ On Error GoTo error_process
     search = WorksheetFunction.Match(resrve_code_number, Sheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, 1)
 On Error GoTo 0
 If resrve_code_number = WorksheetFunction.Index(Sheets("生データ").Cells(1, data_sheet.reserve_code).EntireColumn, search) Then
-    MsgBox ("すでにこの枠の予約があるため予約ができません。LAに確認を依頼してください(エラー番号:１01)")
-    res_input_rawsheet = False
+    Call stu_num_list_input_rawsheet(search, stu_list(), data_number)
+    Call cable_new(cable, search)
+    res_input_rawsheet = True
     Exit Function
 End If
     
@@ -383,12 +384,59 @@ Function stu_num_list_input_rawsheet(ByVal Row As Integer, stu_list() As Variant
 
 Dim Lastcolumn As Long
 Dim i As Integer
-Lastcolumn = Sheets("生データ").Cells(Row, Columns.count).End(xlToLeft).Column + 1
-For i = 0 To data_number
-    Sheets("生データ").Cells(Row, Lastcolumn + i).Value = stu_list(i)
-Next i
+Dim j As Integer
+i = 0
+j = 0
+
+While i <= data_number
+    
+    If (Sheets("生データ").Cells(Row, 6 + j) = "") Then
+        Sheets("生データ").Cells(Row, 6 + j).Value = stu_list(i)
+        i = i + 1
+    End If
+    j = j + 1
+    
+Wend
 
 Call input_res_num(stu_list(), data_number)
+
+End Function
+
+Function leave()
+
+Dim 予約コード As Long
+Dim 現在の位置 As Long
+Dim confirm_number As Variant
+Dim search_stu_row
+Dim target_stu_list(10) As Variant
+
+予約コード = resreve_day * 100 + 時間帯 * 10 + 席番号
+現在の位置 = WorksheetFunction.Match(予約コード, Sheets("生データ").Range("D:D"), 1)
+If 予約コード = WorksheetFunction.Index(Sheets("生データ").Range("D:D"), 現在の位置) Then
+
+    Dim sorce As Variant
+    sorce = Sheets("生データ").Cells(現在の位置, 6)
+    Sheets("生データ").Cells(現在の位置, 6).Clear
+    Dim i As Integer
+    i = 7
+    While Sheets("生データ").Cells(現在の位置, i) <> ""
+        i = i + 1
+    Wend
+    
+    Sheets("生データ").Cells(現在の位置, i) = sorce
+    
+    Worksheets("メイン").EnableCalculation = True
+    Application.Calculate
+    MsgBox ("退席しました")
+    
+    Exit Function
+Else
+    MsgBox ("予約がありません。LAに確認を依頼してください。エラー番号１０３")
+End If
+
+Exit Function
+
+
 
 End Function
 

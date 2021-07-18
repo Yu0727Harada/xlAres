@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} Profile 
    Caption         =   "LAプロフィール"
-   ClientHeight    =   8694
-   ClientLeft      =   91
-   ClientTop       =   406
-   ClientWidth     =   9737
+   ClientHeight    =   8700.001
+   ClientLeft      =   90
+   ClientTop       =   405
+   ClientWidth     =   9735.001
    OleObjectBlob   =   "Profile.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End

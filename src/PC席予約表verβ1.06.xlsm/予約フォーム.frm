@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} 予約フォーム 
    Caption         =   "予約フォーム"
-   ClientHeight    =   8442
-   ClientLeft      =   -462
-   ClientTop       =   -1799
-   ClientWidth     =   8022
+   ClientHeight    =   9728.001
+   ClientLeft      =   -465
+   ClientTop       =   -1800
+   ClientWidth     =   8085
    OleObjectBlob   =   "予約フォーム.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -15,6 +15,14 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim extend_check As Boolean
 Dim cable_check As Boolean
+
+Private Sub Label1_Click()
+
+End Sub
+
+Private Sub Label2_Click()
+
+End Sub
 
 Private Sub Label4_Click()
 
@@ -44,6 +52,43 @@ number_valid = 0
 cable_check = False
 extend_check = False
 '一番最初にフォームが開いたときにテキストボックス位置に入力出来る状態にしておく
+
+Dim targt_time_text As String
+
+If (時間帯 = 1) Then
+    target_time_text = "1時限目"
+ElseIf (時間帯 = 2) Then
+    target_time_text = "2時限目"
+ElseIf (時間帯 = 3) Then
+    target_time_text = "昼休み"
+ElseIf (時間帯 = 4) Then
+    target_time_text = "3時限目"
+ElseIf (時間帯 = 5) Then
+    target_time_text = "4時限目"
+ElseIf (時間帯 = 6) Then
+    target_time_text = "5時限目"
+ElseIf (時間帯 = 7) Then
+    target_time_text = "閉室まで"
+End If
+
+Dim target_pc_text As String
+
+If (席番号 = 1) Then
+    target_pc_text = "１番のPC席"
+ElseIf (席番号 = 2) Then
+    target_pc_text = "2番のPC席"
+ElseIf (席番号 = 3) Then
+    target_pc_text = "3番のPC席"
+ElseIf (席番号 = 4) Then
+    target_pc_text = "4番のPC席"
+ElseIf (席番号 = 5) Then
+    target_pc_text = "5番のPC席"
+End If
+
+
+Label1 = target_time_text + "に" + target_pc_text + "を予約します" + vbCrLf + "学生証のバーコードをスキャンするか" + vbCrLf + "学籍番号を入力してください"
+
+
 End Sub
 
 Private Sub キャンセル_Click()

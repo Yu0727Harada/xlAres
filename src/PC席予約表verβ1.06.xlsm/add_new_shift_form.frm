@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} add_new_shift_form 
    Caption         =   "シフトの追加"
-   ClientHeight    =   4627
-   ClientLeft      =   91
-   ClientTop       =   406
-   ClientWidth     =   7098
+   ClientHeight    =   4635
+   ClientLeft      =   90
+   ClientTop       =   405
+   ClientWidth     =   7095
    OleObjectBlob   =   "add_new_shift_form.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End

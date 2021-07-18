@@ -201,6 +201,43 @@ Application.ExecuteExcel4Macro "SHOW.TOOLBAR(""Ribbon"",False)"
 
 End Sub
 
+Sub all_set()
+
+Call ribbon_undisplay
+
+If ActiveWindow.DisplayWorkbookTabs = True Then
+    ActiveWindow.DisplayWorkbookTabs = False
+End If
+If Application.DisplayScrollBars = True Then
+    Application.DisplayScrollBars = False
+End If
+If Application.DisplayStatusBar = True Then
+    Application.DisplayStatusBar = False
+End If
+If ActiveWindow.DisplayHeadings = True Then
+    ActiveWindow.DisplayHeadings = False
+End If
+If Application.DisplayFormulaBar = True Then
+    Application.DisplayFormulaBar = False
+End If
+If Range(save_on_off).Value = "off" Then
+    Range(save_on_off).Value = "on"
+Else
+    Range(save_on_off).Value = "on"
+End If
+
+If Range(cell_corsor_move).Value = "off" Then
+    Range(cell_corsor_move).Value = "on"
+End If
+
+If Range(master_on_off).Value = "on" Then
+    Range(master_on_off).Value = "off"
+Else
+    Range(master_on_off).Value = "off"
+End If
+Call protect
+End Sub
+
 Sub vbe_open()
 Application.VBE.Windows(1).SetFocus
 End Sub

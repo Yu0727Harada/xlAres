@@ -77,7 +77,7 @@ Do While inputsheet.Cells(j, 1) <> ""
         .Line.Visible = False
             With .TextFrame.Characters.Font  'テキストボックスのフォントの設定
                         .Size = 14
-                        .name = "源ノ角ゴシック JP"
+                        .name = "BIZ UDゴシック"
             End With
     End With
     
@@ -97,7 +97,7 @@ Do While inputsheet.Cells(j, 1) <> ""
         .Line.Visible = False
             With .TextFrame.Characters.Font 'フォントの設定
                         .Size = 10
-                        .name = "源ノ角ゴシック JP"
+                        .name = "BIZ UDゴシック"
             End With
     End With
     
